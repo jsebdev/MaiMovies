@@ -1,5 +1,4 @@
-import { theMovieDBController } from "@app/api/theMovieDB";
-import { getMediaName } from "@app/utils/utils";
+import { mediaController } from "@app/api/media_api";
 import { action, autorun, makeObservable, observable, runInAction } from "mobx";
 
 class TrendingStore {
@@ -12,15 +11,12 @@ class TrendingStore {
     });
     autorun(() => {
       console.log("the trending media is:");
-      this.trendingMedia.forEach((media) =>
-        console.log("title: ", getMediaName(media))
-      );
-      console.log("end of autorun");
+      this.trendingMedia.forEach((media) => console.log("title: ", media.name));
     });
   }
 
   async fetchTrendingMedia() {
-    const result = await theMovieDBController.getWeeklyTrendingMedia();
+    const result = await mediaController.getWeeklyTrendingMedia();
     runInAction(() => {
       this.trendingMedia = result;
     });
