@@ -13,6 +13,8 @@ module.exports = function (api) {
           },
         },
       ],
+      ["module:react-native-dotenv"],
+      // ["@babel/plugin-proposal-class-properties", { loose: false }],
     ],
   };
 };
