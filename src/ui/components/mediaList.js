@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { MediaCard } from "./mediaCard";
 
 export const MediaList = ({ mediaList }) => {
-  // console.log("7: mediaList >>>", mediaList);
   return (
     <FlatList
       data={mediaList}

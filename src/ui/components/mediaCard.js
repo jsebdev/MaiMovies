@@ -4,12 +4,13 @@ import {
   StyleSheet,
   Image,
   Dimensions,
+  Text,
 } from "react-native";
 import React from "react";
 import { mediaPropType } from "@app/domain/MediaType";
 
-const cardWidth = Dimensions.get("window").width / 2.5;
-const cardHeight = (cardWidth * 16) / 9;
+const cardWidth = Dimensions.get("window").width / 3;
+const cardHeight = (cardWidth * 16) / 10;
 
 export const MediaCard = ({ media }) => {
   const goToMedia = () => {
@@ -23,6 +24,9 @@ export const MediaCard = ({ media }) => {
           style={styles.image}
           resizeMode="cover"
         />
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>{media.name}</Text>
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -31,16 +35,25 @@ export const MediaCard = ({ media }) => {
 const styles = StyleSheet.create({
   card: {
     flex: 1,
-    backgroundColor: "#0a0",
-    margin: 5,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 10,
+    margin: 4,
+    justifyContent: "flex-start",
     overflow: "hidden",
   },
   image: {
     width: cardWidth,
     height: cardHeight,
+    borderRadius: 8,
+  },
+  textContainer: {
+    width: cardWidth,
+    flexDirection: "row",
+  },
+  text: {
+    fontSize: 10,
+    width: cardWidth,
+    flex: 1,
+    flexWrap: "wrap",
+    textAlign: "center",
   },
 });
 
