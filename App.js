@@ -15,7 +15,7 @@ export default function App() {
   return (
     // <Context>
     <NavigationContainer>
-      <Navigation></Navigation>
+      <Navigation />
     </NavigationContainer>
     // </Context>
   );

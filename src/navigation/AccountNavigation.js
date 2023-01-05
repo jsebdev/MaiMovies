@@ -1,6 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { AccountScreen } from "@app/screens/AccountScreen";
+import { AccountScreen } from "@app/ui/screens/AccountScreen";
 
 const Stack = createStackNavigator();
 

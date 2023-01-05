@@ -11,7 +11,7 @@ const Tab = createBottomTabNavigator();
 
 export const Navigation = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator initialRouteName="Trending">
       <Tab.Screen
         name="Account"
         component={AccountNavigation}

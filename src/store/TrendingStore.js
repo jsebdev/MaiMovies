@@ -1,5 +1,5 @@
 import { mediaController } from "@app/api/media_api";
-import { action, autorun, makeObservable, observable, runInAction } from "mobx";
+import { action, makeObservable, observable, runInAction } from "mobx";
 
 class TrendingStore {
   trendingMedia = [];
@@ -9,10 +9,10 @@ class TrendingStore {
       trendingMedia: observable,
       fetchTrendingMedia: action,
     });
-    autorun(() => {
-      console.log("the trending media is:");
-      this.trendingMedia.forEach((media) => console.log("title: ", media.name));
-    });
+    // autorun(() => {
+    //   console.log("the trending media is:");
+    //   this.trendingMedia.forEach((media) => console.log("title: ", media.name));
+    // });
   }
 
   async fetchTrendingMedia() {
