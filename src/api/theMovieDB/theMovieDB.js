@@ -4,6 +4,7 @@ import {
   API_HOST,
   API_MEDIA,
   API_WEEKLY_TRENDING,
+  IMAGES_SIZES,
 } from "@app/utils/constants";
 import { ApiController } from "@app/domain/apiController";
 import { apiMedia2Media } from "@app/api/theMovieDB/theMovieDB.utils";
@@ -17,17 +18,22 @@ export class TheMovieDBController extends ApiController {
     this.myHeaders.append("Authorization", `Bearer ${ACCESS_TOKEN}`);
     (async () => {
       this.configuration = await this.#configuration();
-      this.postersBaseLinks = this.#getPostersBaseLinks(this.configuration);
+      this.postersBaseSizes = this.#getImagesBaseSizes(
+        this.configuration.images.poster_sizes
+      );
+      this.backdropBaseSizes = this.#getImagesBaseSizes(
+        this.configuration.images.backdrop_sizes
+      );
     })();
   }
 
-  getWeeklyTrendingMedia = async (page = 1) => {
+  getWeeklyTrendingMedia = async (page = 1, mediaType = "movie") => {
     try {
-      const url = `${API_HOST}${API_WEEKLY_TRENDING(page)}`;
+      const url = `${API_HOST}${API_WEEKLY_TRENDING(mediaType, page)}`;
       const result = await this.#fetch(url);
       if (!result.success) return result;
       result.value = result.rawValue.results.map((media) =>
-        apiMedia2Media(media, this.postersBaseLinks)
+        this.#apiMedia2Media(media)
       );
       result.totalPages = result.rawValue.total_pages;
       return result;
@@ -38,13 +44,11 @@ export class TheMovieDBController extends ApiController {
   };
 
   getMedia = async (mediaId, mediaType) => {
-    // console.log("38: movieId >>>", movieId);
     try {
       const url = `${API_HOST}${API_MEDIA(mediaId, mediaType)}`;
       const result = await this.#fetch(url);
       if (!result.success) return result;
-      result.value = apiMedia2Media(result.rawValue, this.postersBaseLinks);
-      // console.log("42: movie >>>", movie);
+      result.value = this.#apiMedia2Media(result.rawValue);
       return result;
     } catch (err) {
       console.error("Error fetching trending media");
@@ -60,7 +64,7 @@ export class TheMovieDBController extends ApiController {
     const result = await response.json();
     if (response.status !== 200) {
       console.error("Error fetching, status code is " + response.status);
-      console.log("Response: ", result);
+      console.error("Response: ", result);
       return new ApiResponse({
         success: false,
         rawValue: result,
@@ -79,22 +83,24 @@ export class TheMovieDBController extends ApiController {
       const result = await this.#fetch(url);
       return result.rawValue;
     } catch (err) {
-      console.log("Error fetching configuration");
+      console.error("Error fetching configuration");
       console.error(err);
       throw err;
     }
   };
 
-  #getPostersBaseLinks = (configuration) => {
+  #getImagesBaseSizes = (availableSizes) => {
     // everything with word "size" is a string
     // everything with word "width" is a number
-    const posterSizes = configuration.images.poster_sizes;
     const desiredWidths = [100, 400, 800];
-    const desiredWidthsNames = ["small", "medium", "large"];
+    const desiredWidthsNames = [
+      IMAGES_SIZES.small,
+      IMAGES_SIZES.medium,
+      IMAGES_SIZES.large,
+    ];
     const posterWidths = new Map();
-    const originalImageSize = "original";
-    posterSizes.forEach((posterSize) => {
-      if (posterSize === originalImageSize) return;
+    availableSizes.forEach((posterSize) => {
+      if (posterSize === IMAGES_SIZES.original) return;
       const width = /\d+/.exec(posterSize)[0];
       posterWidths.set(Number(width), posterSize);
     });
@@ -112,16 +118,25 @@ export class TheMovieDBController extends ApiController {
       }
       return closestSize;
     });
-    const base_url = configuration.images.secure_base_url;
-    const baseLinks = {};
+    const baseSizes = {};
     closestSizes.forEach((size, index) => {
-      baseLinks[desiredWidthsNames[index]] = `${base_url}${size}`;
+      // baseSizes[desiredWidthsNames[index]] = `${base_url}${size}`;
+      baseSizes[desiredWidthsNames[index]] = size;
     });
-    if (posterSizes.includes(originalImageSize)) {
-      baseLinks[originalImageSize] = `${base_url}${originalImageSize}`;
+    if (availableSizes.includes(IMAGES_SIZES.original)) {
+      baseSizes[IMAGES_SIZES.original] = IMAGES_SIZES.original;
     } else {
-      baseLinks[originalImageSize] = baseLinks[baseLinks.length - 1];
+      baseSizes[IMAGES_SIZES.original] = baseSizes[baseSizes.length - 1];
     }
-    return baseLinks;
+    return baseSizes;
+  };
+
+  #apiMedia2Media = (media) => {
+    return apiMedia2Media(
+      media,
+      this.postersBaseSizes,
+      this.backdropBaseSizes,
+      this.configuration.images.base_url
+    );
   };
 }

@@ -1,7 +1,16 @@
 export const API_HOST = "https://api.themoviedb.org/3";
-export const API_WEEKLY_TRENDING = (page) => `/trending/all/week?page=${page}`;
+export const API_WEEKLY_TRENDING = (mediaType, page) =>
+  `/trending/${mediaType}/week?page=${page}`;
 export const API_CONFIGURATION = "/configuration";
 export const API_MEDIA = (movieId, mediaType) => `/${mediaType}/${movieId}`;
 
 export const HOME_SCREEN = "Home";
 export const MOVIE_SCREEN = "Movie";
+
+export const DESIRED_IMAGES_WIDTHS = [100, 400, 800];
+export const IMAGES_SIZES = {
+  small: "small",
+  medium: "medium",
+  large: "large",
+  original: "original",
+};

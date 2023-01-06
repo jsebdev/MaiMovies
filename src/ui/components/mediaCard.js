@@ -7,8 +7,8 @@ import {
   Text,
 } from "react-native";
 import React from "react";
-import { mediaPropType } from "@app/domain/MediaType";
-import { MOVIE_SCREEN } from "@app/utils/constants";
+import { mediaPropType } from "@app/domain/MediaClass";
+import { IMAGES_SIZES, MOVIE_SCREEN } from "@app/utils/constants";
 import { useNavigation } from "@react-navigation/native";
 
 const cardWidth = Dimensions.get("window").width / 3;
@@ -26,7 +26,7 @@ export const MediaCard = ({ media }) => {
     <TouchableWithoutFeedback onPress={goToMedia}>
       <View style={styles.card}>
         <Image
-          source={{ uri: media.poster.medium }}
+          source={{ uri: media.getPoster(IMAGES_SIZES.medium) }}
           style={styles.image}
           resizeMode="cover"
         />

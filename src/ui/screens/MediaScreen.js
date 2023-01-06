@@ -6,8 +6,8 @@ import { useNavigation } from "@react-navigation/native";
 
 export const MediaScreen = ({ route }) => {
   const { mediaId, mediaType } = route.params;
-  const [media, setMedia] = useState(null);
   const navigation = useNavigation();
+  const [media, setMedia] = useState(null);
   useEffect(() => {
     (async () => {
       const result = await apiController.getMedia(mediaId, mediaType);

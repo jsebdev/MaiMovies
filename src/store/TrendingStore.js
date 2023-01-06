@@ -13,10 +13,6 @@ class TrendingStore {
       totalPages: observable,
       fetchNextPageTrendingMedia: action,
     });
-    // autorun(() => {
-    //   console.log("the trending media is:");
-    //   this.trendingMedia.forEach((media) => console.log("title: ", media.name));
-    // });
   }
 
   async fetchNextPageTrendingMedia() {
