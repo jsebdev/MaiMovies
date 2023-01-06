@@ -3,11 +3,15 @@ import { action, makeObservable, observable, runInAction } from "mobx";
 
 class TrendingStore {
   trendingMedia = [];
+  page = 0;
+  totalPages = Infinity;
 
   constructor() {
     makeObservable(this, {
       trendingMedia: observable,
-      fetchTrendingMedia: action,
+      page: observable,
+      totalPages: observable,
+      fetchNextPageTrendingMedia: action,
     });
     // autorun(() => {
     //   console.log("the trending media is:");
@@ -15,11 +19,14 @@ class TrendingStore {
     // });
   }
 
-  async fetchTrendingMedia() {
-    const result = await apiController.getWeeklyTrendingMedia();
+  async fetchNextPageTrendingMedia() {
+    if (this.page >= this.totalPages) return;
+    this.page++;
+    const result = await apiController.getWeeklyTrendingMedia(this.page);
     if (result.success === true) {
       runInAction(() => {
-        this.trendingMedia = result.value;
+        this.trendingMedia = [...this.trendingMedia, ...result.value];
+        this.totalPages = result.totalPages;
       });
     }
   }

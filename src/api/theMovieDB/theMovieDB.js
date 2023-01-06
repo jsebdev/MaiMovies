@@ -21,15 +21,15 @@ export class TheMovieDBController extends ApiController {
     })();
   }
 
-  getWeeklyTrendingMedia = async () => {
+  getWeeklyTrendingMedia = async (page = 1) => {
     try {
-      const url = `${API_HOST}${API_WEEKLY_TRENDING}`;
+      const url = `${API_HOST}${API_WEEKLY_TRENDING(page)}`;
       const result = await this.#fetch(url);
       if (!result.success) return result;
-      result.value = result.value.results.map((media) =>
+      result.value = result.rawValue.results.map((media) =>
         apiMedia2Media(media, this.postersBaseLinks)
       );
-      // console.log("33: result >>>", result);
+      result.totalPages = result.rawValue.total_pages;
       return result;
     } catch (err) {
       console.error("Error fetching trending media");
@@ -43,7 +43,7 @@ export class TheMovieDBController extends ApiController {
       const url = `${API_HOST}${API_MEDIA(mediaId, mediaType)}`;
       const result = await this.#fetch(url);
       if (!result.success) return result;
-      result.value = apiMedia2Media(result.value, this.postersBaseLinks);
+      result.value = apiMedia2Media(result.rawValue, this.postersBaseLinks);
       // console.log("42: movie >>>", movie);
       return result;
     } catch (err) {
@@ -63,13 +63,13 @@ export class TheMovieDBController extends ApiController {
       console.log("Response: ", result);
       return new ApiResponse({
         success: false,
-        value: result,
+        rawValue: result,
         message: result.status_message,
       });
     }
     return new ApiResponse({
       success: true,
-      value: result,
+      rawValue: result,
     });
   };
 
@@ -77,7 +77,7 @@ export class TheMovieDBController extends ApiController {
     try {
       const url = `${API_HOST}${API_CONFIGURATION}`;
       const result = await this.#fetch(url);
-      return result.value;
+      return result.rawValue;
     } catch (err) {
       console.log("Error fetching configuration");
       console.error(err);

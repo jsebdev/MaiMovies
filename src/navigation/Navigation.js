@@ -51,13 +51,16 @@ export const Navigation = () => {
   );
 };
 
-const renderImageIcon = (src) => (
-  <Image
-    source={src}
-    style={{
-      width: 75,
-      height: 75,
-      top: -15,
-    }}
-  />
-);
+const renderImageIcon = (src) => {
+  const iconSize = 60;
+  return (
+    <Image
+      source={src}
+      style={{
+        width: iconSize,
+        height: iconSize,
+        top: -5,
+      }}
+    />
+  );
+};

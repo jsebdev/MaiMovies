@@ -15,7 +15,6 @@ const cardWidth = Dimensions.get("window").width / 3;
 const cardHeight = (cardWidth * 16) / 10;
 
 export const MediaCard = ({ media }) => {
-  console.log("a component was rendered");
   const navigation = useNavigation();
   const goToMedia = () => {
     navigation.push(MOVIE_SCREEN, {
@@ -45,11 +44,12 @@ const styles = StyleSheet.create({
     margin: 4,
     justifyContent: "flex-start",
     overflow: "hidden",
+    alignItems: "center",
   },
   image: {
     width: cardWidth,
     height: cardHeight,
-    borderRadius: 8,
+    borderRadius: 5,
   },
   textContainer: {
     width: cardWidth,
