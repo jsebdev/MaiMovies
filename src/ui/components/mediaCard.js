@@ -8,13 +8,20 @@ import {
 } from "react-native";
 import React from "react";
 import { mediaPropType } from "@app/domain/MediaType";
+import { MOVIE_SCREEN } from "@app/utils/constants";
+import { useNavigation } from "@react-navigation/native";
 
 const cardWidth = Dimensions.get("window").width / 3;
 const cardHeight = (cardWidth * 16) / 10;
 
 export const MediaCard = ({ media }) => {
+  console.log("a component was rendered");
+  const navigation = useNavigation();
   const goToMedia = () => {
-    console.log("going to media: ", media.name);
+    navigation.push(MOVIE_SCREEN, {
+      mediaId: media.id,
+      mediaType: media.mediaType,
+    });
   };
   return (
     <TouchableWithoutFeedback onPress={goToMedia}>

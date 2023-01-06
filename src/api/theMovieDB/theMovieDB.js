@@ -2,11 +2,12 @@ import { ACCESS_TOKEN } from "@env";
 import {
   API_CONFIGURATION,
   API_HOST,
+  API_MEDIA,
   API_WEEKLY_TRENDING,
 } from "@app/utils/constants";
 import { ApiController } from "@app/domain/apiController";
-import { Media } from "@app/domain/MediaType";
 import { apiMedia2Media } from "@app/api/theMovieDB/theMovieDB.utils";
+import { ApiResponse } from "@app/domain/ApiResponses";
 
 export class TheMovieDBController extends ApiController {
   constructor() {
@@ -17,18 +18,34 @@ export class TheMovieDBController extends ApiController {
     (async () => {
       this.configuration = await this.#configuration();
       this.postersBaseLinks = this.#getPostersBaseLinks(this.configuration);
-      // console.log("20: this.postersBaseLinks >>>", this.postersBaseLinks);
     })();
   }
 
   getWeeklyTrendingMedia = async () => {
     try {
       const url = `${API_HOST}${API_WEEKLY_TRENDING}`;
-      const response = await this.#fetch(url);
-      const result = await response.json();
-      return result.results.map(
-        (media) => new Media(apiMedia2Media(media, this.postersBaseLinks))
+      const result = await this.#fetch(url);
+      if (!result.success) return result;
+      result.value = result.value.results.map((media) =>
+        apiMedia2Media(media, this.postersBaseLinks)
       );
+      // console.log("33: result >>>", result);
+      return result;
+    } catch (err) {
+      console.error("Error fetching trending media");
+      throw err;
+    }
+  };
+
+  getMedia = async (mediaId, mediaType) => {
+    // console.log("38: movieId >>>", movieId);
+    try {
+      const url = `${API_HOST}${API_MEDIA(mediaId, mediaType)}`;
+      const result = await this.#fetch(url);
+      if (!result.success) return result;
+      result.value = apiMedia2Media(result.value, this.postersBaseLinks);
+      // console.log("42: movie >>>", movie);
+      return result;
     } catch (err) {
       console.error("Error fetching trending media");
       throw err;
@@ -36,19 +53,34 @@ export class TheMovieDBController extends ApiController {
   };
 
   // Utils Functions
-  #fetch = async (url) =>
-    await await fetch(url, {
+  #fetch = async (url) => {
+    const response = await fetch(url, {
       headers: this.myHeaders,
     });
+    const result = await response.json();
+    if (response.status !== 200) {
+      console.error("Error fetching, status code is " + response.status);
+      console.log("Response: ", result);
+      return new ApiResponse({
+        success: false,
+        value: result,
+        message: result.status_message,
+      });
+    }
+    return new ApiResponse({
+      success: true,
+      value: result,
+    });
+  };
 
   #configuration = async () => {
     try {
       const url = `${API_HOST}${API_CONFIGURATION}`;
-      const response = await this.#fetch(url);
-      const result = await response.json();
-      return result;
+      const result = await this.#fetch(url);
+      return result.value;
     } catch (err) {
       console.log("Error fetching configuration");
+      console.error(err);
       throw err;
     }
   };

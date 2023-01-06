@@ -1,4 +1,4 @@
-import { mediaController } from "@app/api/media_api";
+import { apiController } from "@app/api/apiController";
 import { action, makeObservable, observable, runInAction } from "mobx";
 
 class TrendingStore {
@@ -16,10 +16,12 @@ class TrendingStore {
   }
 
   async fetchTrendingMedia() {
-    const result = await mediaController.getWeeklyTrendingMedia();
-    runInAction(() => {
-      this.trendingMedia = result;
-    });
+    const result = await apiController.getWeeklyTrendingMedia();
+    if (result.success === true) {
+      runInAction(() => {
+        this.trendingMedia = result.value;
+      });
+    }
   }
 }
 

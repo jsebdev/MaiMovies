@@ -4,10 +4,10 @@ import { observer } from "mobx-react-lite";
 import { useTrendingStore } from "@app/store/useStores";
 import { MediaList } from "../components/mediaList";
 
-export const TrendingScreen = observer(() => {
+export const HomeScreen = observer(() => {
   const { trendingStore } = useTrendingMedia();
   return (
-    <View onTouchStart={() => console.log("tab")}>
+    <View>
       <Text>Trending</Text>
       <MediaList mediaList={trendingStore.trendingMedia} />
     </View>

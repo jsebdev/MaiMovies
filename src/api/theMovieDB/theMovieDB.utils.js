@@ -11,5 +11,6 @@ export const apiMedia2Media = (media, postersBaseLinks) => {
     name: getMediaName(media),
     id: media.id,
     poster,
+    ...media,
   });
 };

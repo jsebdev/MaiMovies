@@ -1,3 +1,3 @@
 import { TheMovieDBController } from "./theMovieDB/theMovieDB";
 
-export const mediaController = new TheMovieDBController();
+export const apiController = new TheMovieDBController();

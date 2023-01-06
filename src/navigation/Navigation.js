@@ -4,27 +4,34 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Image } from "react-native";
 import { FavoritesNavigation } from "./FavoritesNavigation";
-import { TrendingNavigation } from "./TrendingNavigation";
+import { HomeNavigation } from "./HomeNavigation";
 import { AccountNavigation } from "./AccountNavigation";
+import { HOME_SCREEN } from "@app/utils/constants";
 
 const Tab = createBottomTabNavigator();
 
 export const Navigation = () => {
   return (
-    <Tab.Navigator initialRouteName="Trending">
+    <Tab.Navigator
+      initialRouteName={HOME_SCREEN}
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Tab.Screen
         name="Account"
         component={AccountNavigation}
         options={{
           tabBarLabel: "My Account",
+          title: "My Account",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person-circle-outline" color={color} size={size} />
           ),
         }}
       />
       <Tab.Screen
-        name="Trending"
-        component={TrendingNavigation}
+        name={HOME_SCREEN}
+        component={HomeNavigation}
         options={{
           tabBarLabel: "",
           tabBarIcon: () =>
