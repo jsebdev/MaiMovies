@@ -6,7 +6,7 @@ import { Image } from "react-native";
 import { FavoritesNavigation } from "./FavoritesNavigation";
 import { HomeNavigation } from "./HomeNavigation";
 import { AccountNavigation } from "./AccountNavigation";
-import { HOME_SCREEN } from "@app/utils/constants";
+import { colors, HOME_SCREEN } from "@app/utils/constants";
 
 const Tab = createBottomTabNavigator();
 
@@ -16,6 +16,15 @@ export const Navigation = () => {
       initialRouteName={HOME_SCREEN}
       screenOptions={{
         headerShown: false,
+        headerTintColor: "#0f0",
+        headerStyle: {
+          backgroundColor: "red",
+        },
+        tabBarStyle: {
+          backgroundColor: colors.tabs,
+          borderTopWidth: 0,
+          borderTopColor: "red",
+        },
       }}
     >
       <Tab.Screen

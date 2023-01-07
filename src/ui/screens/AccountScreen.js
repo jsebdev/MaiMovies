@@ -4,7 +4,6 @@ import React from "react";
 export const AccountScreen = ({ navigation }) => {
   return (
     <View>
-      <Text>Account</Text>
       <Button
         title="Go to test"
         onPress={() => {

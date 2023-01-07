@@ -1,7 +1,7 @@
 import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import React from "react";
 import PropTypes from "prop-types";
-import { MediaCard } from "./mediaCard";
+import { MediaCard } from "./MediaCard";
 
 export const MediaList = ({
   mediaList,

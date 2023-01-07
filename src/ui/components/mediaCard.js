@@ -8,11 +8,9 @@ import {
 } from "react-native";
 import React from "react";
 import { mediaPropType } from "@app/domain/MediaClass";
-import { IMAGES_SIZES, MOVIE_SCREEN } from "@app/utils/constants";
+import { IMAGES_SIZES, MOVIE_SCREEN, POSTER_RATIO } from "@app/utils/constants";
 import { useNavigation } from "@react-navigation/native";
-
-const cardWidth = Dimensions.get("window").width / 3;
-const cardHeight = (cardWidth * 16) / 10;
+import { Paragraph } from "./Paragraph";
 
 export const MediaCard = ({ media }) => {
   const navigation = useNavigation();
@@ -31,12 +29,15 @@ export const MediaCard = ({ media }) => {
           resizeMode="cover"
         />
         <View style={styles.textContainer}>
-          <Text style={styles.text}>{media.name}</Text>
+          <Paragraph style={styles.text}>{media.name}</Paragraph>
         </View>
       </View>
     </TouchableWithoutFeedback>
   );
 };
+
+const cardWidth = Dimensions.get("window").width / 3;
+const cardHeight = cardWidth * POSTER_RATIO;
 
 const styles = StyleSheet.create({
   card: {

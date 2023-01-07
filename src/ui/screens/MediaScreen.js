@@ -1,8 +1,9 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { apiController } from "@app/api/apiController";
 import PropTypes from "prop-types";
 import { useNavigation } from "@react-navigation/native";
+import { MediaHeader } from "@components/MediaHeader";
 
 export const MediaScreen = ({ route }) => {
   const { mediaId, mediaType } = route.params;
@@ -18,7 +19,8 @@ export const MediaScreen = ({ route }) => {
       navigation.setOptions({ title: result.value.name });
     })();
   }, [mediaId]);
-  return <View>{media && <Text>{media.name}</Text>}</View>;
+
+  return <View>{media && <MediaHeader media={media} />}</View>;
 };
 
 MediaScreen.propTypes = {

@@ -1,6 +1,6 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React, { useEffect } from "react";
-import { MediaList } from "../components/mediaList";
+import { MediaList } from "./MediaList";
 import { useTrendingStore } from "@app/store/useStores";
 import { observer } from "mobx-react-lite";
 
@@ -8,7 +8,6 @@ export const TrendingList = observer(() => {
   const { trendingStore, loadNextPageTrendingMedia } = useTrendingMedia();
   return (
     <View>
-      <Text>TrendingList</Text>
       <MediaList
         mediaList={trendingStore.trendingMedia}
         loadNewData={loadNextPageTrendingMedia}

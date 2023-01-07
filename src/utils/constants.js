@@ -14,3 +14,11 @@ export const IMAGES_SIZES = {
   large: "large",
   original: "original",
 };
+
+export const POSTER_RATIO = 16 / 10;
+
+export const colors = {
+  background: "#111",
+  tabs: "#02081F",
+  text: "white",
+};
