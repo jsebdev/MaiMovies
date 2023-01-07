@@ -21,6 +21,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
+  caption: {
+    fontSize: 16,
+  },
 });
 
 Paragraph.propTypes = {

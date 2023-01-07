@@ -1,4 +1,4 @@
-import { Backdrop, Media, Poster } from "@app/domain/MediaClass";
+import { Backdrop, Genre, Media, Poster } from "@app/domain/MediaClass";
 
 const getMediaName = (media) => media.original_title || media.original_name;
 
@@ -17,6 +17,7 @@ export const apiMedia2Media = (
     backdropSizes[size] = backdropBaseSizes[size];
   });
   return new Media({
+    ...media,
     name: getMediaName(media),
     id: media.id,
     poster: new Poster({ posterPath: media.poster_path, posterSizes }),
@@ -25,6 +26,15 @@ export const apiMedia2Media = (
       backdropSizes,
     }),
     baseImageUrl,
-    ...media,
+    genres: media.genres?.map((genre) => new Genre(genre)),
+    budget: media.budget,
+    homepage: media.homepage,
+    overview: media.overview,
+    releaseDate: media.release_date,
+    revenue: media.revenue,
+    runtime: media.runtime,
+    status: media.status,
+    tagline: media.tagline,
+    averageVote: media.vote_average,
   });
 };

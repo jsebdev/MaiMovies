@@ -48,6 +48,7 @@ export class TheMovieDBController extends ApiController {
       const url = `${API_HOST}${API_MEDIA(mediaId, mediaType)}`;
       const result = await this.#fetch(url);
       if (!result.success) return result;
+      // console.log("51: result.rawValue >>>", result.rawValue);
       result.value = this.#apiMedia2Media(result.rawValue);
       return result;
     } catch (err) {

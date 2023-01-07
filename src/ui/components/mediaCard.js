@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Image,
   Dimensions,
-  Text,
 } from "react-native";
 import React from "react";
 import { mediaPropType } from "@app/domain/MediaClass";
@@ -53,8 +52,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   textContainer: {
-    width: cardWidth,
+    width: cardWidth - 5,
     flexDirection: "row",
+    borderColor: "red",
   },
   text: {
     fontSize: 10,
