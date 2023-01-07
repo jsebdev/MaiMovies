@@ -1,15 +1,23 @@
 import { View, StyleSheet, Image, Dimensions } from "react-native";
 import React from "react";
 import PropTypes from "prop-types";
-import { colors, IMAGES_SIZES, POSTER_RATIO } from "@app/utils/constants";
+import {
+  colors,
+  IMAGES_SIZES,
+  POSTER_RATIO,
+  VOTE_COLORS,
+  VOTE_COLORS_VALUES,
+} from "@app/utils/constants";
 import { LinearGradient } from "expo-linear-gradient";
 import { BackgroundView } from "./BackgroundView";
 import { Paragraph } from "./Paragraph";
 import { format, formatDuration } from "date-fns";
 import { currencyFormatter } from "@app/config/currencyFormatter";
+import { getColorFromSpectrum, rgbColor2rgbString } from "@app/utils/utils";
 
 export const MediaHeader = ({ media }) => {
-  // console.log("10: media >>>", media);
+  console.log("10: media >>>", media);
+
   return (
     <BackgroundView style={styles.container}>
       <View style={styles.backdropContainer}>
@@ -24,7 +32,9 @@ export const MediaHeader = ({ media }) => {
       </View>
       <View style={styles.dataContainer}>
         <Paragraph variant="title">{media.name}</Paragraph>
-        <Paragraph variant="caption">{media.tagline}</Paragraph>
+        {media.tagline && (
+          <Paragraph variant="caption">{media.tagline}</Paragraph>
+        )}
         <View style={styles.bottomContainer}>
           <View style={styles.posterContainer}>
             <Image
@@ -34,7 +44,12 @@ export const MediaHeader = ({ media }) => {
           </View>
           <View style={styles.rightContainer}>
             <View style={styles.voteContainer}>
-              <View style={styles.vote}>
+              <View
+                style={[
+                  styles.vote,
+                  { borderColor: getVoteColor(media.averageVote) },
+                ]}
+              >
                 <Paragraph style={styles.voteText}>
                   {Math.round(media.averageVote * 10) / 10}
                 </Paragraph>
@@ -45,6 +60,10 @@ export const MediaHeader = ({ media }) => {
               <Paragraph style={styles.littleData}>
                 {currencyFormatter.format(media.revenue)}
               </Paragraph>
+            </View>
+            <View style={styles.littleDataContainer}>
+              <Paragraph style={styles.littleTitle}>Status:</Paragraph>
+              <Paragraph style={styles.littleData}>{media.status}</Paragraph>
             </View>
             <View style={styles.littleDataContainer}>
               <Paragraph style={styles.littleTitle}>Release date:</Paragraph>
@@ -82,7 +101,8 @@ const styles = StyleSheet.create({
   backdropContainer: {
     height: 200,
     width: "100%",
-    borderColor: "green",
+    // borderColor: "green",
+    borderColor: "rgb(255, 0, 0)",
     // borderWidth: 5,
     position: "absolute",
   },
@@ -113,7 +133,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 20,
     // borderWidth: 4,
-    borderColor: "green",
+    borderColor: "yellow",
   },
   posterContainer: {
     height: posterHeight,
@@ -133,14 +153,14 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   littleDataContainer: {
-    marginTop: 5,
+    marginTop: 10,
   },
   littleTitle: {
     // fontSize: 13,
   },
   littleData: {
-    marginLeft: 10,
-    marginTop: 2,
+    marginLeft: 5,
+    marginTop: 1,
     color: "green",
   },
   voteContainer: {
@@ -148,7 +168,6 @@ const styles = StyleSheet.create({
   },
   vote: {
     borderWidth: 4,
-    borderColor: "green",
     width: voteSize,
     height: "100%",
     flex: 1,
@@ -163,3 +182,8 @@ const styles = StyleSheet.create({
 });
 
 const backdropGradient = [`${colors.background}77`, colors.background];
+
+const getVoteColor = (vote) =>
+  rgbColor2rgbString(
+    getColorFromSpectrum(vote, VOTE_COLORS_VALUES, VOTE_COLORS)
+  );

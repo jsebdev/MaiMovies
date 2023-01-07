@@ -22,3 +22,22 @@ export const colors = {
   tabs: "#02081F",
   text: "white",
 };
+
+export const VOTE_COLORS = [
+  {
+    r: 255,
+    b: 0,
+    g: 0,
+  },
+  {
+    r: 255,
+    g: 85,
+    b: 0,
+  },
+  {
+    r: 0,
+    g: 180,
+    b: 0,
+  },
+];
+export const VOTE_COLORS_VALUES = [4, 6.5, 8.5];
