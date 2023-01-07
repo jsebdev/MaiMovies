@@ -18,7 +18,7 @@ export const IMAGES_SIZES = {
 export const POSTER_RATIO = 16 / 10;
 
 export const colors = {
-  background: "#111",
+  background: "#000000",
   tabs: "#02081F",
   text: "white",
 };

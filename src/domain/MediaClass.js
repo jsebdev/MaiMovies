@@ -14,11 +14,6 @@ export class Media {
   }
 
   getBackdrop(size) {
-    console.log("17: size >>>", size);
-    console.log(
-      "18: this.backdrop.backdropSizes >>>",
-      this.backdrop.backdropSizes[size]
-    );
     return `${this.baseImageUrl}${this.backdrop.backdropSizes[size]}${this.backdrop.backdropPath}`;
   }
 }
