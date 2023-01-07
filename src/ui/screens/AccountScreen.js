@@ -1,5 +1,6 @@
-import { View, Text, Button } from "react-native";
+import { View, Button } from "react-native";
 import React from "react";
+import { Test } from "../components/TestComponent";
 
 export const AccountScreen = ({ navigation }) => {
   return (
@@ -12,6 +13,7 @@ export const AccountScreen = ({ navigation }) => {
           });
         }}
       />
+      {/* <Test /> */}
     </View>
   );
 };
