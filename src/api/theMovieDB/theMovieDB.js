@@ -39,7 +39,8 @@ export class TheMovieDBController extends ApiController {
       return result;
     } catch (err) {
       console.error("Error fetching trending media");
-      throw err;
+      console.error(err);
+      return new ApiResponse({ success: false, message: err.message });
     }
   };
 
@@ -52,8 +53,9 @@ export class TheMovieDBController extends ApiController {
       result.value = this.#apiMedia2Media(result.rawValue);
       return result;
     } catch (err) {
-      console.error("Error fetching trending media");
-      throw err;
+      console.error("Error fetching media");
+      console.error(err);
+      return new ApiResponse({ success: false, message: err.message });
     }
   };
 

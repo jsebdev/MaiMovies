@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { apiController } from "@app/api/apiController";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
 import { useNavigation } from "@react-navigation/native";
@@ -9,21 +8,13 @@ import { MediaInfo } from "@components/mediaScreen/MediaInfo";
 import { Backdrop } from "../components/mediaScreen/Backdrop";
 import { IMAGES_SIZES } from "@app/utils/constants";
 import { StyleSheet, View } from "react-native";
+import { useStore } from "@app/store/useStores";
+import { observer } from "mobx-react-lite";
 
-export const MediaScreen = ({ route }) => {
-  const { mediaId, mediaType } = route.params;
-  const navigation = useNavigation();
-  const [media, setMedia] = useState(null);
-  useEffect(() => {
-    (async () => {
-      const result = await apiController.getMedia(mediaId, mediaType);
-      if (!result.success) {
-        return;
-      }
-      setMedia(result.value);
-      navigation.setOptions({ title: result.value.name });
-    })();
-  }, [mediaId]);
+export const MediaScreen = observer(({ route }) => {
+  const { mediaType, mediaId } = route.params;
+
+  const { media } = useMediaScreen(mediaType, mediaId);
 
   return (
     <BackgroundView>
@@ -38,7 +29,7 @@ export const MediaScreen = ({ route }) => {
       )}
     </BackgroundView>
   );
-};
+});
 
 const styles = StyleSheet.create({
   dataContainer: {
@@ -55,4 +46,20 @@ MediaScreen.propTypes = {
       mediaType: PropTypes.string,
     }),
   }),
+};
+
+const useMediaScreen = (mediaType, mediaId) => {
+  const navigation = useNavigation();
+  const { mediaStore } = useStore();
+  const media = mediaStore.getMedia(mediaType, mediaId);
+
+  useEffect(() => {
+    navigation.setOptions({ title: media?.name });
+    if (media) {
+      return;
+    }
+    mediaStore.fetchMedia(mediaType, mediaId);
+  }, [mediaId, mediaType, media]);
+
+  return { media };
 };

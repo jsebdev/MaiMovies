@@ -13,7 +13,7 @@ import { currencyFormatter } from "@app/config/currencyFormatter";
 import { getColorFromSpectrum, rgbColor2rgbString } from "@app/utils/utils";
 
 export const MediaHeader = ({ media }) => {
-  console.log("10: media >>>", media);
+  // console.log("10: media >>>", media);
 
   return (
     <View style={styles.container}>
