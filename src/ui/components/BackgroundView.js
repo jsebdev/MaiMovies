@@ -11,12 +11,12 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.background,
     borderWidth: 0,
-    borderColor: "green",
+    // borderColor: "green",
     height: "100%",
   },
 });
 
 BackgroundView.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   style: PropTypes.object,
 };

@@ -21,6 +21,7 @@ export const colors = {
   background: "#000000",
   tabs: "#02081F",
   text: "white",
+  link: "#918aff",
 };
 
 export const VOTE_COLORS = [

@@ -9,7 +9,6 @@ import {
   VOTE_COLORS_VALUES,
 } from "@app/utils/constants";
 import { LinearGradient } from "expo-linear-gradient";
-import { BackgroundView } from "./BackgroundView";
 import { Paragraph } from "./Paragraph";
 import { format, formatDuration } from "date-fns";
 import { currencyFormatter } from "@app/config/currencyFormatter";
@@ -19,7 +18,7 @@ export const MediaHeader = ({ media }) => {
   console.log("10: media >>>", media);
 
   return (
-    <BackgroundView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.backdropContainer}>
         <Image
           style={styles.backdrop}
@@ -31,56 +30,58 @@ export const MediaHeader = ({ media }) => {
         />
       </View>
       <View style={styles.dataContainer}>
-        <Paragraph variant="title">{media.name}</Paragraph>
-        {media.tagline && (
-          <Paragraph variant="caption">{media.tagline}</Paragraph>
-        )}
-        <View style={styles.bottomContainer}>
-          <View style={styles.posterContainer}>
-            <Image
-              source={{ uri: media.getPoster(IMAGES_SIZES.medium) }}
-              style={styles.poster}
-            />
-          </View>
-          <View style={styles.rightContainer}>
-            <View style={styles.voteContainer}>
-              <View
-                style={[
-                  styles.vote,
-                  { borderColor: getVoteColor(media.averageVote) },
-                ]}
-              >
-                <Paragraph style={styles.voteText}>
-                  {Math.round(media.averageVote * 10) / 10}
+        <View>
+          <Paragraph variant="title">{media.name}</Paragraph>
+          {media.tagline && (
+            <Paragraph variant="caption">{media.tagline}</Paragraph>
+          )}
+          <View style={styles.middleContainer}>
+            <View style={styles.posterContainer}>
+              <Image
+                source={{ uri: media.getPoster(IMAGES_SIZES.medium) }}
+                style={styles.poster}
+              />
+            </View>
+            <View style={styles.rightContainer}>
+              <View style={styles.voteContainer}>
+                <View
+                  style={[
+                    styles.vote,
+                    { borderColor: getVoteColor(media.averageVote) },
+                  ]}
+                >
+                  <Paragraph style={styles.voteText}>
+                    {Math.round(media.averageVote * 10) / 10}
+                  </Paragraph>
+                </View>
+              </View>
+              <View style={styles.littleDataContainer}>
+                <Paragraph style={styles.littleTitle}>Revenue:</Paragraph>
+                <Paragraph style={styles.littleData}>
+                  {currencyFormatter.format(media.revenue)}
+                </Paragraph>
+              </View>
+              <View style={styles.littleDataContainer}>
+                <Paragraph style={styles.littleTitle}>Status:</Paragraph>
+                <Paragraph style={styles.littleData}>{media.status}</Paragraph>
+              </View>
+              <View style={styles.littleDataContainer}>
+                <Paragraph style={styles.littleTitle}>Release date:</Paragraph>
+                <Paragraph style={styles.littleData}>
+                  {format(new Date(media.releaseDate), "do MMM yyyy")}
                 </Paragraph>
               </View>
             </View>
-            <View style={styles.littleDataContainer}>
-              <Paragraph style={styles.littleTitle}>Revenue:</Paragraph>
-              <Paragraph style={styles.littleData}>
-                {currencyFormatter.format(media.revenue)}
-              </Paragraph>
-            </View>
-            <View style={styles.littleDataContainer}>
-              <Paragraph style={styles.littleTitle}>Status:</Paragraph>
-              <Paragraph style={styles.littleData}>{media.status}</Paragraph>
-            </View>
-            <View style={styles.littleDataContainer}>
-              <Paragraph style={styles.littleTitle}>Release date:</Paragraph>
-              <Paragraph style={styles.littleData}>
-                {format(new Date(media.releaseDate), "do MMM yyyy")}
-              </Paragraph>
-            </View>
           </View>
+          <Paragraph>
+            {formatDuration({
+              hours: Math.floor(media.runtime / 60),
+              minutes: media.runtime % 60,
+            })}
+          </Paragraph>
         </View>
-        <Paragraph>
-          {formatDuration({
-            hours: Math.floor(media.runtime / 60),
-            minutes: media.runtime % 60,
-          })}
-        </Paragraph>
       </View>
-    </BackgroundView>
+    </View>
   );
 };
 
@@ -91,15 +92,17 @@ MediaHeader.propTypes = {
 const posterWidth = Dimensions.get("window").width / 3;
 const posterHeight = posterWidth * POSTER_RATIO;
 const voteSize = 40;
+const backdropHeight = 200;
+const dataOffset = 100;
 
 const styles = StyleSheet.create({
   container: {
-    borderColor: "yellow",
-    // borderWidth: 5,
-    // backgroundColor: "r",
+    borderColor: "blue",
+    // borderWidth: 2,
+    marginBottom: dataOffset,
   },
   backdropContainer: {
-    height: 200,
+    height: backdropHeight,
     width: "100%",
     // borderColor: "green",
     borderColor: "rgb(255, 0, 0)",
@@ -122,9 +125,9 @@ const styles = StyleSheet.create({
     borderColor: "red",
     backgroundColor: "#0000",
     paddingLeft: 20,
-    top: 100,
+    top: dataOffset,
   },
-  bottomContainer: {
+  middleContainer: {
     // borderWidth: 4,
     borderColor: "red",
     flexDirection: "row",

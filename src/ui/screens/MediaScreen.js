@@ -1,9 +1,11 @@
-import { View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { apiController } from "@app/api/apiController";
 import PropTypes from "prop-types";
+
 import { useNavigation } from "@react-navigation/native";
 import { MediaHeader } from "@components/MediaHeader";
+import { BackgroundView } from "@components/BackgroundView";
+import { MediaInfo } from "@components/mediaScreen/MediaInfo";
 
 export const MediaScreen = ({ route }) => {
   const { mediaId, mediaType } = route.params;
@@ -20,7 +22,16 @@ export const MediaScreen = ({ route }) => {
     })();
   }, [mediaId]);
 
-  return <View>{media && <MediaHeader media={media} />}</View>;
+  return (
+    <BackgroundView>
+      {media && (
+        <>
+          <MediaHeader media={media} />
+          <MediaInfo media={media} />
+        </>
+      )}
+    </BackgroundView>
+  );
 };
 
 MediaScreen.propTypes = {

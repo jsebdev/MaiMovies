@@ -28,6 +28,9 @@ const styles = StyleSheet.create({
 
 Paragraph.propTypes = {
   children: PropTypes.node.isRequired,
-  style: PropTypes.object,
+  style: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.arrayOf(PropTypes.object),
+  ]),
   variant: PropTypes.oneOf(Object.keys(styles)),
 };
