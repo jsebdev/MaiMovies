@@ -3,11 +3,16 @@ import {
   API_CONFIGURATION,
   API_HOST,
   API_MEDIA,
+  API_MEDIA_VIDEOS,
   API_WEEKLY_TRENDING,
   IMAGES_SIZES,
 } from "@app/utils/constants";
 import { ApiController } from "@app/domain/apiController";
-import { apiMedia2Media } from "@app/api/theMovieDB/theMovieDB.utils";
+import {
+  apiMedia2Media,
+  apiVideo2Video,
+  throwError,
+} from "@app/api/theMovieDB/theMovieDB.utils";
 import { ApiResponse } from "@app/domain/ApiResponses";
 
 export class TheMovieDBController extends ApiController {
@@ -44,18 +49,31 @@ export class TheMovieDBController extends ApiController {
     }
   };
 
-  getMedia = async (mediaId, mediaType) => {
+  getMedia = async (mediaType, mediaId) => {
     try {
-      const url = `${API_HOST}${API_MEDIA(mediaId, mediaType)}`;
+      const url = `${API_HOST}${API_MEDIA(mediaType, mediaId)}`;
       const result = await this.#fetch(url);
       if (!result.success) return result;
-      // console.log("51: result.rawValue >>>", result.rawValue);
       result.value = this.#apiMedia2Media(result.rawValue);
       return result;
     } catch (err) {
       console.error("Error fetching media");
       console.error(err);
       return new ApiResponse({ success: false, message: err.message });
+    }
+  };
+
+  getMediaVideos = async (mediaType, mediaId) => {
+    try {
+      const url = `${API_HOST}${API_MEDIA_VIDEOS(mediaType, mediaId)}`;
+      const result = await this.#fetch(url);
+      if (!result.success) return result;
+      result.value = result.rawValue.results.map((video) =>
+        apiVideo2Video(video)
+      );
+      return result;
+    } catch (err) {
+      throwError(err, "Error media Videos");
     }
   };
 
@@ -86,9 +104,7 @@ export class TheMovieDBController extends ApiController {
       const result = await this.#fetch(url);
       return result.rawValue;
     } catch (err) {
-      console.error("Error fetching configuration");
-      console.error(err);
-      throw err;
+      throwError(err, "Error fetching configuration");
     }
   };
 

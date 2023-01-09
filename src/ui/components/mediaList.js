@@ -12,7 +12,6 @@ export const MediaList = ({
   return (
     <FlatList
       data={mediaList}
-      showsVerticalScrollIndicator={false}
       keyExtractor={(media) => media.id}
       renderItem={({ item }) => <MediaCard media={item} />}
       contentContainerStyle={styles.flatListContentContainer}
@@ -23,6 +22,8 @@ export const MediaList = ({
       ListFooterComponent={
         showSpinner && <ActivityIndicator size="large" style={styles.spinner} />
       }
+      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
     />
   );
 };

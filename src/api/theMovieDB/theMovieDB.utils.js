@@ -1,4 +1,5 @@
 import { Backdrop, Genre, Media, Poster } from "@app/domain/MediaClass";
+import { Video } from "@app/domain/VideoClass";
 
 const getMediaName = (media) => media.original_title || media.original_name;
 
@@ -37,4 +38,14 @@ export const apiMedia2Media = (
     tagline: media.tagline,
     averageVote: media.vote_average,
   });
+};
+
+export const throwError = (err, consoleMessage = "No consoleMessage") => {
+  console.error(consoleMessage);
+  console.error(err);
+  throw err;
+};
+
+export const apiVideo2Video = ({ name, key, site, type, official, id }) => {
+  return new Video({ name, key, site, type, official, id });
 };

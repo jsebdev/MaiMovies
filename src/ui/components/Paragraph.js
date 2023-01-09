@@ -7,14 +7,14 @@ export const Paragraph = ({ children, style, variant }) => {
   const inheritedStyle = Array.isArray(style) ? style : [style];
   const variantStyle = variant ? styles[variant] : null;
   return (
-    <Text style={[styles.text, ...inheritedStyle, variantStyle]}>
+    <Text style={[styles.default, ...inheritedStyle, variantStyle]}>
       {children}
     </Text>
   );
 };
 
 const styles = StyleSheet.create({
-  text: {
+  default: {
     color: colors.text,
   },
   title: {
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 });
 
 Paragraph.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   style: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.arrayOf(PropTypes.object),

@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import React, { useEffect } from "react";
 import { MediaList } from "./MediaList";
-import { useStore } from "@app/store/useStores";
+import { useStore } from "@app/store/store.hook";
 import { observer } from "mobx-react-lite";
 
 export const TrendingList = observer(() => {

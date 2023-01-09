@@ -12,7 +12,7 @@ export const MediaInfo = ({ media }) => {
       </View>
       {media.homepage && (
         <View style={styles.infoContainer}>
-          <Paragraph>Home page:</Paragraph>
+          <Paragraph variant="default">Home page:</Paragraph>
           <MyLink style={styles.homepage} href={media.homepage}>
             {media.homepage}
           </MyLink>
@@ -24,8 +24,8 @@ export const MediaInfo = ({ media }) => {
 
 const styles = StyleSheet.create({
   infoContainer: {
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 5,
+    marginBottom: 5,
   },
   homepage: {
     fontSize: 15,

@@ -5,12 +5,14 @@ class MediaStore {
   medias = {};
 
   constructor() {
-    // makeAutoObservable(this);
     makeObservable(this, {
       medias: observable,
       fetchMedia: action,
+      fetchMediaVideos: action,
     });
-    autorun(() => console.dir(this.medias, { depth: 1 }));
+    autorun(() => {
+      // console.log("29: this.medias2 >>>", this.medias2);
+    });
   }
 
   getMedia(mediaType, mediaId) {
@@ -25,18 +27,29 @@ class MediaStore {
       this.medias[mediaType] &&
       Object.keys(this.medias[mediaType]).includes(mediaId)
     ) {
-      return this.medias[mediaType][mediaId];
+      return;
     }
-
-    const result = await apiController.getMedia(mediaId, mediaType);
-
+    const result = await apiController.getMedia(mediaType, mediaId);
     if (!result.success) return;
-
     runInAction(() => {
-      if (!this.medias[mediaType]) this.medias[mediaType] = {};
+      if (!this.medias[mediaType]) {
+        this.medias[mediaType] = {};
+      }
       this.medias[mediaType][mediaId] = result.value;
+    });
+  }
+
+  async fetchMediaVideos(mediaType, mediaId) {
+    const result = await apiController.getMediaVideos(mediaType, mediaId);
+    if (!result.success) return;
+    runInAction(() => {
+      this.medias[mediaType][mediaId].videos = result.value;
     });
   }
 }
 
 export const mediaStore = new MediaStore();
+
+// const delay = (t) => {
+//   return new Promise((resolve) => setTimeout(() => resolve("ya"), t));
+// };

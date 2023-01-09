@@ -7,14 +7,12 @@ import {
   VOTE_COLORS,
   VOTE_COLORS_VALUES,
 } from "@app/utils/constants";
-import { Paragraph } from "./Paragraph";
+import { Paragraph } from "../Paragraph";
 import { format, formatDuration } from "date-fns";
 import { currencyFormatter } from "@app/config/currencyFormatter";
 import { getColorFromSpectrum, rgbColor2rgbString } from "@app/utils/utils";
 
 export const MediaHeader = ({ media }) => {
-  // console.log("10: media >>>", media);
-
   return (
     <View style={styles.container}>
       <View>

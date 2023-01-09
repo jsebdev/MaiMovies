@@ -1,5 +1,7 @@
+import { makeAutoObservable } from "mobx";
 import PropTypes from "prop-types";
 export class Media {
+  videos = [];
   constructor({
     id,
     name,
@@ -18,6 +20,7 @@ export class Media {
     tagline,
     averageVote,
   }) {
+    makeAutoObservable(this);
     this.id = id;
     this.name = name;
     this.poster = poster;
@@ -43,6 +46,14 @@ export class Media {
   getBackdrop(size) {
     return `${this.baseImageUrl}${this.backdrop.backdropSizes[size]}${this.backdrop.backdropPath}`;
   }
+
+  // set videos(vid) {
+  //   this._videos = vid;
+  // }
+
+  // get videos() {
+  //   return this._videos;
+  // }
 }
 
 export class Genre {
