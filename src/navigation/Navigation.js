@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Image } from "react-native";
 import { FavoritesNavigation } from "./FavoritesNavigation";
+// import { HomeNavigation } from "./HomeNavigation_copy";
 import { HomeNavigation } from "./HomeNavigation";
 import { AccountNavigation } from "./AccountNavigation";
 import { colors, HOME_SCREEN } from "@app/utils/constants";

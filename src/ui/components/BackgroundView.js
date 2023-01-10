@@ -10,9 +10,9 @@ export const BackgroundView = ({ children, style }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.background,
-    borderWidth: 0,
+    // borderWidth: 0,
     // borderColor: "green",
-    height: "100%",
+    // height: "100%",
   },
 });
 

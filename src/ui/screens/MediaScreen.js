@@ -16,7 +16,6 @@ import { ScrollView } from "react-native-gesture-handler";
 export const MediaScreen = observer(({ route }) => {
   const { mediaType, mediaId } = route.params;
 
-  // const { media } = useMediaScreen(mediaType, mediaId);
   const { media } = useMediaScreen(mediaType, mediaId);
 
   return (

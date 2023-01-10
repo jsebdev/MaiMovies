@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     flex: Platform.OS === "android" ? 1 : 0,
   },
   playButtonImage: {
+    //todo check if opacity is supported
     width: 70,
     height: 70,
   },
