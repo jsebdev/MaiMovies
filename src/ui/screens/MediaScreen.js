@@ -2,11 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { BackgroundView } from "@components/BackgroundView";
-import { StyleSheet, View } from "react-native";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { observer } from "mobx-react-lite";
 import { MediaVideos } from "@components/mediaScreen/MediaVideos";
 import { useMediaScreen } from "@hooks/media.hook";
-import { Paragraph } from "../components/Paragraph";
 import { Backdrop } from "../components/mediaScreen/Backdrop";
 import { IMAGES_SIZES } from "@app/utils/constants";
 import { MediaHeader } from "../components/mediaScreen/MediaHeader";
@@ -17,6 +16,7 @@ export const MediaScreen = observer(({ route }) => {
   const { mediaType, mediaId } = route.params;
 
   const { media } = useMediaScreen(mediaType, mediaId);
+  console.log("20: media >>>", media);
 
   return (
     <BackgroundView>
@@ -27,11 +27,11 @@ export const MediaScreen = observer(({ route }) => {
           <View style={styles.dataContainer}>
             <MediaHeader media={media} />
             <MediaInfo media={media} />
-            <MediaVideos mediaType={mediaType} mediaId={mediaId} />
+            <MediaVideos mediaType={media.mediaType} mediaId={mediaId} />
           </View>
         </ScrollView>
       ) : (
-        <Paragraph>No media yet</Paragraph>
+        <ActivityIndicator style={styles.spinner} />
       )}
     </BackgroundView>
   );
@@ -51,6 +51,10 @@ const styles = StyleSheet.create({
     borderColor: "white",
     marginBottom: 500,
     // borderWidth: 1,
+  },
+  spinner: {
+    marginTop: 60,
+    marginBottom: 60,
   },
 });
 

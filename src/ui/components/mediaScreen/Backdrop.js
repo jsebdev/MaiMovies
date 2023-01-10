@@ -17,8 +17,8 @@ export const Backdrop = ({ uri }) => {
   );
 };
 
-const backdropGradient = [`${colors.background}77`, colors.background];
-const backdropHeight = 200;
+const backdropGradient = [`${colors.background}80`, colors.background];
+const backdropHeight = 400;
 
 const styles = StyleSheet.create({
   backdropContainer: {

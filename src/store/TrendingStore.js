@@ -23,7 +23,7 @@ class TrendingStore {
     if (media.page >= media.totalPages) return;
     media.page++;
     const result = await apiController.getWeeklyTrendingMedia(
-      this.tvPage,
+      media.page,
       mediaType
     );
     if (result.success === true) {

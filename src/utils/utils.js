@@ -1,3 +1,5 @@
+import { VOTE_COLORS, VOTE_COLORS_VALUES } from "./constants";
+
 /**
  * This function returns a color according to index between startColor and endColor.
  * if index is startIndex, it will return startColor
@@ -43,3 +45,25 @@ const ponder = (start, end, value, rangeLength) => {
 };
 
 export const rgbColor2rgbString = ({ r, g, b }) => `rgb(${r},${g},${b})`;
+
+export const getReadableListOfItems = (items, key = null) => {
+  if (items.length === 0) return;
+  if (items.length === 1) return getItemKey(items[0], key);
+  const lastItem = items[items.length - 1];
+  const list =
+    items
+      .slice(0, items.length - 1)
+      .map((item) => getItemKey(item, key))
+      .join(", ") + ` and ${getItemKey(lastItem, key)}`;
+  return list;
+};
+
+const getItemKey = (item, key) => {
+  if (!key) return item;
+  return item[key];
+};
+
+export const getVoteColor = (vote) =>
+  rgbColor2rgbString(
+    getColorFromSpectrum(vote, VOTE_COLORS_VALUES, VOTE_COLORS)
+  );

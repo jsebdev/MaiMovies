@@ -57,9 +57,9 @@ const styles = StyleSheet.create({
     borderColor: "green",
     // borderWidth: 2,
     flex: Platform.OS === "android" ? 1 : 0,
+    opacity: 0.6,
   },
   playButtonImage: {
-    //todo check if opacity is supported
     width: 70,
     height: 70,
   },

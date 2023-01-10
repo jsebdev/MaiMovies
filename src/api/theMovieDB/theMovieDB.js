@@ -38,7 +38,7 @@ export class TheMovieDBController extends ApiController {
       const result = await this.#fetch(url);
       if (!result.success) return result;
       result.value = result.rawValue.results.map((media) =>
-        this.#apiMedia2Media(media)
+        this.#apiMedia2Media(media, mediaType)
       );
       result.totalPages = result.rawValue.total_pages;
       return result;
@@ -53,8 +53,13 @@ export class TheMovieDBController extends ApiController {
     try {
       const url = `${API_HOST}${API_MEDIA(mediaType, mediaId)}`;
       const result = await this.#fetch(url);
-      if (!result.success) return result;
-      result.value = this.#apiMedia2Media(result.rawValue);
+      if (!result.success) {
+        console.error(
+          `could not fetch media for mediaType: ${mediaType} and mediaId: ${mediaId}`
+        );
+        return result;
+      }
+      result.value = this.#apiMedia2Media(result.rawValue, mediaType);
       return result;
     } catch (err) {
       console.error("Error fetching media");
@@ -84,7 +89,9 @@ export class TheMovieDBController extends ApiController {
     });
     const result = await response.json();
     if (response.status !== 200) {
-      console.error("Error fetching, status code is " + response.status);
+      console.error(
+        `Error fetching url: ${url} status code is ${response.status}`
+      );
       console.error("Response: ", result);
       return new ApiResponse({
         success: false,
@@ -150,12 +157,13 @@ export class TheMovieDBController extends ApiController {
     return baseSizes;
   };
 
-  #apiMedia2Media = (media) => {
+  #apiMedia2Media = (media, mediaType) => {
     return apiMedia2Media(
       media,
       this.postersBaseSizes,
       this.backdropBaseSizes,
-      this.configuration.images.base_url
+      this.configuration.images.base_url,
+      mediaType
     );
   };
 }

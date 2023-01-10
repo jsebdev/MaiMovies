@@ -5,8 +5,9 @@ import PropTypes from "prop-types";
 import { MyLink } from "../commongComponents/MyLink";
 
 export const MediaInfo = ({ media }) => {
+  //TODO: show genres
   return (
-    <>
+    <View style={styles.container}>
       <View style={styles.infoContainer}>
         <Paragraph>{media.overview}</Paragraph>
       </View>
@@ -18,11 +19,16 @@ export const MediaInfo = ({ media }) => {
           </MyLink>
         </View>
       )}
-    </>
+      {/* //todo: show production companies in both media */}
+      {/* todo: create seasons section */}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: 20,
+  },
   infoContainer: {
     marginTop: 5,
     marginBottom: 5,

@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeObservable, observable } from "mobx";
 import PropTypes from "prop-types";
 export class Media {
   videos = [];
@@ -10,17 +10,16 @@ export class Media {
     backdrop,
     baseImageUrl,
     genres,
-    budget,
     homepage,
     overview,
-    releaseDate,
-    revenue,
-    runtime,
     status,
-    tagline,
     averageVote,
+    productionCompanies,
+    mediaType,
   }) {
-    makeAutoObservable(this);
+    makeObservable(this, {
+      videos: observable,
+    });
     this.id = id;
     this.name = name;
     this.poster = poster;
@@ -28,15 +27,12 @@ export class Media {
     this.backdrop = backdrop;
     this.baseImageUrl = baseImageUrl;
     this.genres = genres;
-    this.budget = budget;
     this.homepage = homepage;
     this.overview = overview;
-    this.releaseDate = releaseDate;
-    this.revenue = revenue;
-    this.runtime = runtime;
     this.status = status;
-    this.tagline = tagline;
     this.averageVote = averageVote;
+    this.mediaType = mediaType;
+    this.productionCompanies = productionCompanies;
   }
 
   getPoster(size) {

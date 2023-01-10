@@ -44,12 +44,6 @@ export const MediaVideos = observer(({ mediaType, mediaId }) => {
           />
         </>
       )}
-      {/* <Button
-        title="print media"
-        onPress={() => {
-          console.log("37: media >>>", mediaStore.medias[mediaType][mediaId]);
-        }}
-      /> */}
     </View>
   );
 });
