@@ -8,7 +8,13 @@ export const API_MEDIA_VIDEOS = (mediaType, mediaId) =>
   `/${mediaType}/${mediaId}/videos`;
 export const HOME_SCREEN = "Home";
 export const MOVIE_SCREEN = "Movie";
+export const TV_SHOW_SCREEN = "Tv";
 export const YOUTUBE_SITE = "YouTube";
+
+export const MEDIA_TYPES = {
+  movie: "movie",
+  tv: "tv",
+};
 
 // styles constants
 export const DESIRED_IMAGES_WIDTHS = [100, 400, 800];

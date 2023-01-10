@@ -1,28 +1,35 @@
 import { apiController } from "@app/api/apiController";
-import { action, makeObservable, observable, runInAction } from "mobx";
+import { MEDIA_TYPES } from "@app/utils/constants";
+import { makeAutoObservable, runInAction } from "mobx";
 
 class TrendingStore {
-  trendingMedia = [];
-  page = 0;
-  totalPages = Infinity;
+  movies = {
+    trendingList: [],
+    page: 0,
+    totalPages: Infinity,
+  };
+  tv = {
+    trendingList: [],
+    page: 0,
+    totalPages: Infinity,
+  };
 
   constructor() {
-    makeObservable(this, {
-      trendingMedia: observable,
-      page: observable,
-      totalPages: observable,
-      fetchNextPageTrendingMedia: action,
-    });
+    makeAutoObservable(this);
   }
 
-  async fetchNextPageTrendingMedia() {
-    if (this.page >= this.totalPages) return;
-    this.page++;
-    const result = await apiController.getWeeklyTrendingMedia(this.page);
+  async fetchNextPageMediaTrending(mediaType) {
+    const media = mediaType === MEDIA_TYPES.movie ? this.movies : this.tv;
+    if (media.page >= media.totalPages) return;
+    media.page++;
+    const result = await apiController.getWeeklyTrendingMedia(
+      this.tvPage,
+      mediaType
+    );
     if (result.success === true) {
       runInAction(() => {
-        this.trendingMedia = [...this.trendingMedia, ...result.value];
-        this.totalPages = result.totalPages;
+        media.trendingList = [...media.trendingList, ...result.value];
+        media.totalPages = result.totalPages;
       });
     }
   }

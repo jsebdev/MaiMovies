@@ -7,14 +7,24 @@ import {
 } from "react-native";
 import React from "react";
 import { mediaPropType } from "@app/domain/MediaClass";
-import { IMAGES_SIZES, MOVIE_SCREEN, POSTER_RATIO } from "@app/utils/constants";
+import {
+  IMAGES_SIZES,
+  MEDIA_TYPES,
+  MOVIE_SCREEN,
+  POSTER_RATIO,
+  TV_SHOW_SCREEN,
+} from "@app/utils/constants";
 import { useNavigation } from "@react-navigation/native";
+import PropTypes from "prop-types";
 import { Paragraph } from "./Paragraph";
 
-export const MediaCard = ({ media }) => {
+export const MediaCard = ({ media, mediaType }) => {
   const navigation = useNavigation();
+  const mediaScreen =
+    mediaType === MEDIA_TYPES.movie ? MOVIE_SCREEN : TV_SHOW_SCREEN;
   const goToMedia = () => {
-    navigation.push(MOVIE_SCREEN, {
+    console.log("26: navigation >>>", navigation);
+    navigation.push(mediaScreen, {
       mediaId: media.id,
       mediaType: media.mediaType,
     });
@@ -67,4 +77,5 @@ const styles = StyleSheet.create({
 
 MediaCard.propTypes = {
   media: mediaPropType,
+  mediaType: PropTypes.string.isRequired,
 };

@@ -1,4 +1,4 @@
-import { FlatList, Platform, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import React from "react";
 import { observer } from "mobx-react-lite";
 import { useMedia } from "@hooks/media.hook";
@@ -12,8 +12,6 @@ export const MediaVideos = observer(({ mediaType, mediaId }) => {
   const otherVideos = videos.filter((video) => video.site !== "YouTube");
 
   React.useEffect(() => {
-    console.log("15: Platform.OS >>>", Platform.OS);
-    // console.log("11: media >>>", mediaStore.medias[mediaType][mediaId]);
     if (videos.length > 0) {
       return;
     }

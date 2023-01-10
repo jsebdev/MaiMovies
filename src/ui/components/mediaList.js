@@ -8,12 +8,15 @@ export const MediaList = ({
   loadNewData,
   showSpinner,
   horizontal = false,
+  mediaType,
 }) => {
   return (
     <FlatList
       data={mediaList}
       keyExtractor={(media) => media.id}
-      renderItem={({ item }) => <MediaCard media={item} />}
+      renderItem={({ item }) => (
+        <MediaCard media={item} mediaType={mediaType} />
+      )}
       contentContainerStyle={styles.flatListContentContainer}
       horizontal={horizontal}
       numColumns={!horizontal && 3}
@@ -28,13 +31,6 @@ export const MediaList = ({
   );
 };
 
-MediaList.propTypes = {
-  mediaList: PropTypes.array.isRequired,
-  loadNewData: PropTypes.func,
-  showSpinner: PropTypes.bool,
-  horizontal: PropTypes.bool,
-};
-
 const styles = StyleSheet.create({
   flatListContentContainer: {
     paddingHorizontal: 5,
@@ -45,3 +41,11 @@ const styles = StyleSheet.create({
     marginBottom: 60,
   },
 });
+
+MediaList.propTypes = {
+  mediaList: PropTypes.array.isRequired,
+  loadNewData: PropTypes.func,
+  showSpinner: PropTypes.bool,
+  horizontal: PropTypes.bool,
+  mediaType: PropTypes.string.isRequired,
+};

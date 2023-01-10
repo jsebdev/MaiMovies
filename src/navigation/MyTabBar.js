@@ -38,16 +38,11 @@ export function MyTabBar({ state, descriptors, navigation, position }) {
           });
         };
 
-        console.log("41: state.routes >>>", state.routes);
         const inputRange = state.routes.map((_, i) => i);
-        console.log("43: inputRange >>>", inputRange);
-        console.log("41: position >>>", position);
-        console.log("45: typeof position >>>", typeof position);
         const opacity = position.interpolate({
           inputRange,
           outputRange: inputRange.map((i) => (i === index ? 1 : 0.4)),
         });
-        console.log("50: opacity >>>", opacity);
 
         return (
           <TouchableOpacity
