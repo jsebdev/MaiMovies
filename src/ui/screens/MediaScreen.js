@@ -22,16 +22,20 @@ export const MediaScreen = observer(({ route }) => {
   return (
     <BackgroundView>
       {media ? (
-        <ScrollView style={styles.container}>
-          <Backdrop uri={media.getBackdrop(IMAGES_SIZES.large)}></Backdrop>
-          <View style={styles.headerSpace} />
-          <View style={styles.dataContainer}>
-            <MediaHeader media={media} />
-            <MediaInfo media={media} />
-            <MediaVideos mediaType={media.mediaType} mediaId={mediaId} />
-            {media.mediaType === MEDIA_TYPES.tv && <TvSeasons media={media} />}
-          </View>
-        </ScrollView>
+        <>
+          <Backdrop uri={media.getBackdrop(IMAGES_SIZES.large)} />
+          <ScrollView style={styles.container}>
+            <View style={styles.headerSpace} />
+            <View style={styles.dataContainer}>
+              <MediaHeader media={media} />
+              <MediaInfo media={media} />
+              <MediaVideos mediaType={media.mediaType} mediaId={mediaId} />
+              {media.mediaType === MEDIA_TYPES.tv && (
+                <TvSeasons media={media} />
+              )}
+            </View>
+          </ScrollView>
+        </>
       ) : (
         <ActivityIndicator style={styles.spinner} />
       )}
@@ -51,7 +55,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     borderColor: "white",
-    marginBottom: 500,
+    marginBottom: 100,
     // borderWidth: 1,
   },
   spinner: {
