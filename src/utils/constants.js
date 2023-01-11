@@ -24,16 +24,15 @@ export const IMAGES_SIZES = {
   large: "large",
   original: "original",
 };
-
 export const POSTER_RATIO = 16 / 10;
-
+export const SCENE_RATIO = 11 / 20;
+export const FLAT_LIST_SCENE_WIDTH = 250;
 export const colors = {
   background: "#000000",
   tabs: "#02081F",
   text: "white",
   link: "#918aff",
 };
-
 export const VOTE_COLORS = [
   {
     r: 255,
@@ -52,3 +51,4 @@ export const VOTE_COLORS = [
   },
 ];
 export const VOTE_COLORS_VALUES = [4, 6.5, 8.5];
+export const VERTICAL_POSTERS_IN_SCREEN = 3;

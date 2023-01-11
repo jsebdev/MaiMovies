@@ -35,6 +35,10 @@ export class Media {
     this.productionCompanies = productionCompanies;
   }
 
+  getPosterBaseUrl(size) {
+    return `${this.baseImageUrl}${this.poster.posterSizes[size]}`;
+  }
+
   getPoster(size) {
     return `${this.baseImageUrl}${this.poster.posterSizes[size]}${this.poster.posterPath}`;
   }
@@ -58,12 +62,6 @@ export class Genre {
     this.name = name;
   }
 }
-
-export const mediaPropType = PropTypes.shape({
-  id: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  poster: PropTypes.object.isRequired,
-});
 
 export class Poster {
   constructor({ posterPath, posterSizes }) {

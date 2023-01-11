@@ -3,7 +3,8 @@ import React from "react";
 import { observer } from "mobx-react-lite";
 import { useMedia } from "@hooks/media.hook";
 import { Paragraph } from "../Paragraph";
-import { VideoThumbnail } from "./VideoThumbnail";
+import { HorizontalThumbnail } from "./HorizontalThumbnail";
+import { VideoImage } from "./VideoImage";
 
 export const MediaVideos = observer(({ mediaType, mediaId }) => {
   const { mediaStore } = useMedia(mediaType, mediaId);
@@ -27,7 +28,11 @@ export const MediaVideos = observer(({ mediaType, mediaId }) => {
             data={youtubeVideos}
             horizontal={true}
             keyExtractor={(video) => video.id}
-            renderItem={({ item }) => <VideoThumbnail video={item} />}
+            renderItem={({ item }) => (
+              <HorizontalThumbnail video={item} title={item.name}>
+                <VideoImage video={item} />
+              </HorizontalThumbnail>
+            )}
             showsHorizontalScrollIndicator={false}
           />
         </>
