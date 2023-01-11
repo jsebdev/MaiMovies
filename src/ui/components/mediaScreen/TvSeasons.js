@@ -6,6 +6,7 @@ import { SeasonCard } from "./SeasonCard";
 import { IMAGES_SIZES } from "@app/utils/constants";
 
 export const TvSeasons = ({ media }) => {
+  if (!media.seasons) return null;
   return (
     <>
       {media.seasons && media.seasons.length > 0 && (
