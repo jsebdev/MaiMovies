@@ -7,7 +7,7 @@ import {
 } from "@app/utils/constants";
 import { useNavigation } from "@react-navigation/native";
 import PropTypes from "prop-types";
-import { VerticalCard } from "./VerticalCard";
+import { Card } from "./Card";
 
 export const MediaCard = ({ media, mediaType }) => {
   if (!media.name) {
@@ -23,7 +23,7 @@ export const MediaCard = ({ media, mediaType }) => {
     });
   };
   return (
-    <VerticalCard
+    <Card
       onPress={goToMedia}
       imageSource={media.getPoster(IMAGES_SIZES.medium)}
       title={media.name}

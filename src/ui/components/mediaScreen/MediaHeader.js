@@ -1,9 +1,3 @@
-{
-  /* todo: create episode class */
-}
-{
-  /* todo: create episode screen */
-}
 import { View, StyleSheet, Image, Dimensions } from "react-native";
 import React from "react";
 import PropTypes from "prop-types";
@@ -39,19 +33,20 @@ export const MediaHeader = ({ media }) => {
             </Paragraph>
           )}
           {media.mediaType === MEDIA_TYPES.tv && (
-            <>
-              {media.inProduction ? (
-                <Paragraph>In production</Paragraph>
-              ) : (
-                <Paragraph>Finished</Paragraph>
-              )}
-            </>
+            <Paragraph>
+              {media.inProduction ? "I" : "Not i"}n production
+            </Paragraph>
           )}
           {media.episodesNumber && (
             <Paragraph>Episodes: {media.episodesNumber}</Paragraph>
           )}
           {media.seasonsNumber && (
             <Paragraph>Seasons: {media.seasonsNumber}</Paragraph>
+          )}
+          {media.originCountry && (
+            <Paragraph style={styles.littleTitle}>
+              Countries: {getReadableListOfItems(media.originCountry)}
+            </Paragraph>
           )}
           {media.originalLanguage && (
             <Paragraph style={styles.littleTitle}>
@@ -119,16 +114,17 @@ export const MediaHeader = ({ media }) => {
               </Paragraph>
             </View>
           )}
-          {media.originCountry && (
-            <View style={styles.littleDataContainer}>
-              <Paragraph style={styles.littleTitle}>
-                Origin countries:
-              </Paragraph>
-              <Paragraph style={styles.littleData}>
-                {getReadableListOfItems(media.originCountry)}
-              </Paragraph>
-            </View>
-          )}
+          {media.productionCompanies &&
+            media.productionCompanies.length > 0 && (
+              <View style={styles.littleDataContainer}>
+                <Paragraph style={styles.littleTitle}>
+                  Production Companies
+                </Paragraph>
+                <Paragraph style={styles.littleData}>
+                  {getReadableListOfItems(media.productionCompanies, "name")}
+                </Paragraph>
+              </View>
+            )}
         </View>
       </View>
     </View>

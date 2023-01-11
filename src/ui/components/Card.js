@@ -10,27 +10,55 @@ import { POSTER_RATIO, VERTICAL_POSTERS_IN_SCREEN } from "@app/utils/constants";
 import PropTypes from "prop-types";
 import { Paragraph } from "./Paragraph";
 
-export const VerticalCard = ({ onPress, imageSource, title }) => {
+export const Card = ({
+  onPress,
+  imageSource,
+  title,
+  cardRatio = POSTER_RATIO,
+  horizontalCardsFit = VERTICAL_POSTERS_IN_SCREEN,
+  resizeMode = "cover",
+}) => {
+  const cardWidth = Dimensions.get("window").width / horizontalCardsFit;
+  const cardHeight = cardWidth * cardRatio;
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.card}>
         <Image
           source={{ uri: imageSource }}
-          style={styles.image}
-          resizeMode="cover"
+          style={[
+            styles.image,
+            {
+              width: cardWidth,
+              height: cardHeight,
+            },
+          ]}
+          resizeMode={resizeMode}
         />
         {title && (
-          <View style={styles.textContainer}>
-            <Paragraph style={styles.text}>{title}</Paragraph>
+          <View
+            style={[
+              styles.textContainer,
+              {
+                width: cardWidth - 5,
+              },
+            ]}
+          >
+            <Paragraph
+              style={[
+                styles.text,
+                {
+                  width: cardWidth,
+                },
+              ]}
+            >
+              {title}
+            </Paragraph>
           </View>
         )}
       </View>
     </TouchableWithoutFeedback>
   );
 };
-
-const cardWidth = Dimensions.get("window").width / VERTICAL_POSTERS_IN_SCREEN;
-const cardHeight = cardWidth * POSTER_RATIO;
 
 const styles = StyleSheet.create({
   card: {
@@ -41,26 +69,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: cardWidth,
-    height: cardHeight,
     borderRadius: 5,
   },
   textContainer: {
-    width: cardWidth - 5,
     flexDirection: "row",
     borderColor: "red",
   },
   text: {
     fontSize: 10,
-    width: cardWidth,
     flex: 1,
     flexWrap: "wrap",
     textAlign: "center",
   },
 });
 
-VerticalCard.propTypes = {
+Card.propTypes = {
   title: PropTypes.string,
   imageSource: PropTypes.string.isRequired,
   onPress: PropTypes.func,
+  cardRatio: PropTypes.number,
+  horizontalCardsFit: PropTypes.number,
+  resizeMode: PropTypes.string,
 };

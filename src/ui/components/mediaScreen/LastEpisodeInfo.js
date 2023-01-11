@@ -9,7 +9,7 @@ import { MyButton } from "../MyButton";
 
 export const LastEpisodeInfo = ({ lastEpisode, imageBaseUrl }) => {
   const [showInfo, setShowInfo] = useState(false);
-  console.log("12: lastEpisode, imageBaseUrl >>>", lastEpisode, imageBaseUrl);
+  // console.log("12: lastEpisode, imageBaseUrl >>>", lastEpisode, imageBaseUrl);
   if (!lastEpisode) return null;
   return (
     <View style={styles.container}>
@@ -38,6 +38,11 @@ export const LastEpisodeInfo = ({ lastEpisode, imageBaseUrl }) => {
               {lastEpisode.episode_number !== undefined && (
                 <Paragraph style={styles.title}>
                   Episode: {lastEpisode.episode_number}
+                </Paragraph>
+              )}
+              {lastEpisode.season_number !== undefined && (
+                <Paragraph style={styles.title}>
+                  Season: {lastEpisode.season_number}
                 </Paragraph>
               )}
               {lastEpisode.runtime !== undefined && (
@@ -96,5 +101,3 @@ LastEpisodeInfo.propTypes = {
   lastEpisode: PropTypes.object,
   imageBaseUrl: PropTypes.string,
 };
-
-//todo fix the last of us

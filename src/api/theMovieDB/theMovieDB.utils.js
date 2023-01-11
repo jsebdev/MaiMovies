@@ -10,7 +10,13 @@ const getMediaName = (media) =>
 export const apiMedia2Media = (
   media,
   mediaType,
-  { baseImageUrl, postersBaseSizes, backdropBaseSizes, stillBaseSizes }
+  {
+    baseImageUrl,
+    postersBaseSizes,
+    backdropBaseSizes,
+    stillBaseSizes,
+    logoBaseSizes,
+  }
 ) => {
   const mediaProps = {
     name: getMediaName(media),
@@ -33,6 +39,7 @@ export const apiMedia2Media = (
     productionCompanies: media.production_companies,
     mediaType,
     stillBaseSizes,
+    logoBaseSizes,
   };
 
   const mediaClass = specificMediaClasses[mediaType];

@@ -16,6 +16,7 @@ export class Media {
     productionCompanies,
     mediaType,
     stillBaseSizes,
+    logoBaseSizes,
   }) {
     makeObservable(this, {
       videos: observable,
@@ -33,11 +34,16 @@ export class Media {
     this.averageVote = averageVote;
     this.mediaType = mediaType;
     this.productionCompanies = productionCompanies;
-    this.stillSizes = stillBaseSizes;
+    this.stillBaseSizes = stillBaseSizes;
+    this.logoBaseSizes = logoBaseSizes;
   }
 
   getStillBaseUrl(size) {
-    return `${this.baseImageUrl}${this.stillSizes[size]}`;
+    return `${this.baseImageUrl}${this.stillBaseSizes[size]}`;
+  }
+
+  getLogoBaseUrl(size) {
+    return `${this.baseImageUrl}${this.logoBaseSizes[size]}`;
   }
 
   getPosterBaseUrl(size) {

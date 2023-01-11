@@ -32,6 +32,9 @@ export class TheMovieDBController extends ApiController {
       this.stillBaseSizes = this.#getImagesBaseSizes(
         this.configuration.images.still_sizes
       );
+      this.logoBaseSizes = this.#getImagesBaseSizes(
+        this.configuration.images.logo_sizes
+      );
     })();
   }
 
@@ -166,6 +169,7 @@ export class TheMovieDBController extends ApiController {
       postersBaseSizes: this.postersBaseSizes,
       backdropBaseSizes: this.backdropBaseSizes,
       stillBaseSizes: this.stillBaseSizes,
+      logoBaseSizes: this.logoBaseSizes,
     });
   };
 }
