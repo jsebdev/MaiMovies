@@ -29,6 +29,9 @@ export class TheMovieDBController extends ApiController {
       this.backdropBaseSizes = this.#getImagesBaseSizes(
         this.configuration.images.backdrop_sizes
       );
+      this.stillBaseSizes = this.#getImagesBaseSizes(
+        this.configuration.images.still_sizes
+      );
     })();
   }
 
@@ -158,12 +161,11 @@ export class TheMovieDBController extends ApiController {
   };
 
   #apiMedia2Media = (media, mediaType) => {
-    return apiMedia2Media(
-      media,
-      this.postersBaseSizes,
-      this.backdropBaseSizes,
-      this.configuration.images.base_url,
-      mediaType
-    );
+    return apiMedia2Media(media, mediaType, {
+      baseImageUrl: this.configuration.images.base_url,
+      postersBaseSizes: this.postersBaseSizes,
+      backdropBaseSizes: this.backdropBaseSizes,
+      stillBaseSizes: this.stillBaseSizes,
+    });
   };
 }

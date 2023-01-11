@@ -11,7 +11,8 @@ import { IMAGES_SIZES, MEDIA_TYPES, POSTER_RATIO } from "@app/utils/constants";
 import { Paragraph } from "../Paragraph";
 import { format, formatDuration } from "date-fns";
 import { currencyFormatter } from "@app/config/currencyFormatter";
-import { getReadableListOfItems, getVoteColor } from "@app/utils/utils";
+import { getReadableListOfItems } from "@app/utils/utils";
+import { Score } from "../Score";
 
 export const MediaHeader = ({ media }) => {
   return (
@@ -60,18 +61,7 @@ export const MediaHeader = ({ media }) => {
         </View>
         <View style={styles.rightContainer}>
           <View style={styles.topRightContainer}>
-            <View style={styles.voteContainer}>
-              <View
-                style={[
-                  styles.vote,
-                  { borderColor: getVoteColor(media.averageVote) },
-                ]}
-              >
-                <Paragraph style={styles.voteText}>
-                  {Math.round(media.averageVote * 10) / 10}
-                </Paragraph>
-              </View>
-            </View>
+            <Score score={media.averageVote} />
           </View>
           {media.revenue !== undefined && (
             <View style={styles.littleDataContainer}>
@@ -151,7 +141,6 @@ MediaHeader.propTypes = {
 
 const posterWidth = Dimensions.get("window").width / 3;
 const posterHeight = posterWidth * POSTER_RATIO;
-const voteSize = 40;
 
 const styles = StyleSheet.create({
   container: {
@@ -204,21 +193,5 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginTop: 1,
     color: "green",
-  },
-  voteContainer: {
-    height: voteSize,
-  },
-  vote: {
-    borderWidth: 4,
-    width: voteSize,
-    height: "100%",
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: voteSize / 2,
-  },
-  voteText: {
-    fontWeight: "bold",
-    textAlign: "center",
   },
 });

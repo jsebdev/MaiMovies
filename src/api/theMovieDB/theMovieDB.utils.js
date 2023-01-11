@@ -9,10 +9,8 @@ const getMediaName = (media) =>
 
 export const apiMedia2Media = (
   media,
-  postersBaseSizes,
-  backdropBaseSizes,
-  baseImageUrl,
-  mediaType
+  mediaType,
+  { baseImageUrl, postersBaseSizes, backdropBaseSizes, stillBaseSizes }
 ) => {
   const mediaProps = {
     name: getMediaName(media),
@@ -34,6 +32,7 @@ export const apiMedia2Media = (
     averageVote: media.vote_average,
     productionCompanies: media.production_companies,
     mediaType,
+    stillBaseSizes,
   };
 
   const mediaClass = specificMediaClasses[mediaType];

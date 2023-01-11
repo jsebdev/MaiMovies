@@ -1,5 +1,4 @@
 import { makeObservable, observable } from "mobx";
-import PropTypes from "prop-types";
 export class Media {
   videos = [];
   constructor({
@@ -16,6 +15,7 @@ export class Media {
     averageVote,
     productionCompanies,
     mediaType,
+    stillBaseSizes,
   }) {
     makeObservable(this, {
       videos: observable,
@@ -33,6 +33,11 @@ export class Media {
     this.averageVote = averageVote;
     this.mediaType = mediaType;
     this.productionCompanies = productionCompanies;
+    this.stillSizes = stillBaseSizes;
+  }
+
+  getStillBaseUrl(size) {
+    return `${this.baseImageUrl}${this.stillSizes[size]}`;
   }
 
   getPosterBaseUrl(size) {

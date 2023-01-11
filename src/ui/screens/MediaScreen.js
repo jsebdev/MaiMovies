@@ -12,12 +12,13 @@ import { MediaHeader } from "../components/mediaScreen/MediaHeader";
 import { MediaInfo } from "../components/mediaScreen/MediaInfo";
 import { ScrollView } from "react-native-gesture-handler";
 import { TvSeasons } from "../components/mediaScreen/TvSeasons";
+import { LastEpisodeInfo } from "../components/mediaScreen/LastEpisodeInfo";
 
 export const MediaScreen = observer(({ route }) => {
   const { mediaType, mediaId } = route.params;
 
   const { media } = useMediaScreen(mediaType, mediaId);
-  console.log("20: media >>>", media);
+  // console.log("20: media >>>", media);
 
   return (
     <BackgroundView>
@@ -31,7 +32,13 @@ export const MediaScreen = observer(({ route }) => {
               <MediaInfo media={media} />
               <MediaVideos mediaType={media.mediaType} mediaId={mediaId} />
               {media.mediaType === MEDIA_TYPES.tv && (
-                <TvSeasons media={media} />
+                <>
+                  <TvSeasons media={media} />
+                  <LastEpisodeInfo
+                    lastEpisode={media.lastEpisode}
+                    imageBaseUrl={media.getStillBaseUrl(IMAGES_SIZES.original)}
+                  />
+                </>
               )}
             </View>
           </ScrollView>
