@@ -28,6 +28,7 @@ export const MediaHeader = ({ media }) => {
               style={styles.poster}
             />
           </View>
+          <Paragraph>{media.status}</Paragraph>
           {media.runtime && (
             <Paragraph>
               {formatDuration({
@@ -57,7 +58,6 @@ export const MediaHeader = ({ media }) => {
             </Paragraph>
           )}
         </View>
-
         <View style={styles.rightContainer}>
           <View style={styles.topRightContainer}>
             <View style={styles.voteContainer}>
@@ -73,7 +73,6 @@ export const MediaHeader = ({ media }) => {
               </View>
             </View>
           </View>
-
           {media.revenue !== undefined && (
             <View style={styles.littleDataContainer}>
               <Paragraph style={styles.littleTitle}>Revenue:</Paragraph>
@@ -82,10 +81,6 @@ export const MediaHeader = ({ media }) => {
               </Paragraph>
             </View>
           )}
-          <View style={styles.littleDataContainer}>
-            <Paragraph style={styles.littleTitle}>Status:</Paragraph>
-            <Paragraph style={styles.littleData}>{media.status}</Paragraph>
-          </View>
           {media.releaseDate && (
             <View style={styles.littleDataContainer}>
               <Paragraph style={styles.littleTitle}>Release date:</Paragraph>
@@ -99,6 +94,14 @@ export const MediaHeader = ({ media }) => {
               <Paragraph style={styles.littleTitle}>Created by:</Paragraph>
               <Paragraph style={styles.littleData}>
                 {getReadableListOfItems(media.createdBy, "name")}
+              </Paragraph>
+            </View>
+          )}
+          {media.genres && media.genres.length > 0 && (
+            <View style={styles.littleDataContainer}>
+              <Paragraph style={styles.littleTitle}>Genre:</Paragraph>
+              <Paragraph style={styles.littleData}>
+                {getReadableListOfItems(media.genres, "name")}
               </Paragraph>
             </View>
           )}
