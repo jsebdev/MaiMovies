@@ -1,17 +1,32 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { MediaScreen } from "@app/ui/screens/MediaScreen";
-import { TV_SHOW_SCREEN } from "@app/utils/constants";
+import { IMAGE_SCREEN, TV_SHOW_SCREEN } from "@app/utils/constants";
 import { generalScreenOptions } from "@app/ui/globalStyles";
 import { TvScreen } from "@app/ui/screens/TvScreen";
+import { ImageScreen } from "@app/ui/screens/ImageScreen";
+import { ImagesListScreen } from "@app/ui/screens/ImagesListScreen";
 
 const Stack = createStackNavigator();
+
+const forFade = ({ current }) => ({
+  cardStyle: {
+    opacity: current.progress,
+  },
+});
 
 export const TrendingTvNavigation = () => {
   return (
     <Stack.Navigator screenOptions={generalScreenOptions}>
       <Stack.Screen name="TrendingTv" component={TvScreen} />
       <Stack.Screen name={TV_SHOW_SCREEN} component={MediaScreen} />
+      <Stack.Screen
+        name={IMAGE_SCREEN}
+        component={ImagesListScreen}
+        options={{
+          cardStyleInterpolator: forFade,
+        }}
+      />
     </Stack.Navigator>
   );
 };

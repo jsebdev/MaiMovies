@@ -9,6 +9,7 @@ export const API_MEDIA_VIDEOS = (mediaType, mediaId) =>
 export const HOME_SCREEN = "Home";
 export const MOVIE_SCREEN = "Movie";
 export const TV_SHOW_SCREEN = "Tv";
+export const IMAGE_SCREEN = "Image";
 export const YOUTUBE_SITE = "YouTube";
 
 export const MEDIA_TYPES = {

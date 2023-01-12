@@ -18,7 +18,6 @@ export const MediaInfo = ({ media }) => {
           </MyLink>
         </View>
       )}
-      {/* //todo: show production companies in both media */}
     </View>
   );
 };

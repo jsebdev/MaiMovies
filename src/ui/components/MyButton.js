@@ -19,7 +19,7 @@ export const MyButton = ({
     : [pressableStyle];
   const inheritedTextStyle = Array.isArray(textStyle) ? textStyle : [textStyle];
   const variantContainerStyle = variant ? pressableStyles[variant] : null;
-  const variantPressabeStyle = variant ? pressableStyles[variant] : null;
+  const variantPressableStyle = variant ? pressableStyles[variant] : null;
   const variantTextStyle = variant ? textStyles[variant] : null;
   return (
     <View
@@ -34,7 +34,7 @@ export const MyButton = ({
         style={({ pressed }) => [
           pressableStyles.default({ pressed }),
           ...inheritedPressableStyle,
-          variantPressabeStyle,
+          variantPressableStyle,
         ]}
       >
         <Paragraph

@@ -17,12 +17,13 @@ export const Card = ({
   cardRatio = POSTER_RATIO,
   horizontalCardsFit = VERTICAL_POSTERS_IN_SCREEN,
   resizeMode = "cover",
+  marginX = 4,
 }) => {
   const cardWidth = Dimensions.get("window").width / horizontalCardsFit;
   const cardHeight = cardWidth * cardRatio;
   return (
-    <TouchableWithoutFeedback onPress={onPress}>
-      <View style={styles.card}>
+    <TouchableWithoutFeedback onPress={onPress ? onPress : null}>
+      <View style={[styles.card, { marginHorizontal: marginX }]}>
         <Image
           source={{ uri: imageSource }}
           style={[
@@ -63,7 +64,6 @@ export const Card = ({
 const styles = StyleSheet.create({
   card: {
     flex: 1,
-    margin: 4,
     justifyContent: "flex-start",
     overflow: "hidden",
     alignItems: "center",
