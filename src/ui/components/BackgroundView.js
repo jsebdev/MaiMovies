@@ -4,15 +4,15 @@ import PropTypes from "prop-types";
 import { colors } from "@app/utils/constants";
 
 export const BackgroundView = ({ children, style }) => {
-  return <View style={[styles.container, style]}>{children}</View>;
+  const inheritedStyle = Array.isArray(style) ? style : [style];
+  return <View style={[styles.container, ...inheritedStyle]}>{children}</View>;
 };
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.background,
-    // borderWidth: 0,
-    // borderColor: "green",
     height: "100%",
+    // paddingHorizontal: 4,
   },
 });
 

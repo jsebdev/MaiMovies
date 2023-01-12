@@ -44,6 +44,7 @@ export const Navigation = () => {
         component={HomeNavigation}
         options={{
           tabBarLabel: "",
+          //todo: change this image to a better one
           tabBarIcon: () =>
             renderImageIcon(require("@assets/images/moviesIcon.png")),
         }}

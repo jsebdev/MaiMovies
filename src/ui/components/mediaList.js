@@ -33,7 +33,6 @@ export const MediaList = ({
 
 const styles = StyleSheet.create({
   flatListContentContainer: {
-    paddingHorizontal: 5,
     marginBottom: 50,
   },
   spinner: {

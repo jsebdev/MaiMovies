@@ -12,6 +12,7 @@ module.exports = function (api) {
             "@assets": "./src/assets",
             "@components": "./src/ui/components",
             "@hooks": "./src/ui/hooks",
+            "@config": "./src/config",
           },
         },
       ],

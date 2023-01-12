@@ -6,7 +6,8 @@
       "@screens/*": ["src/ui/screens/*"],
       "@assets/*": ["src/assets/*"],
       "@components/*": ["src/ui/components/*"],
-      "@hooks/*": ["src/ui/hooks/*"]
+      "@hooks/*": ["src/ui/hooks/*"],
+      "@config/*": ["src/config/*"]
     }
   }
 }
