@@ -17,13 +17,19 @@ export const Card = ({
   cardRatio = POSTER_RATIO,
   horizontalCardsFit = VERTICAL_POSTERS_IN_SCREEN,
   resizeMode = "cover",
-  marginX = 4,
+  marginX = 2,
+  marginB = 6,
 }) => {
   const cardWidth = Dimensions.get("window").width / horizontalCardsFit;
   const cardHeight = cardWidth * cardRatio;
   return (
     <TouchableWithoutFeedback onPress={onPress ? onPress : null}>
-      <View style={[styles.card, { marginHorizontal: marginX }]}>
+      <View
+        style={[
+          styles.card,
+          { marginHorizontal: marginX, marginBottom: marginB },
+        ]}
+      >
         <Image
           source={{ uri: imageSource }}
           style={[
@@ -90,4 +96,6 @@ Card.propTypes = {
   cardRatio: PropTypes.number,
   horizontalCardsFit: PropTypes.number,
   resizeMode: PropTypes.string,
+  marginX: PropTypes.number,
+  marginB: PropTypes.number,
 };
