@@ -2,7 +2,7 @@ import React from "react";
 import { Animated, View, TouchableOpacity, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 import { colors } from "@app/utils/constants";
-import { Paragraph } from "@app/ui/components/Paragraph";
+import { Paragraph } from "@app/ui/components/commonComponents/Paragraph";
 
 export function MyTabBar({ state, descriptors, navigation, position }) {
   return (

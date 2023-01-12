@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Card } from "../Card";
+import { Card } from "@app/ui/components/commonComponents/Card";
 import { useNavigation } from "@react-navigation/native";
 import { IMAGE_LIST_SCREEN } from "@app/utils/constants";
 
@@ -31,4 +31,5 @@ SeasonCard.propTypes = {
   bigPosterUrl: PropTypes.string,
   mediaId: PropTypes.number,
   mediaType: PropTypes.string,
+  seasonIndex: PropTypes.number,
 };

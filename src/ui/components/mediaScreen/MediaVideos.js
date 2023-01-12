@@ -2,7 +2,7 @@ import { FlatList, StyleSheet, View } from "react-native";
 import React from "react";
 import { observer } from "mobx-react-lite";
 import { useMedia } from "@hooks/media.hook";
-import { Paragraph } from "../Paragraph";
+import { Paragraph } from "../commonComponents/Paragraph";
 import { HorizontalThumbnail } from "./HorizontalThumbnail";
 import { VideoImage } from "./VideoImage";
 

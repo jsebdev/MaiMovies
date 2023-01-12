@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import React from "react";
-import { Paragraph } from "../components/Paragraph";
+import { Paragraph } from "@app/ui/components/commonComponents/Paragraph";
 
 export const FavoritesScreen = () => {
   return (

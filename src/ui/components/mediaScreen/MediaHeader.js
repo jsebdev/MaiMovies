@@ -2,11 +2,11 @@ import { View, StyleSheet, Image, Dimensions } from "react-native";
 import React from "react";
 import PropTypes from "prop-types";
 import { IMAGES_SIZES, MEDIA_TYPES, POSTER_RATIO } from "@app/utils/constants";
-import { Paragraph } from "../Paragraph";
+import { Paragraph } from "../commonComponents/Paragraph";
 import { format, formatDuration } from "date-fns";
 import { currencyFormatter } from "@app/config/currencyFormatter";
 import { getReadableListOfItems } from "@app/utils/utils";
-import { Score } from "../Score";
+import { Score } from "../commonComponents/Score";
 
 export const MediaHeader = ({ media }) => {
   return (

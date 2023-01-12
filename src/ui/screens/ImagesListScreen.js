@@ -3,15 +3,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { FlatList } from "react-native-gesture-handler";
 import { useMedia } from "../hooks/media.hook";
-import { Card } from "../components/Card";
+import { Card } from "@components/commonComponents/Card";
 import { IMAGES_SIZES } from "@app/utils/constants";
-import { BackgroundView } from "../components/BackgroundView";
+import { BackgroundView } from "@app/ui/components/commonComponents/BackgroundView";
 
 export const ImagesListScreen = ({ route, navigation }) => {
   const { mediaId, mediaType, imageIndex } = route.params;
   const { media } = useMedia(mediaType, mediaId);
   const cardWidth = Dimensions.get("window").width;
-  console.log("14: route.name >>>", route.name);
   const goBack = () => {
     navigation.goBack();
   };

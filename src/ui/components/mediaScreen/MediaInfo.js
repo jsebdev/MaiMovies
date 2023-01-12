@@ -1,8 +1,8 @@
 import { StyleSheet, View } from "react-native";
 import React from "react";
-import { Paragraph } from "../Paragraph";
+import { Paragraph } from "../commonComponents/Paragraph";
 import PropTypes from "prop-types";
-import { MyLink } from "../commongComponents/MyLink";
+import { MyLink } from "../commonComponents/MyLink";
 
 export const MediaInfo = ({ media }) => {
   return (

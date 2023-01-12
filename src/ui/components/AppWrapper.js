@@ -1,7 +1,7 @@
 import { Platform, View } from "react-native";
 import React from "react";
 import PropTypes from "prop-types";
-import { BackgroundView } from "./BackgroundView";
+import { BackgroundView } from "@components/commonComponents/BackgroundView";
 
 export const AppWrapper = ({ children }) => {
   return (

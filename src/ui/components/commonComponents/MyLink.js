@@ -3,7 +3,7 @@ import { A } from "@expo/html-elements";
 import { StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 
-import { Paragraph } from "../Paragraph";
+import { Paragraph } from "./Paragraph";
 import { colors } from "@app/utils/constants";
 
 export const MyLink = ({ href, style, children }) => {

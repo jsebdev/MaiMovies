@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import React, { useEffect } from "react";
-import { MediaList } from "./MediaList";
+import { MediaList } from "./commonComponents/MediaList";
 import { useStore } from "@app/store/store.hook";
 import { observer } from "mobx-react-lite";
 import { MEDIA_TYPES } from "@app/utils/constants";

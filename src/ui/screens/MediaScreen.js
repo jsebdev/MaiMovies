@@ -1,18 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { BackgroundView } from "@components/BackgroundView";
+import { BackgroundView } from "@app/ui/components/commonComponents/BackgroundView";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { observer } from "mobx-react-lite";
 import { MediaVideos } from "@components/mediaScreen/MediaVideos";
 import { useMediaScreen } from "@hooks/media.hook";
-import { Backdrop } from "../components/mediaScreen/Backdrop";
+import { Backdrop } from "@components/mediaScreen/Backdrop";
 import { IMAGES_SIZES, MEDIA_TYPES } from "@app/utils/constants";
-import { MediaHeader } from "../components/mediaScreen/MediaHeader";
-import { MediaInfo } from "../components/mediaScreen/MediaInfo";
+import { MediaHeader } from "@components/mediaScreen/MediaHeader";
+import { MediaInfo } from "@components/mediaScreen/MediaInfo";
 import { ScrollView } from "react-native-gesture-handler";
-import { TvSeasons } from "../components/mediaScreen/TvSeasons";
-import { LastEpisodeInfo } from "../components/mediaScreen/LastEpisodeInfo";
+import { TvSeasons } from "@components/mediaScreen/TvSeasons";
+import { LastEpisodeInfo } from "@components/mediaScreen/LastEpisodeInfo";
 
 export const MediaScreen = observer(({ route }) => {
   const { mediaType, mediaId } = route.params;

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { Paragraph } from "../Paragraph";
+import { Paragraph } from "../commonComponents/Paragraph";
 import { SCENE_RATIO } from "@app/utils/constants";
-import { Score } from "../Score";
+import { Score } from "../commonComponents/Score";
 import { formatDuration } from "date-fns";
 import PropTypes from "prop-types";
-import { MyButton } from "../MyButton";
+import { MyButton } from "../commonComponents/MyButton";
 
 export const LastEpisodeInfo = ({ lastEpisode, imageBaseUrl }) => {
   const [showInfo, setShowInfo] = useState(false);

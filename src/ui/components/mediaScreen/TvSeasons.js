@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet, View } from "react-native";
 import React from "react";
 import PropTypes from "prop-types";
-import { Paragraph } from "../Paragraph";
+import { Paragraph } from "../commonComponents/Paragraph";
 import { SeasonCard } from "./SeasonCard";
 import { IMAGES_SIZES } from "@app/utils/constants";
 
