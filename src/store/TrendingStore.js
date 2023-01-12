@@ -1,38 +1,37 @@
 import { apiController } from "@app/api/apiController";
+import { Movie } from "@app/domain/MovieType";
+import { TvShow } from "@app/domain/TvShowType";
 import { MEDIA_TYPES } from "@app/utils/constants";
-import { makeAutoObservable, runInAction } from "mobx";
+import { flow, types } from "mobx-state-tree";
 
-class TrendingStore {
-  movies = {
-    trendingList: [],
-    page: 0,
-    totalPages: Infinity,
-  };
-  tv = {
-    trendingList: [],
-    page: 0,
-    totalPages: Infinity,
-  };
-
-  constructor() {
-    makeAutoObservable(this);
-  }
-
-  async fetchNextPageMediaTrending(mediaType) {
-    const media = mediaType === MEDIA_TYPES.movie ? this.movies : this.tv;
-    if (media.page >= media.totalPages) return;
-    media.page++;
-    const result = await apiController.getWeeklyTrendingMedia(
-      media.page,
-      mediaType
-    );
-    if (result.success === true) {
-      runInAction(() => {
+const TrendingStore = types
+  .model("unname", {
+    // movies: types.optional(types.model(trendingMedia(Movie)), {}),
+    // tv: types.optional(types.model(trendingMedia(TvShow)), {}),
+  })
+  .actions((self) => {
+    const fetchNextPageMediaTrending = flow(function* (mediaType) {
+      const media = mediaType === MEDIA_TYPES.movie ? self.movies : self.tv;
+      if (media.page >= media.totalPages) return;
+      media.page++;
+      const result = yield apiController.getWeeklyTrendingMedia(
+        media.page,
+        mediaType
+      );
+      if (result.success === true) {
         media.trendingList = [...media.trendingList, ...result.value];
         media.totalPages = result.totalPages;
-      });
-    }
-  }
-}
+      }
+    });
 
-export const trendingStore = new TrendingStore();
+    return { fetchNextPageMediaTrending };
+  });
+
+const trendingMedia = (mediaType) =>
+  types.model({
+    trendingList: types.optional(types.array(mediaType), []),
+    page: types.optional(types.number, 0),
+    totalPages: Infinity,
+  });
+
+export const trendingStore = TrendingStore.create();

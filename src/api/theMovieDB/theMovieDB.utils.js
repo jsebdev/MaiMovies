@@ -1,6 +1,6 @@
-import { Backdrop, Genre, Poster } from "@app/domain/MediaClass";
-import { Movie } from "@app/domain/MovieClass";
-import { TvShow } from "@app/domain/TvShowClass";
+import { Backdrop, Genre, Poster } from "@app/domain/MediaType";
+import { Movie } from "@app/domain/MovieType";
+import { TvShow } from "@app/domain/TvShowType";
 import { Video } from "@app/domain/VideoClass";
 import { MEDIA_TYPES } from "@app/utils/constants";
 

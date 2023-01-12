@@ -23,7 +23,7 @@ const useTrendingMedia = (mediaType) => {
   const { trendingStore } = useStore();
   const loadNextPageTrendingMedia = () => {
     try {
-      trendingStore.fetchNextPageMediaTrending(mediaType);
+      // trendingStore.fetchNextPageMediaTrending(mediaType);
     } catch (error) {
       console.error(error);
     }
