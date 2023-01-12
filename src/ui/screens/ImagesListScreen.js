@@ -11,11 +11,10 @@ export const ImagesListScreen = ({ route, navigation }) => {
   const { mediaId, mediaType, imageIndex } = route.params;
   const { media } = useMedia(mediaType, mediaId);
   const cardWidth = Dimensions.get("window").width;
-  console.log("13: imageIndex >>>", imageIndex);
+  console.log("14: route.name >>>", route.name);
   const goBack = () => {
     navigation.goBack();
   };
-  console.log("18: media.seasons >>>", media.seasons);
   const seasons = media.seasons.filter((season) => season.poster_path);
   return (
     <BackgroundView>

@@ -6,10 +6,10 @@ export const API_CONFIGURATION = "/configuration";
 export const API_MEDIA = (mediaType, mediaId) => `/${mediaType}/${mediaId}`;
 export const API_MEDIA_VIDEOS = (mediaType, mediaId) =>
   `/${mediaType}/${mediaId}/videos`;
-export const HOME_SCREEN = "Home";
-export const MOVIE_SCREEN = "Movie";
-export const TV_SHOW_SCREEN = "Tv";
-export const IMAGE_SCREEN = "Image";
+export const HOME_SCREEN = "HomeScreen";
+export const MOVIE_SCREEN = "MovieScreen";
+export const TV_SHOW_SCREEN = "TvShowScreen";
+export const IMAGE_LIST_SCREEN = "ImageListScreen";
 export const YOUTUBE_SITE = "YouTube";
 
 export const MEDIA_TYPES = {

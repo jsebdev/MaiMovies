@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Card } from "../Card";
 import { useNavigation } from "@react-navigation/native";
-import { IMAGE_SCREEN } from "@app/utils/constants";
+import { IMAGE_LIST_SCREEN } from "@app/utils/constants";
 
 export const SeasonCard = ({
   posterUrl,
@@ -14,7 +14,7 @@ export const SeasonCard = ({
 }) => {
   const navigation = useNavigation();
   const toggleImage = () => {
-    navigation.push(IMAGE_SCREEN, {
+    navigation.push(IMAGE_LIST_SCREEN, {
       imageUrl: bigPosterUrl,
       mediaId,
       mediaType,
