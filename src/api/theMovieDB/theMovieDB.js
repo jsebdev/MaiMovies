@@ -149,7 +149,7 @@ export class TheMovieDBController extends ApiController {
       console.log(
         `Error fetching url: ${url} status code is ${response.status}`
       );
-      console.log("Response: ", result);
+      // console.log("Response: ", result);
       return new ApiResponse({
         success: false,
         rawValue: result,

@@ -1,13 +1,13 @@
 import { apiController } from "@app/api/apiController";
 import { AUTHENTICATE_TOKEN_LINK } from "@app/utils/constants";
 import { parseStringToDate } from "@app/utils/utils";
-import { autorun, flow, makeAutoObservable, runInAction } from "mobx";
+import { autorun, flow, makeAutoObservable } from "mobx";
 
 class UserStore {
   token = null;
   expiresAt = null;
-  session = null;
-  intervalId = null;
+  _session = null;
+  _timeoutId = null;
 
   constructor() {
     makeAutoObservable(this, {
@@ -20,8 +20,21 @@ class UserStore {
     });
   }
 
+  get session() {
+    return this._session;
+  }
+  set session(session) {
+    this._session = session;
+  }
+  get timeoutId() {
+    return this._timeoutId;
+  }
+  set timeoutId(timeoutId) {
+    this._timeoutId = timeoutId;
+  }
+
   validToken() {
-    console.log("validing token");
+    if (!this.token) return false;
     return this.expiresAt - new Date() > 0;
   }
 
@@ -29,34 +42,34 @@ class UserStore {
     this.expiresAt = null;
     this.session = null;
     this.token = null;
-    this.intervalId = null;
+    this.timeoutId = null;
   }
 
   periodicCreateSession() {
-    if (this.intervalId) {
-      console.log("inteval exists");
-      return;
-    }
-    this.intervalId = setInterval(async () => {
-      console.log("in the interval");
+    this.timeoutId = setTimeout(async () => {
       if (!this.validToken()) {
-        console.log("token is not valid anymore");
-        clearInterval(this.intervalId);
         this.clearAll();
         return;
       }
-      const result = await apiController.createNewSession(this.token);
-      if (!result.success) return;
-      clearInterval(this.intervalId);
-      runInAction(() => {
-        this.session = result.value;
-        this.intervalId = null;
-      });
+      const result = await this.createNewSession();
+      if (!result.success) {
+        this.periodicCreateSession();
+        return;
+      }
+      this.session = result.value;
+      this.timeoutId = null;
     }, 3000);
   }
 
+  attemptUntilCreateSession() {
+    if (this.timeoutId && this.validToken()) {
+      return;
+    }
+    this.periodicCreateSession();
+  }
+
   *createNewToken() {
-    if (this.token) {
+    if (this.validToken()) {
       return { success: true };
     }
     const result = yield apiController.getNewToken();
@@ -81,7 +94,7 @@ class UserStore {
       this.session = null;
       this.token = null;
       this.expiresAt = null;
-      this.intervalId = null;
+      this.timeoutId = null;
     }
     return result;
   }

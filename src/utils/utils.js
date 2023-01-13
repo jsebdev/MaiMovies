@@ -1,4 +1,4 @@
-import { subMinutes, subSeconds } from "date-fns/esm";
+// import { subMinutes, subSeconds } from "date-fns/esm";
 import { VOTE_COLORS, VOTE_COLORS_VALUES } from "./constants";
 
 /**
@@ -71,10 +71,7 @@ export const getVoteColor = (vote) =>
 
 export const parseStringToDate = (str) => {
   const newStr = str.replace(" UTC", "Z").trim().replace(" ", "T");
-  console.log("74: newStr >>>", newStr);
   const date = new Date(newStr);
-  console.log("76: date >>>", date);
-  console.log("now is ", new Date());
-  return subSeconds(subMinutes(date, 59), 10);
-  // return date;
+  // return subSeconds(subMinutes(date, 59), 10);
+  return date;
 };

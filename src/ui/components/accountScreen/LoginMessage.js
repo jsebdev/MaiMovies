@@ -9,6 +9,7 @@ export const LoginMessage = () => {
   const { userStore } = useStore();
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+
   const getAccess = async () => {
     setErrorMessage(null);
     setLoading(true);
@@ -23,7 +24,7 @@ export const LoginMessage = () => {
     const supportedLink = await Linking.canOpenURL(authorizationLink);
     if (supportedLink) {
       Linking.openURL(authorizationLink);
-      userStore.periodicCreateSession();
+      userStore.attemptUntilCreateSession();
     } else {
       console.error("Link is not supported to open ", authorizationLink);
     }
@@ -35,10 +36,24 @@ export const LoginMessage = () => {
         All data in this application is obtained and stored in{" "}
         <MyLink href={"https://www.themoviedb.org/"}>www.themoviedb.org</MyLink>
         . Hence, for you to create and edit your lists, you&apos;ll have to have
-        an account in TMDB.
+        an account.
       </Paragraph>
       <MyButton rootStyle={{ marginVertical: 10 }} onPress={getAccess}>
         Access to my TMDB account
+      </MyButton>
+      <MyButton
+        rootStyle={{ marginVertical: 10 }}
+        onPress={() => {
+          setTimeout(async () => {
+            console.log("bam");
+            await new Promise((resolve) => {
+              setTimeout(resolve, 1000);
+            });
+            console.log("bum");
+          }, 1000);
+        }}
+      >
+        play
       </MyButton>
       {errorMessage && <Paragraph>{errorMessage}</Paragraph>}
       {loading && <ActivityIndicator size="large" />}
