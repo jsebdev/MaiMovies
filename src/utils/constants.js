@@ -6,6 +6,13 @@ export const API_CONFIGURATION = "/configuration";
 export const API_MEDIA = (mediaType, mediaId) => `/${mediaType}/${mediaId}`;
 export const API_MEDIA_VIDEOS = (mediaType, mediaId) =>
   `/${mediaType}/${mediaId}/videos`;
+export const API_NEW_TOKEN = "/authentication/token/new";
+export const AUTHENTICATE_TOKEN_LINK = (token) =>
+  `https://www.themoviedb.org/authenticate/${token}`;
+export const API_NEW_SESSION = "/authentication/session/new";
+export const API_DELETE_SESSION = "/authentication/session";
+
+// Screen names
 export const HOME_SCREEN = "HomeScreen";
 export const MOVIE_SCREEN = "MovieScreen";
 export const TV_SHOW_SCREEN = "TvShowScreen";

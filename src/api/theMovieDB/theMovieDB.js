@@ -1,9 +1,12 @@
 import { ACCESS_TOKEN } from "@env";
 import {
   API_CONFIGURATION,
+  API_DELETE_SESSION,
   API_HOST,
   API_MEDIA,
   API_MEDIA_VIDEOS,
+  API_NEW_SESSION,
+  API_NEW_TOKEN,
   API_WEEKLY_TRENDING,
   IMAGES_SIZES,
 } from "@app/utils/constants";
@@ -37,6 +40,52 @@ export class TheMovieDBController extends ApiController {
       );
     })();
   }
+
+  deleteSession = async (sessionId) => {
+    try {
+      const url = `${API_HOST}${API_DELETE_SESSION}`;
+      const body = { session_id: sessionId };
+      const result = await this.#fetch(url, { method: "DELETE", body });
+      if (!result.success) return result;
+      return result;
+    } catch (err) {
+      console.error("Error deleting session");
+      console.error(err);
+      return new ApiResponse({ success: false, message: err.message });
+    }
+  };
+
+  createNewSession = async (token) => {
+    try {
+      const url = `${API_HOST}${API_NEW_SESSION}`;
+      const body = { request_token: token };
+      const result = await this.#fetch(url, { method: "POST", body });
+      if (!result.success) return result;
+      result.value = result.rawValue.session_id;
+      return result;
+    } catch (err) {
+      console.error("Error creating new session");
+      console.error(err);
+      return new ApiResponse({ success: false, message: err.message });
+    }
+  };
+
+  getNewToken = async () => {
+    try {
+      const url = `${API_HOST}${API_NEW_TOKEN}`;
+      const result = await this.#fetch(url);
+      if (!result.success) return result;
+      result.value = {
+        token: result.rawValue.request_token,
+        expiresAt: result.rawValue.expires_at,
+      };
+      return result;
+    } catch (err) {
+      console.error("Error obtaining new token");
+      console.error(err);
+      return new ApiResponse({ success: false, message: err.message });
+    }
+  };
 
   getWeeklyTrendingMedia = async (page = 1, mediaType = "movie") => {
     try {
@@ -89,16 +138,18 @@ export class TheMovieDBController extends ApiController {
   };
 
   // Utils Functions
-  #fetch = async (url) => {
+  #fetch = async (url, { method, body } = { method: "GET" }) => {
     const response = await fetch(url, {
       headers: this.myHeaders,
+      method: method,
+      body: JSON.stringify(body),
     });
     const result = await response.json();
     if (response.status !== 200) {
-      console.error(
+      console.log(
         `Error fetching url: ${url} status code is ${response.status}`
       );
-      console.error("Response: ", result);
+      console.log("Response: ", result);
       return new ApiResponse({
         success: false,
         rawValue: result,

@@ -6,14 +6,12 @@ import { Paragraph } from "./Paragraph";
 export const MyButton = ({
   children,
   onPress,
-  containerStyle,
+  rootStyle,
   pressableStyle,
   textStyle,
   variant,
 }) => {
-  const inheritedContainerStyle = Array.isArray(containerStyle)
-    ? containerStyle
-    : [containerStyle];
+  const inheritedRootStyle = Array.isArray(rootStyle) ? rootStyle : [rootStyle];
   const inheritedPressableStyle = Array.isArray(pressableStyle)
     ? pressableStyle
     : [pressableStyle];
@@ -25,7 +23,7 @@ export const MyButton = ({
     <View
       style={[
         containerStyles.default,
-        ...inheritedContainerStyle,
+        ...inheritedRootStyle,
         variantContainerStyle,
       ]}
     >
@@ -73,7 +71,7 @@ MyButton.propTypes = {
   children: PropTypes.node,
   onPress: PropTypes.func,
   pressableStyle: PropTypes.object,
-  containerStyle: PropTypes.object,
+  rootStyle: PropTypes.object,
   textStyle: PropTypes.object,
   variant: PropTypes.oneOf(Object.keys(textStyles)),
 };

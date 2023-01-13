@@ -1,5 +1,5 @@
 import { apiController } from "@app/api/apiController";
-import { action, autorun, makeObservable, observable, runInAction } from "mobx";
+import { action, makeObservable, observable, runInAction } from "mobx";
 
 class MediaStore {
   medias = {};
@@ -10,9 +10,9 @@ class MediaStore {
       fetchMedia: action,
       fetchMediaVideos: action,
     });
-    autorun(() => {
-      // console.log("29: this.medias >>>", this.medias);
-    });
+    // autorun(() => {
+    // console.log("29: this.medias >>>", this.medias);
+    // });
   }
 
   getMedia(mediaType, mediaId) {
