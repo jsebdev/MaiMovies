@@ -12,7 +12,9 @@ export const AUTHENTICATE_TOKEN_LINK = (token) =>
 export const API_NEW_SESSION = "/authentication/session/new";
 export const API_DELETE_SESSION = "/authentication/session";
 
-// Screen names
+// Navigation and Screen names
+export const SEARCH_NAVIGATION = "SearchNavigation";
+export const SEARCH_SCREEN = "SearchScreen";
 export const HOME_SCREEN = "HomeScreen";
 export const MOVIE_SCREEN = "MovieScreen";
 export const TV_SHOW_SCREEN = "TvShowScreen";
@@ -38,8 +40,9 @@ export const FLAT_LIST_SCENE_WIDTH = 250;
 export const colors = {
   background: "#000000",
   tabs: "#02081F",
-  text: "white",
+  bright: "white",
   link: "#918aff",
+  dimmed: "#aaa",
 };
 export const VOTE_COLORS = [
   {

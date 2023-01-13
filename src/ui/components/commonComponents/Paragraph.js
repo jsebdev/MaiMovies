@@ -15,7 +15,7 @@ export const Paragraph = ({ children, style, variant }) => {
 
 const styles = StyleSheet.create({
   default: {
-    color: colors.text,
+    color: colors.bright,
   },
   title: {
     fontSize: 20,

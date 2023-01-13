@@ -8,6 +8,7 @@ import { FavoritesNavigation } from "./FavoritesNavigation";
 import { HomeNavigation } from "./HomeNavigation";
 import { AccountNavigation } from "./AccountNavigation";
 import { colors, HOME_SCREEN } from "@app/utils/constants";
+import { generalScreenOptions } from "@app/ui/globalStyles";
 
 const Tab = createBottomTabNavigator();
 
@@ -15,18 +16,14 @@ export const Navigation = () => {
   return (
     <Tab.Navigator
       initialRouteName={HOME_SCREEN}
-      screenOptions={{
-        headerShown: false,
-        headerTintColor: "#0f0",
-        headerStyle: {
-          backgroundColor: "red",
-        },
+      screenOptions={(props) => ({
+        ...generalScreenOptions(props),
         tabBarStyle: {
           backgroundColor: colors.tabs,
           borderTopWidth: 0,
           borderTopColor: "red",
         },
-      }}
+      })}
     >
       <Tab.Screen
         name="Account"

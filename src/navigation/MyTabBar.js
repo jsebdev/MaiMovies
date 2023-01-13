@@ -1,12 +1,25 @@
 import React from "react";
 import { Animated, View, TouchableOpacity, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
-import { colors } from "@app/utils/constants";
+import Ionicons from "react-native-vector-icons/Ionicons";
+
+import { colors, SEARCH_NAVIGATION } from "@app/utils/constants";
 import { Paragraph } from "@app/ui/components/commonComponents/Paragraph";
+import { MyButton } from "@app/ui/components/commonComponents/MyButton";
 
 export function MyTabBar({ state, descriptors, navigation, position }) {
   return (
     <View style={{ flexDirection: "row", backgroundColor: colors.background }}>
+      <View style={styles.searchContainer}>
+        <MyButton
+          onPress={() => {
+            console.log("15: navigation >>>", navigation);
+            navigation.push(SEARCH_NAVIGATION);
+          }}
+        >
+          <Ionicons name="search" color={colors.dimmed} size={30} />
+        </MyButton>
+      </View>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -66,6 +79,15 @@ export function MyTabBar({ state, descriptors, navigation, position }) {
 }
 
 const styles = StyleSheet.create({
+  searchContainer: {
+    // borderWidth: 1,
+    borderColor: "red",
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   tab: {
     flex: 1,
     // backgroundColor: "red",
