@@ -10,7 +10,7 @@ export const TrendingList = observer(({ mediaType }) => {
   return (
     <View>
       <MediaList
-        mediaList={media.trendingList}
+        mediaList={Array.from(media.trendingList.values())}
         loadNewData={loadNextPageTrendingMedia}
         showSpinner={media.page < media.totalPages}
         mediaType={mediaType}
@@ -31,7 +31,7 @@ const useTrendingMedia = (mediaType) => {
   const media =
     mediaType === MEDIA_TYPES.movie ? trendingStore.movies : trendingStore.tv;
   useEffect(() => {
-    if (media.trendingList.length === 0) {
+    if (media.trendingList.size === 0) {
       (async () => loadNextPageTrendingMedia())();
     }
   }, []);

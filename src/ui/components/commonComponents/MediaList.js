@@ -24,7 +24,9 @@ export const MediaList = ({
       onEndReachedThreshold={0.5}
       ListFooterComponent={
         <View style={styles.spinnerContainer}>
-          {showSpinner && <ActivityIndicator size="large" />}
+          <View style={styles.spinner}>
+            {showSpinner && <ActivityIndicator size="large" />}
+          </View>
         </View>
       }
       showsVerticalScrollIndicator={false}
@@ -36,6 +38,11 @@ export const MediaList = ({
 const styles = StyleSheet.create({
   flatListContentContainer: {},
   spinnerContainer: {
+    // borderWidth: 1,
+    // borderColor: "blue",
+    alignItems: "center",
+  },
+  spinner: {
     height: 80,
     width: 80,
     justifyContent: "center",

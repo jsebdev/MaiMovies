@@ -20,12 +20,12 @@ export const SearchScreen = observer(() => {
             Search results for &rdquo;{searchStore.searchText}&rdquo;
           </Paragraph>
           <SearchResult
-            list={searchStore.movies.list}
+            list={Array.from(searchStore.movies.list.values())}
             pendingResults={searchStore.pendingResults}
             loadMoreResults={fetchNewMovies}
           />
           <SearchResult
-            list={searchStore.tv.list}
+            list={Array.from(searchStore.tv.list.values())}
             pendingResults={searchStore.pendingResults}
             loadMoreResults={fetchNewTvShows}
           />

@@ -8,7 +8,7 @@ import { VideoImage } from "./VideoImage";
 
 export const MediaVideos = observer(({ mediaType, mediaId }) => {
   const { mediaStore } = useMedia(mediaType, mediaId);
-  const videos = mediaStore.medias[mediaType][mediaId].videos;
+  const videos = mediaStore.medias[mediaType].get(mediaId).videos;
   const youtubeVideos = videos.filter((video) => video.site === "YouTube");
   const otherVideos = videos.filter((video) => video.site !== "YouTube");
 

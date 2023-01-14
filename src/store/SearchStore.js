@@ -6,7 +6,7 @@ class SearchStore {
   _searchText = "";
   pendingResults = 0;
   movies = {
-    list: [],
+    list: new Map(),
     page: 0,
     totalPages: Infinity,
   };
@@ -32,12 +32,12 @@ class SearchStore {
   set searchText(searchText) {
     this._searchText = searchText;
     this.movies = {
-      list: [],
+      list: new Map(),
       page: 0,
       totalPages: Infinity,
     };
     this.tv = {
-      list: [],
+      list: new Map(),
       page: 0,
       totalPages: Infinity,
     };
@@ -55,10 +55,11 @@ class SearchStore {
     );
     if (result.success === true) {
       media.totalPages = result.totalPages;
-      media.list = [
-        ...media.list,
-        ...result.value.filter((media) => media.poster.posterPath),
-      ];
+      result.value
+        .filter((m) => m.poster.posterPath)
+        .forEach((m) => {
+          media.list.set(m.id, m);
+        });
     }
     this.pendingResults--;
   }

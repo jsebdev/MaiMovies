@@ -4,12 +4,12 @@ import { makeAutoObservable, runInAction } from "mobx";
 
 class TrendingStore {
   movies = {
-    trendingList: [],
+    trendingList: new Map(),
     page: 0,
     totalPages: Infinity,
   };
   tv = {
-    trendingList: [],
+    trendingList: new Map(),
     page: 0,
     totalPages: Infinity,
   };
@@ -28,7 +28,11 @@ class TrendingStore {
     );
     if (result.success === true) {
       runInAction(() => {
-        media.trendingList = [...media.trendingList, ...result.value];
+        result.value
+          .filter((m) => m.poster.posterPath)
+          .forEach((m) => {
+            media.trendingList.set(m.id, m);
+          });
         media.totalPages = result.totalPages;
       });
     }

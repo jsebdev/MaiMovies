@@ -16,26 +16,23 @@ class MediaStore {
   }
 
   getMedia(mediaType, mediaId) {
-    if (!this.medias[mediaType] || !this.medias[mediaType][mediaId]) {
+    if (!this.medias[mediaType] || !this.medias[mediaType].has(mediaId)) {
       return null;
     }
-    return this.medias[mediaType][mediaId];
+    return this.medias[mediaType].get(mediaId);
   }
 
   async fetchMedia(mediaType, mediaId) {
-    if (
-      this.medias[mediaType] &&
-      Object.keys(this.medias[mediaType]).includes(mediaId)
-    ) {
+    if (this.medias[mediaType] && this.medias[mediaType].has(mediaId)) {
       return;
     }
     const result = await apiController.getMedia(mediaType, mediaId);
     if (!result.success) return;
     runInAction(() => {
       if (!this.medias[mediaType]) {
-        this.medias[mediaType] = {};
+        this.medias[mediaType] = new Map();
       }
-      this.medias[mediaType][mediaId] = result.value;
+      this.medias[mediaType].set(mediaId, result.value);
     });
   }
 
@@ -43,7 +40,7 @@ class MediaStore {
     const result = await apiController.getMediaVideos(mediaType, mediaId);
     if (!result.success) return;
     runInAction(() => {
-      this.medias[mediaType][mediaId].videos = result.value;
+      this.medias[mediaType].get(mediaId).videos = result.value;
     });
   }
 }

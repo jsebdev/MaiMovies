@@ -19,7 +19,6 @@ export const generalScreenOptions = ({ navigation }) => ({
       size={30}
       style={{ marginLeft: 10 }}
       onPress={() => {
-        console.log("22: navigation >>>", navigation);
         navigation.goBack();
       }}
     />
