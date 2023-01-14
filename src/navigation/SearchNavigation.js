@@ -12,7 +12,7 @@ export const SearchNavigation = () => {
       screenOptions={(props) => ({
         ...generalScreenOptions(props),
         headerShown: true,
-        title: "Search",
+        title: "Search Movies and Shows",
       })}
     >
       <Stack.Screen name={SEARCH_SCREEN} component={SearchScreen} />

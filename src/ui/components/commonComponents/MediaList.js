@@ -1,4 +1,4 @@
-import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
 import React from "react";
 import PropTypes from "prop-types";
 import { MediaCard } from "./MediaCard";
@@ -23,7 +23,9 @@ export const MediaList = ({
       onEndReached={loadNewData}
       onEndReachedThreshold={0.5}
       ListFooterComponent={
-        showSpinner && <ActivityIndicator size="large" style={styles.spinner} />
+        <View style={styles.spinnerContainer}>
+          {showSpinner && <ActivityIndicator size="large" />}
+        </View>
       }
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
@@ -32,12 +34,14 @@ export const MediaList = ({
 };
 
 const styles = StyleSheet.create({
-  flatListContentContainer: {
-    marginBottom: 50,
-  },
-  spinner: {
-    marginTop: 20,
-    marginBottom: 60,
+  flatListContentContainer: {},
+  spinnerContainer: {
+    height: 80,
+    width: 80,
+    justifyContent: "center",
+    // borderColor: "red",
+    // borderWidth: 2,
+    paddingHorizontal: 30,
   },
 });
 

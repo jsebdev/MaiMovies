@@ -7,6 +7,7 @@ import {
   API_MEDIA_VIDEOS,
   API_NEW_SESSION,
   API_NEW_TOKEN,
+  API_SEARCH_MEDIA,
   API_WEEKLY_TRENDING,
   IMAGES_SIZES,
 } from "@app/utils/constants";
@@ -87,6 +88,25 @@ export class TheMovieDBController extends ApiController {
     }
   };
 
+  searchMedia = async (page = 1, mediaType, searchText) => {
+    try {
+      const url = `${API_HOST}${API_SEARCH_MEDIA(mediaType, searchText, page)}`;
+      const result = await this.#fetch(url);
+      if (!result.success) return result;
+      result.value = result.rawValue.results.map((media) =>
+        this.#apiMedia2Media(media, mediaType)
+      );
+      result.totalPages = result.rawValue.total_pages;
+      return result;
+    } catch (err) {
+      console.error(
+        `Error fetching search media for searchText: ${searchText} and mediaType: ${mediaType}`
+      );
+      console.error(err);
+      return new ApiResponse({ success: false, message: err.message });
+    }
+  };
+
   getWeeklyTrendingMedia = async (page = 1, mediaType = "movie") => {
     try {
       const url = `${API_HOST}${API_WEEKLY_TRENDING(mediaType, page)}`;
@@ -139,6 +159,7 @@ export class TheMovieDBController extends ApiController {
 
   // Utils Functions
   #fetch = async (url, { method, body } = { method: "GET" }) => {
+    console.log("162: url >>>", url);
     const response = await fetch(url, {
       headers: this.myHeaders,
       method: method,

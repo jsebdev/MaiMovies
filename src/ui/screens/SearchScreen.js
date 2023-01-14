@@ -1,52 +1,62 @@
-import React, { useRef, useState } from "react";
-import View from "@expo/html-elements/build/primitives/View";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import React from "react";
 
 import { Paragraph } from "../components/commonComponents/Paragraph";
 import { BackgroundView } from "../components/commonComponents/BackgroundView";
-import { colors } from "@app/utils/constants";
-import { StyleSheet, TextInput } from "react-native";
+import { MEDIA_TYPES } from "@app/utils/constants";
+import { StyleSheet, View } from "react-native";
+import { observer } from "mobx-react-lite";
+import { useStore } from "@app/store/store.hook";
+import { Searcher } from "../components/searchScreen/Searcher";
+import { SearchResult } from "../components/searchScreen/SearchResult";
 
-export const SearchScreen = () => {
-  const [searchText, setSearchText] = useState("");
-  const search = () => {
-    console.log("13: searchText >>>", searchText);
-  };
+export const SearchScreen = observer(() => {
+  const { searchStore, search, fetchNewMovies, fetchNewTvShows } = useSearch();
   return (
     <BackgroundView>
-      <View style={styles.searchBar}>
-        <TextInput
-          style={styles.input}
-          value={searchText}
-          onChangeText={setSearchText}
-        />
-        <Ionicons
-          name="search"
-          color={colors.dimmed}
-          size={30}
-          style={styles.searchButton}
-          onPress={search}
-        />
-      </View>
+      <Searcher search={search} />
+      {searchStore.searchText && (
+        <View style={styles.resultsContainer}>
+          <Paragraph style={styles.message}>
+            Search results for &rdquo;{searchStore.searchText}&rdquo;
+          </Paragraph>
+          <SearchResult
+            list={searchStore.movies.list}
+            pendingResults={searchStore.pendingResults}
+            loadMoreResults={fetchNewMovies}
+          />
+          <SearchResult
+            list={searchStore.tv.list}
+            pendingResults={searchStore.pendingResults}
+            loadMoreResults={fetchNewTvShows}
+          />
+        </View>
+      )}
     </BackgroundView>
   );
-};
+});
 
 const styles = StyleSheet.create({
-  searchBar: {
-    borderColor: colors.bright,
-    borderWidth: 2,
-    borderRadius: 8,
-    paddingVertical: 8,
-    flexDirection: "row",
+  resultsContainer: {
+    marginTop: 20,
   },
-  input: {
-    flex: 1,
-    color: colors.bright,
-    fontSize: 20,
-    paddingHorizontal: 10,
-  },
-  searchButton: {
-    marginHorizontal: 10,
+  message: {
+    textAlign: "center",
+    marginBottom: 30,
   },
 });
+
+const useSearch = () => {
+  const { searchStore } = useStore();
+  const search = (text) => {
+    searchStore.searchText = text;
+    fetchNewMovies();
+    fetchNewTvShows();
+  };
+  const fetchNewMovies = () => {
+    searchStore.fetchNextPageMediaSearch(MEDIA_TYPES.movie);
+  };
+  const fetchNewTvShows = () => {
+    searchStore.fetchNextPageMediaSearch(MEDIA_TYPES.tv);
+  };
+  return { searchStore, search, fetchNewMovies, fetchNewTvShows };
+};

@@ -11,6 +11,8 @@ export const AUTHENTICATE_TOKEN_LINK = (token) =>
   `https://www.themoviedb.org/authenticate/${token}`;
 export const API_NEW_SESSION = "/authentication/session/new";
 export const API_DELETE_SESSION = "/authentication/session";
+export const API_SEARCH_MEDIA = (mediaType, searchText, page) =>
+  `/search/${mediaType}?query="${searchText}"&page=${page}`;
 
 // Navigation and Screen names
 export const SEARCH_NAVIGATION = "SearchNavigation";

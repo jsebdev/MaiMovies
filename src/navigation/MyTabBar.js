@@ -13,7 +13,6 @@ export function MyTabBar({ state, descriptors, navigation, position }) {
       <View style={styles.searchContainer}>
         <MyButton
           onPress={() => {
-            console.log("15: navigation >>>", navigation);
             navigation.push(SEARCH_NAVIGATION);
           }}
         >
