@@ -20,10 +20,10 @@ class SearchStore {
     makeAutoObservable(this, {
       fetchNextPageMediaSearch: flow,
     });
-    autorun(() => {
-      console.log("23: this.movies.page >>>", this.movies.page);
-      console.log("24: this.tv.page >>>", this.tv.page);
-    });
+    // autorun(() => {
+    //   console.log("23: this.movies.page >>>", this.movies.page);
+    //   console.log("24: this.tv.page >>>", this.tv.page);
+    // });
   }
 
   get searchText() {

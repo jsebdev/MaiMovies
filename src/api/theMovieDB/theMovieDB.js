@@ -159,7 +159,6 @@ export class TheMovieDBController extends ApiController {
 
   // Utils Functions
   #fetch = async (url, { method, body } = { method: "GET" }) => {
-    console.log("162: url >>>", url);
     const response = await fetch(url, {
       headers: this.myHeaders,
       method: method,

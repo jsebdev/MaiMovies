@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 
 export const ImageScreen = ({ route, navigation }) => {
   const { imageUrl } = route.params;
-  console.log("7: imageUrl >>>", imageUrl);
   return (
     <View>
       <Pressable style={styles.container} onPress={() => navigation.goBack()}>

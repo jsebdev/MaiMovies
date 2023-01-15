@@ -1,20 +1,27 @@
 import React from "react";
 import { Paragraph } from "@components/commonComponents/Paragraph";
-import { MEDIA_TYPES } from "@app/utils/constants";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { MediaList } from "@components/commonComponents/MediaList";
 import PropTypes from "prop-types";
 
-export const SearchResult = ({ list, pendingResults, loadMoreResults }) => {
+export const SearchResult = ({
+  list,
+  pendingResults,
+  loadMoreResults,
+  resultTitle,
+  mediaType,
+}) => {
   return (
     <View style={styles.listContainer}>
-      <Paragraph variant="title" style={styles.sectionTitle}>
-        Movies:
-      </Paragraph>
+      {resultTitle && (
+        <Paragraph variant="title" style={styles.sectionTitle}>
+          {resultTitle}
+        </Paragraph>
+      )}
       {list.length > 0 ? (
         <MediaList
           mediaList={list}
-          mediaType={MEDIA_TYPES.movie}
+          mediaType={mediaType}
           horizontal={true}
           loadNewData={loadMoreResults}
           showSpinner={pendingResults > 0}
@@ -53,4 +60,6 @@ SearchResult.propTypes = {
   list: PropTypes.arrayOf(PropTypes.object).isRequired,
   pendingResults: PropTypes.number.isRequired,
   loadMoreResults: PropTypes.func,
+  resultTitle: PropTypes.string,
+  mediaType: PropTypes.string,
 };

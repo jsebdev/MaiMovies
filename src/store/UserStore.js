@@ -15,9 +15,9 @@ class UserStore {
       createNewSession: flow,
       deleteSession: flow,
     });
-    autorun(() => {
-      console.log("UserStore is: ", this);
-    });
+    // autorun(() => {
+    //   console.log("UserStore is: ", this);
+    // });
   }
 
   get session() {

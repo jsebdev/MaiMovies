@@ -41,20 +41,6 @@ export const LoginMessage = () => {
       <MyButton rootStyle={{ marginVertical: 10 }} onPress={getAccess}>
         Access to my TMDB account
       </MyButton>
-      <MyButton
-        rootStyle={{ marginVertical: 10 }}
-        onPress={() => {
-          setTimeout(async () => {
-            console.log("bam");
-            await new Promise((resolve) => {
-              setTimeout(resolve, 1000);
-            });
-            console.log("bum");
-          }, 1000);
-        }}
-      >
-        play
-      </MyButton>
       {errorMessage && <Paragraph>{errorMessage}</Paragraph>}
       {loading && <ActivityIndicator size="large" />}
     </View>

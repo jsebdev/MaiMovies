@@ -5,7 +5,10 @@ import { Dimensions } from "react-native";
 import { MyTabBar } from "./MyTabBar";
 import { TrendingMoviesNavigation } from "./TrendingMoviesNavigation";
 import { TrendingTvNavigation } from "./TrendingTvNavigation";
-import { IMAGE_LIST_SCREEN } from "@app/utils/constants";
+import {
+  MOVIES_TRENDING_NAVIGATION,
+  TV_TRENDING_NAVIGATION,
+} from "@app/utils/constants";
 
 const Tabs = createMaterialTopTabNavigator();
 
@@ -30,12 +33,12 @@ export const HomeNavigation = () => {
       }}
     >
       <Tabs.Screen
-        name="TrendingMoviesNavigation"
+        name={MOVIES_TRENDING_NAVIGATION}
         options={{ title: "Movies" }}
         component={TrendingMoviesNavigation}
       />
       <Tabs.Screen
-        name="TrendingTvNavigation"
+        name={TV_TRENDING_NAVIGATION}
         options={{ title: "Tv" }}
         component={TrendingTvNavigation}
       />

@@ -20,6 +20,11 @@ export const Searcher = ({ search }) => {
         style={styles.input}
         value={searchText}
         onChangeText={setSearchText}
+        returnKeyType="search"
+        enablesReturnKeyAutomatically={true}
+        onSubmitEditing={() => {
+          handleSearch();
+        }}
       />
       <Entypo
         name="cross"

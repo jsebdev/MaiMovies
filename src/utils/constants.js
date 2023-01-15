@@ -16,12 +16,17 @@ export const API_SEARCH_MEDIA = (mediaType, searchText, page) =>
 
 // Navigation and Screen names
 export const SEARCH_NAVIGATION = "SearchNavigation";
+export const TV_TRENDING_NAVIGATION = "TvTrendingNavigation";
+export const MOVIES_TRENDING_NAVIGATION = "MoviesTrendingNavigation";
+export const TV_TRENDING_SCREEN = "TvTrendingScreen";
+export const MOVIES_TRENDING_SCREEN = "MoviesTrendingScreen";
 export const SEARCH_SCREEN = "SearchScreen";
 export const HOME_SCREEN = "HomeScreen";
 export const MOVIE_SCREEN = "MovieScreen";
 export const TV_SHOW_SCREEN = "TvShowScreen";
 export const IMAGE_LIST_SCREEN = "ImageListScreen";
 export const YOUTUBE_SITE = "YouTube";
+export const MEDIA_SEARCH_SCREEN = "MediaSearchScreen";
 
 export const MEDIA_TYPES = {
   movie: "movie",
