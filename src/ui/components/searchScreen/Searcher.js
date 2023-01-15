@@ -13,7 +13,6 @@ export const Searcher = ({ search }) => {
       search(searchText);
     }
   };
-  //todo: make searcher search when click or press enter
   return (
     <View style={styles.searchBar}>
       <TextInput
