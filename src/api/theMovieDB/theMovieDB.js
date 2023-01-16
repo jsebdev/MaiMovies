@@ -2,6 +2,7 @@ import { ACCESS_TOKEN } from "@env";
 import {
   API_ACCOUNT_DETAILS,
   API_CONFIGURATION,
+  API_CREATE_NEW_LIST,
   API_DELETE_SESSION,
   API_GET_LIST,
   API_HOST,
@@ -66,20 +67,6 @@ export class TheMovieDBController extends ApiController {
     }
   };
 
-  deleteSession = async (sessionId) => {
-    try {
-      const url = `${API_HOST}${API_DELETE_SESSION}`;
-      const body = { session_id: sessionId };
-      const result = await this.#fetch(url, { method: "DELETE", body });
-      if (!result.success) return result;
-      return result;
-    } catch (err) {
-      console.error("Error deleting session");
-      console.error(err);
-      return new ApiResponse({ success: false, message: err.message });
-    }
-  };
-
   getList = async (listId) => {
     try {
       const url = `${API_HOST}${API_GET_LIST(listId)}`;
@@ -106,21 +93,6 @@ export class TheMovieDBController extends ApiController {
       console.error(
         `Error obtaining lists for account: ${accountId}, session: ${sessionId}`
       );
-      console.error(err);
-      return new ApiResponse({ success: false, message: err.message });
-    }
-  };
-
-  createNewSession = async (token) => {
-    try {
-      const url = `${API_HOST}${API_NEW_SESSION}`;
-      const body = { request_token: token };
-      const result = await this.#fetch(url, { method: "POST", body });
-      if (!result.success) return result;
-      result.value = result.rawValue.session_id;
-      return result;
-    } catch (err) {
-      console.error("Error creating new session");
       console.error(err);
       return new ApiResponse({ success: false, message: err.message });
     }
@@ -212,6 +184,53 @@ export class TheMovieDBController extends ApiController {
     }
   };
 
+  //post methods
+  createNewSession = async (token) => {
+    try {
+      const url = `${API_HOST}${API_NEW_SESSION}`;
+      const body = { request_token: token };
+      const result = await this.#fetch(url, { method: "POST", body });
+      if (!result.success) return result;
+      result.value = result.rawValue.session_id;
+      return result;
+    } catch (err) {
+      console.error("Error creating new session");
+      console.error(err);
+      return new ApiResponse({ success: false, message: err.message });
+    }
+  };
+
+  createNewList = async (sessionId, listInfo) => {
+    try {
+      const url = `${API_HOST}${API_CREATE_NEW_LIST(sessionId)}`;
+      const result = await this.#fetch(url, { method: "POST", body: listInfo });
+      if (!result.success) {
+        result.errors = result.rawValue.errors;
+        return result;
+      }
+      return result;
+    } catch (err) {
+      console.error("Error creating new List");
+      console.error(err);
+      return new ApiResponse({ success: false, message: err.message });
+    }
+  };
+
+  //delete methods
+  deleteSession = async (sessionId) => {
+    try {
+      const url = `${API_HOST}${API_DELETE_SESSION}`;
+      const body = { session_id: sessionId };
+      const result = await this.#fetch(url, { method: "DELETE", body });
+      if (!result.success) return result;
+      return result;
+    } catch (err) {
+      console.error("Error deleting session");
+      console.error(err);
+      return new ApiResponse({ success: false, message: err.message });
+    }
+  };
+
   // Utils Functions
   #fetch = async (url, { method, body } = { method: "GET" }) => {
     const response = await fetch(url, {
@@ -220,11 +239,12 @@ export class TheMovieDBController extends ApiController {
       body: JSON.stringify(body),
     });
     const result = await response.json();
-    if (response.status !== 200) {
+    if (![200, 201].includes(response.status)) {
       console.log(
-        `Error fetching url: ${url} status code is ${response.status}`
+        `Error fetching url: ${url}, method: ${method}, status code is ${response.status}`
       );
-      // console.log("Response: ", result);
+      if (body) console.log("sent body: ", body);
+      console.log("Response: ", result);
       return new ApiResponse({
         success: false,
         rawValue: result,

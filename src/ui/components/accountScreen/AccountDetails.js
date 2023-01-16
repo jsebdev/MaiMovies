@@ -8,8 +8,7 @@ import { ListSection } from "./ListSection";
 
 export const AccountDetails = observer(() => {
   const { userStore } = useStore();
-  const lists = Array.from(userStore.lists.values());
-  // const lists = [];
+  const lists = Array.from(userStore.lists.values()).reverse();
   useEffect(() => {
     (async () => {
       await userStore.fetchAccountDetails();
@@ -29,8 +28,9 @@ export const AccountDetails = observer(() => {
         keyExtractor={(list) => list.id}
         renderItem={({ item }) => <ListItem list={item} />}
         numColumns={2}
-        // onEndReached={loadMoreData}
         onEndReachedThreshold={0.5}
+        //todo: make logic to fetch next page of lists
+        // onEndReached={loadMoreData}
         // ListFooterComponent={<FlatListLoader showSpinner={showSpinner} />}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}

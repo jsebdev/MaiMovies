@@ -2,6 +2,7 @@ import React from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { colors } from "@app/utils/constants";
+import { StyleSheet } from "react-native";
 
 export const generalScreenOptions = ({ navigation }) => ({
   // headerTransparent: true,

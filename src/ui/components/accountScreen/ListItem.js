@@ -1,14 +1,21 @@
-import { View, StyleSheet, ImageBackground } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ImageBackground,
+  TouchableWithoutFeedback,
+} from "react-native";
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Paragraph } from "../commonComponents/Paragraph";
 import { observer } from "mobx-react-lite";
 import { useStore } from "@app/store/store.hook";
 import { LinearGradientCard } from "../commonComponents/LinearGradientCard";
+import { useNavigation } from "@react-navigation/native";
+import { LIST_SCREEN } from "@app/utils/constants";
 
 export const ListItem = observer(({ list }) => {
-  // console.log("7: list >>>", list);
   const { userStore } = useStore();
+  const navigation = useNavigation();
   const Background = list.background
     ? BackgroundList(list.background)
     : LinearGradientCard;
@@ -19,14 +26,16 @@ export const ListItem = observer(({ list }) => {
     })();
   }, []);
   return (
-    <View style={styles.container}>
-      <Background style={styles.background}>
-        <Paragraph style={styles.listName}>{list.name}</Paragraph>
-        <Paragraph style={styles.itemCount}>
-          {list.itemCount} item{list.itemCount !== 1 && "s"}
-        </Paragraph>
-      </Background>
-    </View>
+    <TouchableWithoutFeedback onPress={() => navigation.push(LIST_SCREEN)}>
+      <View style={styles.container}>
+        <Background style={styles.background}>
+          <Paragraph style={styles.listName}>{list.name}</Paragraph>
+          <Paragraph style={styles.itemCount}>
+            {list.itemCount} item{list.itemCount !== 1 && "s"}
+          </Paragraph>
+        </Background>
+      </View>
+    </TouchableWithoutFeedback>
   );
 });
 

@@ -13,7 +13,7 @@ class UserStore {
   //since session and timeout are never set outside this class,
   //it's not necessary make getters and setters for them. but YOLO
   // _sessionId = null;
-  _sessionId = "141e5a3c72b049d6dbc3eb2d849d0c4d27cd80f3";
+  _sessionId = "c65b00b5a0d6850009f1ee0ca2990843fc050795";
   _timeoutId = null;
   avatar = null;
   name = null;
@@ -31,12 +31,24 @@ class UserStore {
       deleteSession: flow,
       fetchAccountDetails: flow,
       fetchLists: flow,
+      createNewList: flow,
     });
     autorun(() => {
       if (this._sessionId) {
         console.log("20: this.session >>>", this.sessionId);
       }
     });
+  }
+
+  *createNewList(listInfo) {
+    const result = yield apiController.createNewList(this.sessionId, listInfo);
+    if (result.success === true) {
+      this.lists.clear();
+      this.listTotalPages = Infinity;
+      this.listPage = 0;
+      this.fetchListsNextPage();
+    }
+    return result;
   }
 
   *fetchListItems(listId) {
@@ -47,7 +59,7 @@ class UserStore {
     if (items.length > 0) {
       this.lists.get(listId).background = `${apiController.imageBaseUrl}${
         apiController.backdropBaseSizes[IMAGES_SIZES.large]
-      }${items[0].backdrop_path}`;
+      }${items[items.length - 1].backdrop_path}`;
     }
   }
 
@@ -67,18 +79,23 @@ class UserStore {
 
   *fetchAccountDetails() {
     const result = yield apiController.getAccountDetails(this.sessionId);
-    if (result.success === true) {
-      if (result.avatar.tmdb?.avatar_path) {
-        this.avatar = `${apiController.imageBaseUrl}${
-          apiController.profileBaseSizes[IMAGES_SIZES.medium]
-        }${result.avatar.tmdb.avatar_path}`;
-      } else {
-        this.avatar = API_GRAVATAR_IMAGE_PATH(result.avatar.gravatar.hash);
+    if (result.success !== true) {
+      console.log("83: result >>>", result);
+      if (result.rawValue.status_code === 3) {
+        this.sessionId = null;
       }
-      this.name = result.name;
-      this.username = result.username;
-      this.accountId = result.accountId;
+      return result;
     }
+    if (result.avatar.tmdb?.avatar_path) {
+      this.avatar = `${apiController.imageBaseUrl}${
+        apiController.profileBaseSizes[IMAGES_SIZES.medium]
+      }${result.avatar.tmdb.avatar_path}`;
+    } else {
+      this.avatar = API_GRAVATAR_IMAGE_PATH(result.avatar.gravatar.hash);
+    }
+    this.name = result.name;
+    this.username = result.username;
+    this.accountId = result.accountId;
     return result;
   }
 
@@ -138,7 +155,6 @@ class UserStore {
   }
 
   *deleteSession() {
-    console.log("hello");
     const result = yield apiController.deleteSession(this.sessionId);
     if (result.success === true) {
       this.sessionId = null;

@@ -27,7 +27,7 @@ export const AccountHeader = observer(() => {
   );
 });
 
-const avatarSize = 90;
+const avatarSize = 100;
 
 const styles = StyleSheet.create({
   mainContainer: {

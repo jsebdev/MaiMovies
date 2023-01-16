@@ -24,8 +24,9 @@ export const ListSection = observer(({ listLength }) => {
           <Paragraph style={styles.message}>
             You don&apos;t have lists yet
           </Paragraph>
-          {/* todo: add functionality to this button */}
-          <MyButton>Create your first list</MyButton>
+          <MyButton onPress={() => navigation.push(NEW_LIST_SCREEN)}>
+            Create your first list
+          </MyButton>
         </>
       )}
     </View>
