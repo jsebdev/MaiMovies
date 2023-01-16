@@ -1,8 +1,10 @@
 import { ACCESS_TOKEN } from "@env";
 import {
+  API_ACCOUNT_DETAILS,
   API_CONFIGURATION,
   API_DELETE_SESSION,
   API_HOST,
+  API_LISTS,
   API_MEDIA,
   API_MEDIA_VIDEOS,
   API_NEW_SESSION,
@@ -18,6 +20,7 @@ import {
   throwError,
 } from "@app/api/theMovieDB/theMovieDB.utils";
 import { ApiResponse } from "@app/domain/ApiResponses";
+import { List } from "@app/domain/ListClass";
 
 export class TheMovieDBController extends ApiController {
   constructor() {
@@ -39,8 +42,28 @@ export class TheMovieDBController extends ApiController {
       this.logoBaseSizes = this.#getImagesBaseSizes(
         this.configuration.images.logo_sizes
       );
+      this.profileBaseSizes = this.#getImagesBaseSizes(
+        this.configuration.images.profile_sizes
+      );
     })();
   }
+
+  getAccountDetails = async (sessionId) => {
+    try {
+      const url = `${API_HOST}${API_ACCOUNT_DETAILS(sessionId)}`;
+      const result = await this.#fetch(url);
+      if (!result.success) return result;
+      result.avatar = result.rawValue.avatar;
+      result.name = result.rawValue.name;
+      result.username = result.rawValue.username;
+      result.accountId = result.rawValue.id;
+      return result;
+    } catch (err) {
+      console.error("Error fetching account details");
+      console.error(err);
+      return new ApiResponse({ success: false, message: err.message });
+    }
+  };
 
   deleteSession = async (sessionId) => {
     try {
@@ -51,6 +74,23 @@ export class TheMovieDBController extends ApiController {
       return result;
     } catch (err) {
       console.error("Error deleting session");
+      console.error(err);
+      return new ApiResponse({ success: false, message: err.message });
+    }
+  };
+
+  getLists = async (accountId, sessionId, page = 1) => {
+    try {
+      const url = `${API_HOST}${API_LISTS(accountId, sessionId, page)}`;
+      const result = await this.#fetch(url);
+      if (!result.success) return result;
+      result.value = result.rawValue.results.map((list) => new List(list));
+      result.totalPages = result.rawValue.total_pages;
+      return result;
+    } catch (err) {
+      console.error(
+        `Error creating obtaining lists for account: ${accountId}, session: ${sessionId}`
+      );
       console.error(err);
       return new ApiResponse({ success: false, message: err.message });
     }
@@ -234,9 +274,13 @@ export class TheMovieDBController extends ApiController {
     return baseSizes;
   };
 
+  get imageBaseUrl() {
+    return this.configuration.images.base_url;
+  }
+
   #apiMedia2Media = (media, mediaType) => {
     return apiMedia2Media(media, mediaType, {
-      baseImageUrl: this.configuration.images.base_url,
+      baseImageUrl: this.imageBaseUrl,
       postersBaseSizes: this.postersBaseSizes,
       backdropBaseSizes: this.backdropBaseSizes,
       stillBaseSizes: this.stillBaseSizes,

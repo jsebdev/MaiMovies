@@ -13,6 +13,14 @@ export const API_NEW_SESSION = "/authentication/session/new";
 export const API_DELETE_SESSION = "/authentication/session";
 export const API_SEARCH_MEDIA = (mediaType, searchText, page) =>
   `/search/${mediaType}?query="${searchText}"&page=${page}`;
+export const API_ACCOUNT_DETAILS = (sessionId) =>
+  `/account?session_id=${sessionId}`;
+export const API_LISTS = (accountId, sessionId, page) =>
+  `/account/${accountId}/lists?session_id=${sessionId}&page=${page}`;
+
+// Gravatar API
+export const API_GRAVATAR_IMAGE_PATH = (hash) =>
+  `https://www.gravatar.com/avatar/${hash}`;
 
 // Navigation and Screen names
 export const SEARCH_NAVIGATION = "SearchNavigation";
@@ -23,7 +31,9 @@ export const MEDIA_SCREEN = "MediaScreen";
 export const TV_TRENDING_SCREEN = "TvTrendingScreen";
 export const MOVIES_TRENDING_SCREEN = "MoviesTrendingScreen";
 export const SEARCH_SCREEN = "SearchScreen";
-export const HOME_SCREEN = "HomeScreen";
+export const HOME_NAVIGATION = "HomeNavigation";
+export const TRENDING_NAVIGATION = "TrendingNavigation";
+export const ACCOUNT_NAVIGATION = "AccountNavigation";
 // export const MOVIE_SCREEN = "MovieScreen";
 // export const TV_SHOW_SCREEN = "TvShowScreen";
 export const IMAGE_LIST_SCREEN = "ImageListScreen";
@@ -46,6 +56,7 @@ export const IMAGES_SIZES = {
 export const POSTER_RATIO = 16 / 10;
 export const SCENE_RATIO = 11 / 20;
 export const FLAT_LIST_SCENE_WIDTH = 250;
+export const gradientCardColors = ["#2b067a", "#2807a3"];
 export const colors = {
   background: "#000000",
   tabs: "#02081F",

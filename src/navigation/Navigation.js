@@ -5,9 +5,13 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { Image } from "react-native";
 import { FavoritesNavigation } from "./FavoritesNavigation";
 // import { HomeNavigation } from "./HomeNavigation_copy";
-import { HomeNavigation } from "./HomeNavigation";
+import { TrendingNavigation } from "./TrendingNavigation";
 import { AccountNavigation } from "./AccountNavigation";
-import { colors, HOME_SCREEN } from "@app/utils/constants";
+import {
+  ACCOUNT_NAVIGATION,
+  colors,
+  TRENDING_NAVIGATION,
+} from "@app/utils/constants";
 import { generalScreenOptions } from "@app/ui/globalStyles";
 
 const Tab = createBottomTabNavigator();
@@ -15,7 +19,7 @@ const Tab = createBottomTabNavigator();
 export const Navigation = () => {
   return (
     <Tab.Navigator
-      initialRouteName={HOME_SCREEN}
+      initialRouteName={ACCOUNT_NAVIGATION}
       screenOptions={(props) => ({
         ...generalScreenOptions(props),
         tabBarStyle: {
@@ -26,7 +30,7 @@ export const Navigation = () => {
       })}
     >
       <Tab.Screen
-        name="Account"
+        name={ACCOUNT_NAVIGATION}
         component={AccountNavigation}
         options={{
           tabBarLabel: "My Account",
@@ -37,8 +41,8 @@ export const Navigation = () => {
         }}
       />
       <Tab.Screen
-        name={HOME_SCREEN}
-        component={HomeNavigation}
+        name={TRENDING_NAVIGATION}
+        component={TrendingNavigation}
         options={{
           tabBarLabel: "",
           //todo: change this image to a better one

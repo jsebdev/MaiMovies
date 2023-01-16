@@ -12,7 +12,7 @@ import {
 
 const Tabs = createMaterialTopTabNavigator();
 
-export const HomeNavigation = () => {
+export const TrendingNavigation = () => {
   return (
     <Tabs.Navigator
       tabBarPosition="top"
@@ -26,6 +26,7 @@ export const HomeNavigation = () => {
           .routes.find(({ name }) => name === route.name);
         const routes = navigator.state?.routes;
         if (!routes) return generalScreenOptions;
+        //todo:Fix now swiping when navigation is deeper than just the media screen
         if (routes.length >= 3) {
           return { ...generalScreenOptions, swipeEnabled: false };
         }

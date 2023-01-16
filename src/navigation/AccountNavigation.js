@@ -1,8 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AccountScreen } from "@app/ui/screens/AccountScreen";
-import { TestScreen } from "@app/ui/screens/TestScreen";
-import { StyleSheet } from "react-native";
+import TestScreen from "@app/ui/screens/TestScreen";
 import { generalScreenOptions } from "@app/ui/globalStyles";
 
 const Stack = createStackNavigator();

@@ -1,36 +1,73 @@
 import { apiController } from "@app/api/apiController";
-import { AUTHENTICATE_TOKEN_LINK } from "@app/utils/constants";
+import {
+  API_GRAVATAR_IMAGE_PATH,
+  AUTHENTICATE_TOKEN_LINK,
+  IMAGES_SIZES,
+} from "@app/utils/constants";
 import { parseStringToDate } from "@app/utils/utils";
 import { autorun, flow, makeAutoObservable } from "mobx";
 
 class UserStore {
   token = null;
   expiresAt = null;
-  _session = null;
+  //since session and timeout are never set outside this class,
+  //it's not necessary make getters and setters for them. but YOLO
+  // _sessionId = null;
+  _sessionId = "986412b098dffe6c04fa90b20d7984387e3516ae";
   _timeoutId = null;
+  avatar = null;
+  name = null;
+  username = null;
+  accountId = null;
+  lists = new Map();
+  listTotalPages = Infinity;
+  listsPage = 0;
+  favorites = new Map();
 
   constructor() {
     makeAutoObservable(this, {
       createNewToken: flow,
       createNewSession: flow,
       deleteSession: flow,
+      fetchAccountDetails: flow,
+      fetchLists: flow,
     });
-    // autorun(() => {
-    //   console.log("UserStore is: ", this);
-    // });
+    autorun(() => {
+      if (this._sessionId) {
+        console.log("20: this.session >>>", this.sessionId);
+      }
+    });
   }
 
-  get session() {
-    return this._session;
+  *fetchListsNextPage() {
+    this.listsPage++;
+    const result = yield apiController.getLists(
+      this.accountId,
+      this.sessionId,
+      this.listsPage
+    );
+    if (result.success === false) return result;
+    this.listTotalPages = result.totalPages;
+    result.value.forEach((list) => {
+      this.lists.set(list.id, list);
+    });
   }
-  set session(session) {
-    this._session = session;
-  }
-  get timeoutId() {
-    return this._timeoutId;
-  }
-  set timeoutId(timeoutId) {
-    this._timeoutId = timeoutId;
+
+  *fetchAccountDetails() {
+    const result = yield apiController.getAccountDetails(this.sessionId);
+    if (result.success === true) {
+      if (result.avatar.tmdb?.avatar_path) {
+        this.avatar = `${apiController.imageBaseUrl}${
+          apiController.profileBaseSizes[IMAGES_SIZES.medium]
+        }${result.avatar.tmdb.avatar_path}`;
+      } else {
+        this.avatar = API_GRAVATAR_IMAGE_PATH(result.avatar.gravatar.hash);
+      }
+      this.name = result.name;
+      this.username = result.username;
+      this.accountId = result.accountId;
+    }
+    return result;
   }
 
   validToken() {
@@ -40,7 +77,7 @@ class UserStore {
 
   clearAll() {
     this.expiresAt = null;
-    this.session = null;
+    this.sessionId = null;
     this.token = null;
     this.timeoutId = null;
   }
@@ -56,7 +93,7 @@ class UserStore {
         this.periodicCreateSession();
         return;
       }
-      this.session = result.value;
+      this.sessionId = result.value;
       this.timeoutId = null;
     }, 3000);
   }
@@ -83,15 +120,16 @@ class UserStore {
   *createNewSession() {
     const result = yield apiController.createNewSession(this.token);
     if (result.success === true) {
-      this.session = result.value;
+      this.sessionId = result.value;
     }
     return result;
   }
 
   *deleteSession() {
-    const result = yield apiController.deleteSession(this.session);
+    console.log("hello");
+    const result = yield apiController.deleteSession(this.sessionId);
     if (result.success === true) {
-      this.session = null;
+      this.sessionId = null;
       this.token = null;
       this.expiresAt = null;
       this.timeoutId = null;
@@ -101,6 +139,18 @@ class UserStore {
 
   get authenticateTokenLink() {
     return AUTHENTICATE_TOKEN_LINK(this.token);
+  }
+  get sessionId() {
+    return this._sessionId;
+  }
+  set sessionId(session) {
+    this._sessionId = session;
+  }
+  get timeoutId() {
+    return this._timeoutId;
+  }
+  set timeoutId(timeoutId) {
+    this._timeoutId = timeoutId;
   }
 }
 

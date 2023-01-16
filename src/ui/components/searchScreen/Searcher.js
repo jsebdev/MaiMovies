@@ -15,6 +15,7 @@ export const Searcher = ({ search }) => {
   };
   return (
     <View style={styles.searchBar}>
+      {/* todo: make keyboard hide when clicking on search */}
       <TextInput
         style={styles.input}
         value={searchText}

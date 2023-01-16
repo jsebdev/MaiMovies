@@ -22,7 +22,6 @@ export const ImagesListScreen = ({ route, navigation }) => {
         horizontal={true}
         keyExtractor={(video) => video.id}
         getItemLayout={(data, index) => {
-          // console.log("24: cardWidth >>>", cardWidth);
           return {
             length: cardWidth,
             offset: cardWidth * index,
