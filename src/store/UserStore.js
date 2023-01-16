@@ -13,7 +13,7 @@ class UserStore {
   //since session and timeout are never set outside this class,
   //it's not necessary make getters and setters for them. but YOLO
   // _sessionId = null;
-  _sessionId = "986412b098dffe6c04fa90b20d7984387e3516ae";
+  _sessionId = "141e5a3c72b049d6dbc3eb2d849d0c4d27cd80f3";
   _timeoutId = null;
   avatar = null;
   name = null;
@@ -37,6 +37,18 @@ class UserStore {
         console.log("20: this.session >>>", this.sessionId);
       }
     });
+  }
+
+  *fetchListItems(listId) {
+    const result = yield apiController.getList(listId);
+    if (result.success === false) return result;
+    const items = result.value.items;
+    this.lists.get(listId).items = items;
+    if (items.length > 0) {
+      this.lists.get(listId).background = `${apiController.imageBaseUrl}${
+        apiController.backdropBaseSizes[IMAGES_SIZES.large]
+      }${items[0].backdrop_path}`;
+    }
   }
 
   *fetchListsNextPage() {

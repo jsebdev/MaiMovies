@@ -75,3 +75,8 @@ export const parseStringToDate = (str) => {
   // return subSeconds(subMinutes(date, 59), 10);
   return date;
 };
+
+export const myBorder = (color = "red") => ({
+  borderColor: color,
+  borderWidth: 1,
+});

@@ -3,6 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { MediaCard } from "./MediaCard";
 import { FlatListLoader } from "./FlatListLoader";
+import { Paragraph } from "./Paragraph";
 
 export const MediaList = ({
   mediaList,

@@ -17,6 +17,7 @@ export const API_ACCOUNT_DETAILS = (sessionId) =>
   `/account?session_id=${sessionId}`;
 export const API_LISTS = (accountId, sessionId, page) =>
   `/account/${accountId}/lists?session_id=${sessionId}&page=${page}`;
+export const API_GET_LIST = (listId) => `/list/${listId}`;
 
 // Gravatar API
 export const API_GRAVATAR_IMAGE_PATH = (hash) =>
@@ -34,6 +35,8 @@ export const SEARCH_SCREEN = "SearchScreen";
 export const HOME_NAVIGATION = "HomeNavigation";
 export const TRENDING_NAVIGATION = "TrendingNavigation";
 export const ACCOUNT_NAVIGATION = "AccountNavigation";
+export const ACCOUNT_SCREEN = "AccountScreen";
+export const NEW_LIST_SCREEN = "NewListScreen";
 // export const MOVIE_SCREEN = "MovieScreen";
 // export const TV_SHOW_SCREEN = "TvShowScreen";
 export const IMAGE_LIST_SCREEN = "ImageListScreen";

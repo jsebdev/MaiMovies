@@ -9,6 +9,8 @@ export class List {
   listType = null;
   name = null;
   posterPath = null;
+  items = null;
+  background = null;
   constructor(props) {
     makeAutoObservable(this);
     this.description = props.description;
@@ -18,5 +20,7 @@ export class List {
     this.listType = props.list_type;
     this.name = props.name;
     this.posterPath = props.poster_path;
+    this.items = props.items;
+    this.background = props.background;
   }
 }

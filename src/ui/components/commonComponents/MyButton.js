@@ -62,7 +62,7 @@ const textStyles = StyleSheet.create({
   default: {
     textAlign: "center",
     padding: 10,
-    fontSize: 18,
+    fontSize: 20,
     color: "#007AFF",
   },
 });

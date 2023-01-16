@@ -3,6 +3,7 @@ import {
   API_ACCOUNT_DETAILS,
   API_CONFIGURATION,
   API_DELETE_SESSION,
+  API_GET_LIST,
   API_HOST,
   API_LISTS,
   API_MEDIA,
@@ -79,6 +80,20 @@ export class TheMovieDBController extends ApiController {
     }
   };
 
+  getList = async (listId) => {
+    try {
+      const url = `${API_HOST}${API_GET_LIST(listId)}`;
+      const result = await this.#fetch(url);
+      if (!result.success) return result;
+      result.value = result.rawValue;
+      return result;
+    } catch (err) {
+      console.error(`Error obtaining list for listId: ${listId}`);
+      console.error(err);
+      return new ApiResponse({ success: false, message: err.message });
+    }
+  };
+
   getLists = async (accountId, sessionId, page = 1) => {
     try {
       const url = `${API_HOST}${API_LISTS(accountId, sessionId, page)}`;
@@ -89,7 +104,7 @@ export class TheMovieDBController extends ApiController {
       return result;
     } catch (err) {
       console.error(
-        `Error creating obtaining lists for account: ${accountId}, session: ${sessionId}`
+        `Error obtaining lists for account: ${accountId}, session: ${sessionId}`
       );
       console.error(err);
       return new ApiResponse({ success: false, message: err.message });

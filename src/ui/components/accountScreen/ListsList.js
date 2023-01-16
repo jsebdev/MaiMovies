@@ -3,6 +3,7 @@ import React from "react";
 import { FlatListLoader } from "../commonComponents/FlatListLoader";
 import PropTypes from "prop-types";
 import { ListItem } from "./ListItem";
+import { Paragraph } from "../commonComponents/Paragraph";
 
 export const ListsList = ({ list, loadMoreData, showSpinner = false }) => {
   return (
