@@ -20,6 +20,10 @@ export const API_LISTS = (accountId, sessionId, page) =>
 export const API_GET_LIST = (listId) => `/list/${listId}`;
 export const API_CREATE_NEW_LIST = (sessionId) =>
   `/list?session_id=${sessionId}`;
+export const API_MARK_FAVORITE = (accountId, sessionId) =>
+  `/account/${accountId}/favorite?session_id=${sessionId}`;
+export const API_FAVORITES = (accountId, mediaType, sessionId, page) =>
+  `/account/${accountId}/favorite/${mediaType}?session_id=${sessionId}&page=${page}`;
 
 // Gravatar API
 export const API_GRAVATAR_IMAGE_PATH = (hash) =>
@@ -40,15 +44,22 @@ export const ACCOUNT_NAVIGATION = "AccountNavigation";
 export const ACCOUNT_SCREEN = "AccountScreen";
 export const LIST_SCREEN = "ListScreen";
 export const NEW_LIST_SCREEN = "NewListScreen";
-// export const MOVIE_SCREEN = "MovieScreen";
-// export const TV_SHOW_SCREEN = "TvShowScreen";
 export const IMAGE_LIST_SCREEN = "ImageListScreen";
 export const YOUTUBE_SITE = "YouTube";
 export const MEDIA_SEARCH_SCREEN = "MediaSearchScreen";
+export const FAVORITES_SCREEN = "FavoritesScreen";
+export const MEDIA_LIST_SCREEN = "MediaListScreen";
+export const MEDIA_LIST_NAVIGATION = "MediaListNavigation";
+export const MOVIES_FAVORITES_NAVIGATION = "MoviesFavoritesNavigation";
+export const TV_FAVORITES_NAVIGATION = "TvFavoritesNavigation";
 
 export const MEDIA_TYPES = {
   movie: "movie",
   tv: "tv",
+};
+export const MEDIA_LIST_TYPES = {
+  trending: "trending",
+  favorites: "favorites",
 };
 
 // styles constants

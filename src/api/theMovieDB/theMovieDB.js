@@ -4,6 +4,7 @@ import {
   API_CONFIGURATION,
   API_CREATE_NEW_LIST,
   API_DELETE_SESSION,
+  API_FAVORITES,
   API_GET_LIST,
   API_HOST,
   API_LISTS,
@@ -49,6 +50,28 @@ export class TheMovieDBController extends ApiController {
       );
     })();
   }
+
+  getFavorites = async (accountId, mediaType, sessionId, page) => {
+    try {
+      const url = `${API_HOST}${API_FAVORITES(
+        accountId,
+        mediaType,
+        sessionId,
+        page
+      )}`;
+      const result = await this.#fetch(url);
+      if (!result.success) return result;
+      result.value = result.rawValue.results.map((media) =>
+        this.#apiMedia2Media(media, mediaType)
+      );
+      result.totalPages = result.rawValue.total_pages;
+      return result;
+    } catch (err) {
+      console.error("Error fetching favorites of type " + mediaType);
+      console.error(err);
+      return new ApiResponse({ success: false, message: err.message });
+    }
+  };
 
   getAccountDetails = async (sessionId) => {
     try {

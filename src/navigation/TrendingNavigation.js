@@ -3,12 +3,13 @@ import { generalScreenOptions } from "@app/ui/globalStyles";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Dimensions } from "react-native";
 import { MyTabBar } from "./MyTabBar";
-import { TrendingMoviesNavigation } from "./TrendingMoviesNavigation";
-import { TrendingTvNavigation } from "./TrendingTvNavigation";
 import {
+  MEDIA_LIST_TYPES,
+  MEDIA_TYPES,
   MOVIES_TRENDING_NAVIGATION,
   TV_TRENDING_NAVIGATION,
 } from "@app/utils/constants";
+import { MediaListNavigation } from "./MediaListNavigation";
 
 const Tabs = createMaterialTopTabNavigator();
 
@@ -36,12 +37,20 @@ export const TrendingNavigation = () => {
       <Tabs.Screen
         name={MOVIES_TRENDING_NAVIGATION}
         options={{ title: "Movies" }}
-        component={TrendingMoviesNavigation}
+        component={MediaListNavigation}
+        initialParams={{
+          mediaType: MEDIA_TYPES.movie,
+          listType: MEDIA_LIST_TYPES.trending,
+        }}
       />
       <Tabs.Screen
         name={TV_TRENDING_NAVIGATION}
         options={{ title: "Tv" }}
-        component={TrendingTvNavigation}
+        component={MediaListNavigation}
+        initialParams={{
+          mediaType: MEDIA_TYPES.tv,
+          listType: MEDIA_LIST_TYPES.trending,
+        }}
       />
     </Tabs.Navigator>
   );

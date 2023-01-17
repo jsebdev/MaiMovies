@@ -1,11 +1,11 @@
-import { View, Text } from "react-native";
 import React from "react";
 import { Paragraph } from "@app/ui/components/commonComponents/Paragraph";
+import { BackgroundView } from "../components/commonComponents/BackgroundView";
 
 export const FavoritesScreen = () => {
   return (
-    <View>
-      <Paragraph>Favorites yeah</Paragraph>
-    </View>
+    <BackgroundView>
+      <Paragraph variant="title">Favorites</Paragraph>
+    </BackgroundView>
   );
 };

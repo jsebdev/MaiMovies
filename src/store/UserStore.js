@@ -3,6 +3,7 @@ import {
   API_GRAVATAR_IMAGE_PATH,
   AUTHENTICATE_TOKEN_LINK,
   IMAGES_SIZES,
+  MEDIA_TYPES,
 } from "@app/utils/constants";
 import { parseStringToDate } from "@app/utils/utils";
 import { autorun, flow, makeAutoObservable } from "mobx";
@@ -13,7 +14,7 @@ class UserStore {
   //since session and timeout are never set outside this class,
   //it's not necessary make getters and setters for them. but YOLO
   // _sessionId = null;
-  _sessionId = "c65b00b5a0d6850009f1ee0ca2990843fc050795";
+  _sessionId = "89d6406d888fb39b7fa6105530e92f0bb3c682dd";
   _timeoutId = null;
   avatar = null;
   name = null;
@@ -22,7 +23,16 @@ class UserStore {
   lists = new Map();
   listTotalPages = Infinity;
   listsPage = 0;
-  favorites = new Map();
+  favoritesTvShows = {
+    list: new Map(),
+    page: 0,
+    totalPages: Infinity,
+  };
+  favoritesMovies = {
+    list: new Map(),
+    page: 0,
+    totalPages: Infinity,
+  };
 
   constructor() {
     makeAutoObservable(this, {
@@ -39,6 +49,27 @@ class UserStore {
         console.log("20: this.session >>>", this.sessionId);
       }
     });
+  }
+
+  *fetchNextPageFavorites(mediaType) {
+    const favorites =
+      mediaType === MEDIA_TYPES.movie
+        ? this.favoritesMovies
+        : this.favoritesTvShows;
+    if (favorites.page >= favorites.totalPages) return;
+    favorites.page++;
+    const result = yield apiController.getFavorites(
+      this.accountId,
+      mediaType,
+      this.sessionId,
+      favorites.page
+    );
+    if (result.success === true) {
+      result.value.forEach((m) => {
+        favorites.list.set(m.id, m);
+      });
+      favorites.totalPages = result.totalPages;
+    }
   }
 
   *createNewList(listInfo) {
