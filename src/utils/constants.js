@@ -50,6 +50,7 @@ export const IMAGE_LIST_SCREEN = "ImageListScreen";
 export const YOUTUBE_SITE = "YouTube";
 export const MEDIA_SEARCH_SCREEN = "MediaSearchScreen";
 export const FAVORITES_SCREEN = "FavoritesScreen";
+export const FAVORITES_NAVIGATION = "FavoritesNavigation";
 export const MEDIA_LIST_SCREEN = "MediaListScreen";
 export const MEDIA_LIST_NAVIGATION = "MediaListNavigation";
 export const MOVIES_FAVORITES_NAVIGATION = "MoviesFavoritesNavigation";
