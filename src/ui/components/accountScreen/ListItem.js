@@ -26,7 +26,12 @@ export const ListItem = observer(({ list }) => {
     })();
   }, []);
   return (
-    <TouchableWithoutFeedback onPress={() => navigation.push(LIST_SCREEN)}>
+    <TouchableWithoutFeedback
+      onPress={
+        () => navigation.push(LIST_SCREEN, { name: list.name, listId: list.id })
+        // navigation.push(LIST_SCREEN)
+      }
+    >
       <View style={styles.container}>
         <Background style={styles.background}>
           <Paragraph style={styles.listName}>{list.name}</Paragraph>

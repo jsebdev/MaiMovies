@@ -16,7 +16,14 @@ const forFade = ({ current }) => ({
 export const MediaNavigation = () => {
   return (
     <Stack.Navigator screenOptions={generalScreenOptions}>
-      <Stack.Screen name={MEDIA_SCREEN} component={MediaScreen} />
+      <Stack.Screen
+        name={MEDIA_SCREEN}
+        component={MediaScreen}
+        options={({ route }) => ({
+          title: route?.params?.name,
+          headerShown: true,
+        })}
+      />
       <Stack.Screen
         name={IMAGE_LIST_SCREEN}
         component={ImagesListScreen}

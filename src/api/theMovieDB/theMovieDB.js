@@ -73,6 +73,9 @@ export class TheMovieDBController extends ApiController {
       const result = await this.#fetch(url);
       if (!result.success) return result;
       result.value = result.rawValue;
+      result.value.items = result.value.items.map((media) =>
+        this.#apiMedia2Media(media, media.media_type)
+      );
       return result;
     } catch (err) {
       console.error(`Error obtaining list for listId: ${listId}`);

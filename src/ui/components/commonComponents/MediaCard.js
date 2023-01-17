@@ -8,14 +8,15 @@ import { useNavigation } from "@react-navigation/native";
 import PropTypes from "prop-types";
 import { Card } from "./Card";
 
-export const MediaCard = ({ media, mediaType }) => {
+export const MediaCard = ({ media }) => {
   const navigation = useNavigation();
   const goToMedia = () => {
     navigation.push(MEDIA_NAVIGATION, {
       screen: MEDIA_SCREEN,
       params: {
         mediaId: media.id,
-        mediaType: mediaType,
+        mediaType: media.mediaType,
+        name: media.name,
       },
     });
   };
@@ -30,5 +31,4 @@ export const MediaCard = ({ media, mediaType }) => {
 
 MediaCard.propTypes = {
   media: PropTypes.object,
-  mediaType: PropTypes.string.isRequired,
 };

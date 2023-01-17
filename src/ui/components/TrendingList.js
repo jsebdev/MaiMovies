@@ -13,7 +13,6 @@ export const TrendingList = observer(({ mediaType }) => {
         mediaList={Array.from(media.trendingList.values())}
         loadNewData={loadNextPageTrendingMedia}
         showSpinner={media.page < media.totalPages}
-        mediaType={mediaType}
       />
     </View>
   );

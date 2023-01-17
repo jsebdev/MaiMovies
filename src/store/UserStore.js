@@ -31,6 +31,7 @@ class UserStore {
       deleteSession: flow,
       fetchAccountDetails: flow,
       fetchLists: flow,
+      fetchListItems: flow,
       createNewList: flow,
     });
     autorun(() => {
@@ -57,9 +58,9 @@ class UserStore {
     const items = result.value.items;
     this.lists.get(listId).items = items;
     if (items.length > 0) {
-      this.lists.get(listId).background = `${apiController.imageBaseUrl}${
-        apiController.backdropBaseSizes[IMAGES_SIZES.large]
-      }${items[items.length - 1].backdrop_path}`;
+      this.lists.get(listId).background = items[items.length - 1].getBackdrop(
+        IMAGES_SIZES.large
+      );
     }
   }
 
@@ -80,7 +81,6 @@ class UserStore {
   *fetchAccountDetails() {
     const result = yield apiController.getAccountDetails(this.sessionId);
     if (result.success !== true) {
-      console.log("83: result >>>", result);
       if (result.rawValue.status_code === 3) {
         this.sessionId = null;
       }

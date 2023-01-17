@@ -9,7 +9,6 @@ export const SearchResult = ({
   pendingResults,
   loadMoreResults,
   resultTitle,
-  mediaType,
 }) => {
   return (
     <View style={styles.listContainer}>
@@ -21,7 +20,6 @@ export const SearchResult = ({
       {list.length > 0 ? (
         <MediaList
           mediaList={list}
-          mediaType={mediaType}
           horizontal={true}
           loadNewData={loadMoreResults}
           showSpinner={pendingResults > 0}
