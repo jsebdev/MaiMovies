@@ -7,6 +7,7 @@ import { Paragraph } from "./commonComponents/Paragraph";
 
 export const FavoritesList = observer(({ mediaType }) => {
   const { media, loadNextPageFavoriteMedia } = useFavoriteMedia(mediaType);
+  //todo if not logged in, ask to log in
   return (
     <>
       {media.list.size > 0 ? (

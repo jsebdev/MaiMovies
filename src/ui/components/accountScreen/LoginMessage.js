@@ -14,7 +14,7 @@ export const LoginMessage = () => {
   const getAccess = async () => {
     setErrorMessage(null);
     setLoading(true);
-    const result = await userStore.createNewToken();
+    const result = await userStore.createNewRequestToken();
     if (!result.success) {
       if (result.message) setErrorMessage(result.message);
       else setErrorMessage("Sorry, something went wrong");
@@ -25,7 +25,7 @@ export const LoginMessage = () => {
     const supportedLink = await Linking.canOpenURL(authorizationLink);
     if (supportedLink) {
       Linking.openURL(authorizationLink);
-      userStore.attemptUntilCreateSession();
+      userStore.attemptUntilCreateAccessToken();
     } else {
       console.error("Link is not supported to open ", authorizationLink);
     }

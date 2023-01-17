@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN } from "@env";
+import { READ_ACCESS_TOKEN } from "@env";
 import {
   API_ACCOUNT_DETAILS,
   API_CONFIGURATION,
@@ -6,16 +6,17 @@ import {
   API_DELETE_SESSION,
   API_FAVORITES,
   API_GET_LIST,
-  API_HOST,
+  API_URL_V3,
   API_LISTS,
   API_MARK_FAVORITE,
   API_MEDIA,
   API_MEDIA_VIDEOS,
   API_NEW_SESSION,
-  API_NEW_TOKEN,
+  API_NEW_REQUEST_TOKEN,
   API_SEARCH_MEDIA,
   API_WEEKLY_TRENDING,
   IMAGES_SIZES,
+  API_NEW_ACCESS_TOKEN,
 } from "@app/utils/constants";
 import { ApiController } from "@app/domain/apiController";
 import {
@@ -25,13 +26,15 @@ import {
 } from "@app/api/theMovieDB/theMovieDB.utils";
 import { ApiResponse } from "@app/domain/ApiResponses";
 import { List } from "@app/domain/ListClass";
+import { addMinutes } from "date-fns/esm";
 
 export class TheMovieDBController extends ApiController {
+  accessToken = null;
   constructor() {
     super();
     this.myHeaders = new Headers();
-    this.myHeaders.append("Content-Type", "application/json;charset=utf-8");
-    this.myHeaders.append("Authorization", `Bearer ${ACCESS_TOKEN}`);
+    this.myHeaders.set("Content-Type", "application/json;charset=utf-8");
+    this.myHeaders.set("Authorization", `Bearer ${READ_ACCESS_TOKEN}`);
     (async () => {
       this.configuration = await this.#configuration();
       this.postersBaseSizes = this.#getImagesBaseSizes(
@@ -54,7 +57,7 @@ export class TheMovieDBController extends ApiController {
 
   getFavorites = async (accountId, mediaType, sessionId, page) => {
     try {
-      const url = `${API_HOST}${API_FAVORITES(
+      const url = `${API_URL_V3}${API_FAVORITES(
         accountId,
         mediaType,
         sessionId,
@@ -76,7 +79,7 @@ export class TheMovieDBController extends ApiController {
 
   getAccountDetails = async (sessionId) => {
     try {
-      const url = `${API_HOST}${API_ACCOUNT_DETAILS(sessionId)}`;
+      const url = `${API_URL_V3}${API_ACCOUNT_DETAILS(sessionId)}`;
       const result = await this.#fetch(url);
       if (!result.success) return result;
       result.avatar = result.rawValue.avatar;
@@ -93,7 +96,7 @@ export class TheMovieDBController extends ApiController {
 
   getList = async (listId) => {
     try {
-      const url = `${API_HOST}${API_GET_LIST(listId)}`;
+      const url = `${API_URL_V3}${API_GET_LIST(listId)}`;
       const result = await this.#fetch(url);
       if (!result.success) return result;
       result.value = result.rawValue;
@@ -110,7 +113,7 @@ export class TheMovieDBController extends ApiController {
 
   getLists = async (accountId, sessionId, page = 1) => {
     try {
-      const url = `${API_HOST}${API_LISTS(accountId, sessionId, page)}`;
+      const url = `${API_URL_V3}${API_LISTS(accountId, sessionId, page)}`;
       const result = await this.#fetch(url);
       if (!result.success) return result;
       result.value = result.rawValue.results.map((list) => new List(list));
@@ -125,18 +128,37 @@ export class TheMovieDBController extends ApiController {
     }
   };
 
-  getNewToken = async () => {
+  getNewRequestToken = async () => {
     try {
-      const url = `${API_HOST}${API_NEW_TOKEN}`;
-      const result = await this.#fetch(url);
+      const url = API_NEW_REQUEST_TOKEN;
+      const result = await this.#fetch(url, { method: "POST" });
       if (!result.success) return result;
       result.value = {
         token: result.rawValue.request_token,
-        expiresAt: result.rawValue.expires_at,
+        expiresAt: addMinutes(new Date(), 15),
       };
       return result;
     } catch (err) {
-      console.error("Error obtaining new token");
+      console.error("Error obtaining new request token");
+      console.error(err);
+      return new ApiResponse({ success: false, message: err.message });
+    }
+  };
+
+  createNewAccessToken = async (requestToken) => {
+    try {
+      const url = API_NEW_ACCESS_TOKEN;
+      const result = await this.#fetch(url, {
+        method: "POST",
+        body: { request_token: requestToken },
+      });
+      if (!result.success) return result;
+      this.accessToken = result.rawValue.access_token;
+      this.myHeaders.set("Authorization", `Bearer ${this.accessToken}`);
+      result.value = this.accessToken;
+      return result;
+    } catch (err) {
+      console.error("Error obtaining new access token");
       console.error(err);
       return new ApiResponse({ success: false, message: err.message });
     }
@@ -144,7 +166,11 @@ export class TheMovieDBController extends ApiController {
 
   searchMedia = async (page = 1, mediaType, searchText) => {
     try {
-      const url = `${API_HOST}${API_SEARCH_MEDIA(mediaType, searchText, page)}`;
+      const url = `${API_URL_V3}${API_SEARCH_MEDIA(
+        mediaType,
+        searchText,
+        page
+      )}`;
       const result = await this.#fetch(url);
       if (!result.success) return result;
       result.value = result.rawValue.results.map((media) =>
@@ -163,7 +189,7 @@ export class TheMovieDBController extends ApiController {
 
   getWeeklyTrendingMedia = async (page = 1, mediaType = "movie") => {
     try {
-      const url = `${API_HOST}${API_WEEKLY_TRENDING(mediaType, page)}`;
+      const url = `${API_URL_V3}${API_WEEKLY_TRENDING(mediaType, page)}`;
       const result = await this.#fetch(url);
       if (!result.success) return result;
       result.value = result.rawValue.results.map((media) =>
@@ -180,7 +206,7 @@ export class TheMovieDBController extends ApiController {
 
   getMedia = async (mediaType, mediaId) => {
     try {
-      const url = `${API_HOST}${API_MEDIA(mediaType, mediaId)}`;
+      const url = `${API_URL_V3}${API_MEDIA(mediaType, mediaId)}`;
       const result = await this.#fetch(url);
       if (!result.success) {
         console.error(
@@ -199,7 +225,7 @@ export class TheMovieDBController extends ApiController {
 
   getMediaVideos = async (mediaType, mediaId) => {
     try {
-      const url = `${API_HOST}${API_MEDIA_VIDEOS(mediaType, mediaId)}`;
+      const url = `${API_URL_V3}${API_MEDIA_VIDEOS(mediaType, mediaId)}`;
       const result = await this.#fetch(url);
       if (!result.success) return result;
       result.value = result.rawValue.results.map((video) =>
@@ -221,7 +247,7 @@ export class TheMovieDBController extends ApiController {
     favorite
   ) => {
     try {
-      const url = `${API_HOST}${API_MARK_FAVORITE(accountId, sessionId)}`;
+      const url = `${API_URL_V3}${API_MARK_FAVORITE(accountId, sessionId)}`;
       const body = {
         media_type: mediaType,
         media_id: mediaId,
@@ -238,10 +264,10 @@ export class TheMovieDBController extends ApiController {
     }
   };
 
-  createNewSession = async (token) => {
+  createNewSession = async (accessTokenV4) => {
     try {
-      const url = `${API_HOST}${API_NEW_SESSION}`;
-      const body = { request_token: token };
+      const url = `${API_URL_V3}${API_NEW_SESSION}`;
+      const body = { access_token: accessTokenV4 };
       const result = await this.#fetch(url, { method: "POST", body });
       if (!result.success) return result;
       result.value = result.rawValue.session_id;
@@ -255,7 +281,7 @@ export class TheMovieDBController extends ApiController {
 
   createNewList = async (sessionId, listInfo) => {
     try {
-      const url = `${API_HOST}${API_CREATE_NEW_LIST(sessionId)}`;
+      const url = `${API_URL_V3}${API_CREATE_NEW_LIST(sessionId)}`;
       const result = await this.#fetch(url, { method: "POST", body: listInfo });
       if (!result.success) {
         result.errors = result.rawValue.errors;
@@ -272,7 +298,7 @@ export class TheMovieDBController extends ApiController {
   //delete methods
   deleteSession = async (sessionId) => {
     try {
-      const url = `${API_HOST}${API_DELETE_SESSION}`;
+      const url = `${API_URL_V3}${API_DELETE_SESSION}`;
       const body = { session_id: sessionId };
       const result = await this.#fetch(url, { method: "DELETE", body });
       if (!result.success) return result;
@@ -312,7 +338,7 @@ export class TheMovieDBController extends ApiController {
 
   #configuration = async () => {
     try {
-      const url = `${API_HOST}${API_CONFIGURATION}`;
+      const url = `${API_URL_V3}${API_CONFIGURATION}`;
       const result = await this.#fetch(url);
       return result.rawValue;
     } catch (err) {

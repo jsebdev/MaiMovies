@@ -21,7 +21,7 @@ const Tab = createBottomTabNavigator();
 export const Navigation = () => {
   return (
     <Tab.Navigator
-      initialRouteName={TRENDING_NAVIGATION}
+      initialRouteName={ACCOUNT_NAVIGATION}
       screenOptions={(props) => ({
         ...generalScreenOptions(props),
         tabBarStyle: {

@@ -5,22 +5,22 @@ import {
   IMAGES_SIZES,
   MEDIA_TYPES,
 } from "@app/utils/constants";
-import { parseStringToDate } from "@app/utils/utils";
 import { autorun, flow, makeAutoObservable } from "mobx";
 
 class UserStore {
-  token = null;
-  expiresAt = null;
+  requestToken = null;
+  requestTokenExpiresAt = null;
+  accessToken = null;
   //since session and timeout are never set outside this class,
   //it's not necessary make getters and setters for them. but YOLO
-  // _sessionId = null;
-  _sessionId = "f64250417a99663e66ffff4a194fdffd9e0dbf67";
+  _sessionId = null;
+  // _sessionId = "f64250417a99663e66ffff4a194fdffd9e0dbf67";
   _timeoutId = null;
   avatar = null;
   name = null;
   username = null;
-  accountId = 16827403;
-  // accountId = null;
+  // accountId = 16827403;
+  accountId = null;
   lists = new Map();
   listTotalPages = Infinity;
   listsPage = 0;
@@ -37,7 +37,7 @@ class UserStore {
 
   constructor() {
     makeAutoObservable(this, {
-      createNewToken: flow,
+      createNewRequestToken: flow,
       createNewSession: flow,
       deleteSession: flow,
       fetchAccountDetails: flow,
@@ -48,10 +48,12 @@ class UserStore {
       fetchAllFavorites: flow,
       fetchNextPageFavorites: flow,
       fetchListsNextPage: flow,
+      createNewAccessToken: flow,
     });
     autorun(() => {
       if (this._sessionId) {
         console.log("20: this.session >>>", this.sessionId);
+        console.log("56: this.accessToken >>>", this.accessToken);
       }
     });
   }
@@ -74,12 +76,10 @@ class UserStore {
     }
     const favorites = this.chooseFavorites(mediaType);
     if (favorite) {
-      console.log("84: favorite >>>", favorite);
       //there must be a better way to add a new favorite than this
       this.clearFavorites(mediaType);
       yield this.fetchAllFavorites(mediaType);
     } else {
-      console.log("89: favorite >>>", favorite);
       favorites.list.delete(mediaId);
     }
     return result;
@@ -181,55 +181,63 @@ class UserStore {
     return result;
   }
 
-  validToken() {
-    if (!this.token) return false;
-    return this.expiresAt - new Date() > 0;
+  validRequestToken() {
+    if (!this.requestToken) return false;
+    return this.requestTokenExpiresAt - new Date() > 0;
   }
 
   clearAll() {
-    this.expiresAt = null;
+    this.requestTokenExpiresAt = null;
     this.sessionId = null;
-    this.token = null;
+    this.requestToken = null;
     this.timeoutId = null;
   }
 
-  periodicCreateSession() {
+  periodicCreateAccessToken() {
     this.timeoutId = setTimeout(async () => {
-      if (!this.validToken()) {
+      if (!this.validRequestToken()) {
         this.clearAll();
         return;
       }
-      const result = await this.createNewSession();
+      const result = await this.createNewAccessToken();
       if (!result.success) {
-        this.periodicCreateSession();
+        this.periodicCreateAccessToken();
         return;
       }
-      this.sessionId = result.value;
       this.timeoutId = null;
+      this.createNewSession();
     }, 3000);
   }
 
-  attemptUntilCreateSession() {
-    if (this.timeoutId && this.validToken()) {
-      return;
+  *createNewAccessToken() {
+    const result = yield apiController.createNewAccessToken(this.requestToken);
+    if (result.success === true) {
+      this.accessToken = result.value;
     }
-    this.periodicCreateSession();
+    return result;
   }
 
-  *createNewToken() {
-    if (this.validToken()) {
+  attemptUntilCreateAccessToken() {
+    if (this.timeoutId && this.validRequestToken()) {
+      return;
+    }
+    this.periodicCreateAccessToken();
+  }
+
+  *createNewRequestToken() {
+    if (this.validRequestToken()) {
       return { success: true };
     }
-    const result = yield apiController.getNewToken();
+    const result = yield apiController.getNewRequestToken();
     if (result.success === true) {
-      this.token = result.value.token;
-      this.expiresAt = parseStringToDate(result.value.expiresAt);
+      this.requestToken = result.value.token;
+      this.requestTokenExpiresAt = result.value.expiresAt;
     }
     return result;
   }
 
   *createNewSession() {
-    const result = yield apiController.createNewSession(this.token);
+    const result = yield apiController.createNewSession(this.accessToken);
     if (result.success === true) {
       this.sessionId = result.value;
     }
@@ -240,15 +248,15 @@ class UserStore {
     const result = yield apiController.deleteSession(this.sessionId);
     if (result.success === true) {
       this.sessionId = null;
-      this.token = null;
-      this.expiresAt = null;
+      this.requestToken = null;
+      this.requestTokenExpiresAt = null;
       this.timeoutId = null;
     }
     return result;
   }
 
   get authenticateTokenLink() {
-    return AUTHENTICATE_TOKEN_LINK(this.token);
+    return AUTHENTICATE_TOKEN_LINK(this.requestToken);
   }
   get sessionId() {
     return this._sessionId;

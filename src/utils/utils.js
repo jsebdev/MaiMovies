@@ -69,12 +69,12 @@ export const getVoteColor = (vote) =>
     getColorFromSpectrum(vote, VOTE_COLORS_VALUES, VOTE_COLORS)
   );
 
-export const parseStringToDate = (str) => {
-  const newStr = str.replace(" UTC", "Z").trim().replace(" ", "T");
-  const date = new Date(newStr);
-  // return subSeconds(subMinutes(date, 59), 10);
-  return date;
-};
+// export const parseStringToDate = (str) => {
+//   const newStr = str.replace(" UTC", "Z").trim().replace(" ", "T");
+//   const date = new Date(newStr);
+//   // return subSeconds(subMinutes(date, 59), 10);
+//   return date;
+// };
 
 export const myBorder = (color = "red") => ({
   borderColor: color,

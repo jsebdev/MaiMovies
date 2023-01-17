@@ -1,15 +1,17 @@
 // api constants
-export const API_HOST = "https://api.themoviedb.org/3";
+export const API_URL_V3 = "https://api.themoviedb.org/3";
+export const API_URL_V4 = "https://api.themoviedb.org/4";
 export const API_WEEKLY_TRENDING = (mediaType, page) =>
   `/trending/${mediaType}/week?page=${page}`;
 export const API_CONFIGURATION = "/configuration";
 export const API_MEDIA = (mediaType, mediaId) => `/${mediaType}/${mediaId}`;
 export const API_MEDIA_VIDEOS = (mediaType, mediaId) =>
   `/${mediaType}/${mediaId}/videos`;
-export const API_NEW_TOKEN = "/authentication/token/new";
+export const API_NEW_REQUEST_TOKEN = `${API_URL_V4}/auth/request_token`;
+export const API_NEW_ACCESS_TOKEN = `${API_URL_V4}/auth/access_token`;
 export const AUTHENTICATE_TOKEN_LINK = (token) =>
-  `https://www.themoviedb.org/authenticate/${token}`;
-export const API_NEW_SESSION = "/authentication/session/new";
+  `https://www.themoviedb.org/auth/access?request_token=${token}`;
+export const API_NEW_SESSION = "/authentication/session/convert/4";
 export const API_DELETE_SESSION = "/authentication/session";
 export const API_SEARCH_MEDIA = (mediaType, searchText, page) =>
   `/search/${mediaType}?query="${searchText}"&page=${page}`;
