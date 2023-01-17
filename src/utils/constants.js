@@ -22,8 +22,10 @@ export const API_CREATE_NEW_LIST = (sessionId) =>
   `/list?session_id=${sessionId}`;
 export const API_MARK_FAVORITE = (accountId, sessionId) =>
   `/account/${accountId}/favorite?session_id=${sessionId}`;
-export const API_FAVORITES = (accountId, mediaType, sessionId, page) =>
-  `/account/${accountId}/favorite/${mediaType}?session_id=${sessionId}&page=${page}`;
+export const API_FAVORITES = (accountId, mediaType, sessionId, page) => {
+  if (mediaType === MEDIA_TYPES.movie) mediaType = mediaType + "s";
+  return `/account/${accountId}/favorite/${mediaType}?session_id=${sessionId}&page=${page}`;
+};
 
 // Gravatar API
 export const API_GRAVATAR_IMAGE_PATH = (hash) =>

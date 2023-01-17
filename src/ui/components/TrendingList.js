@@ -1,4 +1,3 @@
-import { View } from "react-native";
 import React, { useEffect } from "react";
 import { MediaList } from "./commonComponents/MediaList";
 import { useStore } from "@app/store/store.hook";
@@ -8,13 +7,11 @@ import { MEDIA_TYPES } from "@app/utils/constants";
 export const TrendingList = observer(({ mediaType }) => {
   const { media, loadNextPageTrendingMedia } = useTrendingMedia(mediaType);
   return (
-    <View>
-      <MediaList
-        mediaList={Array.from(media.trendingList.values())}
-        loadNewData={loadNextPageTrendingMedia}
-        showSpinner={media.page < media.totalPages}
-      />
-    </View>
+    <MediaList
+      mediaList={Array.from(media.trendingList.values())}
+      loadNewData={loadNextPageTrendingMedia}
+      showSpinner={media.page < media.totalPages}
+    />
   );
 });
 

@@ -4,6 +4,7 @@ import { BackgroundView } from "@app/ui/components/commonComponents/BackgroundVi
 import PropTypes from "prop-types";
 import { MEDIA_LIST_TYPES } from "@app/utils/constants";
 import { Paragraph } from "../components/commonComponents/Paragraph";
+import { FavoritesList } from "../components/FavoritesList";
 
 export const MediaListScreen = ({ route }) => {
   const mediaType = route.params.mediaType;
@@ -14,8 +15,8 @@ export const MediaListScreen = ({ route }) => {
         <TrendingList mediaType={mediaType} />
       )}
       {listType === MEDIA_LIST_TYPES.favorites && (
-        // <FavoritesList mediaType={mediaType} />
-        <Paragraph>aqui van los favoritos de tipo {mediaType}</Paragraph>
+        <FavoritesList mediaType={mediaType} />
+        // <Paragraph>aqui van los favoritos de tipo {mediaType}</Paragraph>
       )}
     </BackgroundView>
   );

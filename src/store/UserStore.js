@@ -14,12 +14,13 @@ class UserStore {
   //since session and timeout are never set outside this class,
   //it's not necessary make getters and setters for them. but YOLO
   // _sessionId = null;
-  _sessionId = "89d6406d888fb39b7fa6105530e92f0bb3c682dd";
+  _sessionId = "e58a9138a4a17bf6b603f162de322e267d0ca8b9";
   _timeoutId = null;
   avatar = null;
   name = null;
   username = null;
-  accountId = null;
+  accountId = 16827403;
+  // accountId = null;
   lists = new Map();
   listTotalPages = Infinity;
   listsPage = 0;
