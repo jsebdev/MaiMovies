@@ -4,22 +4,32 @@ import { useStore } from "@app/store/store.hook";
 import { observer } from "mobx-react-lite";
 import { MEDIA_TYPES } from "@app/utils/constants";
 import { Paragraph } from "./commonComponents/Paragraph";
+import { StyleSheet } from "react-native";
 
 export const FavoritesList = observer(({ mediaType }) => {
-  const { media, loadNextPageFavoriteMedia } = useFavoriteMedia(mediaType);
-  //todo if not logged in, ask to log in
+  const { media, loadNextPageFavoriteMedia, userStore } =
+    useFavoriteMedia(mediaType);
   return (
     <>
-      {media.list.size > 0 ? (
-        <MediaList
-          mediaList={Array.from(media.list.values())}
-          loadNewData={loadNextPageFavoriteMedia}
-          showSpinner={media.page < media.totalPages}
-        />
+      {userStore.sessionId ? (
+        <>
+          {media.list.size > 0 ? (
+            <MediaList
+              mediaList={Array.from(media.list.values())}
+              loadNewData={loadNextPageFavoriteMedia}
+              showSpinner={media.page < media.totalPages}
+            />
+          ) : (
+            <Paragraph style={styles.message}>
+              You don&apos;t have any favorite $
+              {mediaType === MEDIA_TYPES.movie ? "movie" : "tv show"} yet`
+            </Paragraph>
+          )}
+        </>
       ) : (
-        <Paragraph>
-          You don&apos;t have any favorite{" "}
-          {mediaType === MEDIA_TYPES.movie ? "movie" : "tv show"} yet
+        <Paragraph style={styles.message}>
+          Login to your account to see your favorite{" "}
+          {mediaType === MEDIA_TYPES.movie ? "movies" : "tv shows"} here.
         </Paragraph>
       )}
     </>
@@ -28,6 +38,9 @@ export const FavoritesList = observer(({ mediaType }) => {
 
 const useFavoriteMedia = (mediaType) => {
   const { userStore } = useStore();
+  if (!userStore.sessionId) {
+    return { userStore };
+  }
   const loadNextPageFavoriteMedia = () => {
     try {
       userStore.fetchNextPageFavorites(mediaType);
@@ -45,5 +58,14 @@ const useFavoriteMedia = (mediaType) => {
     }
   }, []);
 
-  return { media, loadNextPageFavoriteMedia };
+  return { media, loadNextPageFavoriteMedia, userStore };
 };
+
+const styles = StyleSheet.create({
+  message: {
+    textAlign: "center",
+    marginTop: 100,
+    marginHorizontal: 20,
+    fontSize: 18,
+  },
+});

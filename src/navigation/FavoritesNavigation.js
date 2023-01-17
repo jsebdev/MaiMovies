@@ -55,18 +55,3 @@ export const FavoritesNavigation = () => {
     </Tabs.Navigator>
   );
 };
-
-// export const FavoritesNavigation = () => {
-//   return (
-//     <Tabs.Navigator screenOptions={generalScreenOptions}>
-//       <Tabs.Screen
-//         name={FAVORITES_SCREEN}
-//         component={FavoritesScreen}
-//         options={{
-//           title: "Favorites",
-//         }}
-//       />
-//       <Tabs.Screen name={MEDIA_NAVIGATION} component={MediaNavigation} />
-//     </Tabs.Navigator>
-//   );
-// };
