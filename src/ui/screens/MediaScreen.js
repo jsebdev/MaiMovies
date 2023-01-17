@@ -12,7 +12,6 @@ import { MediaInfo } from "@components/mediaScreen/MediaInfo";
 import { ScrollView } from "react-native-gesture-handler";
 import { TvSeasons } from "@components/mediaScreen/TvSeasons";
 import { LastEpisodeInfo } from "@components/mediaScreen/LastEpisodeInfo";
-import { myBorder } from "@app/utils/utils";
 import { MediaButtons } from "../components/mediaScreen/MediaButtons";
 
 export const MediaScreen = observer(({ route }) => {
@@ -27,7 +26,7 @@ export const MediaScreen = observer(({ route }) => {
         <>
           <Backdrop uri={media.getBackdrop(IMAGES_SIZES.large)} />
           <ScrollView style={styles.container}>
-            <MediaButtons />
+            <MediaButtons mediaType={media.mediaType} mediaId={media.id} />
             <View style={styles.headerSpace} />
             <View style={styles.dataContainer}>
               <MediaHeader media={media} />

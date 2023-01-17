@@ -14,7 +14,7 @@ class UserStore {
   //since session and timeout are never set outside this class,
   //it's not necessary make getters and setters for them. but YOLO
   // _sessionId = null;
-  _sessionId = "e58a9138a4a17bf6b603f162de322e267d0ca8b9";
+  _sessionId = "f64250417a99663e66ffff4a194fdffd9e0dbf67";
   _timeoutId = null;
   avatar = null;
   name = null;

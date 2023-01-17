@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite";
 import { AccountHeader } from "./AccountHeader";
 import { ListItem } from "./ListItem";
 import { ListSection } from "./ListSection";
+import { MEDIA_TYPES } from "@app/utils/constants";
 
 export const AccountDetails = observer(() => {
   const { userStore } = useStore();
@@ -12,7 +13,9 @@ export const AccountDetails = observer(() => {
   useEffect(() => {
     (async () => {
       await userStore.fetchAccountDetails();
-      await userStore.fetchListsNextPage();
+      userStore.fetchListsNextPage();
+      userStore.fetchNextPageFavorites(MEDIA_TYPES.movie);
+      userStore.fetchNextPageFavorites(MEDIA_TYPES.tv);
     })();
   }, []);
   return (

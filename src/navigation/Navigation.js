@@ -26,7 +26,6 @@ export const Navigation = () => {
         ...generalScreenOptions(props),
         tabBarStyle: {
           backgroundColor: colors.tabs,
-          height: 90,
         },
       })}
     >
