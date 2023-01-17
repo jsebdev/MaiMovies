@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import { BackgroundView } from "@app/ui/components/commonComponents/BackgroundView";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { observer } from "mobx-react-lite";
@@ -13,6 +12,7 @@ import { MediaInfo } from "@components/mediaScreen/MediaInfo";
 import { ScrollView } from "react-native-gesture-handler";
 import { TvSeasons } from "@components/mediaScreen/TvSeasons";
 import { LastEpisodeInfo } from "@components/mediaScreen/LastEpisodeInfo";
+import { myBorder } from "@app/utils/utils";
 
 export const MediaScreen = observer(({ route }) => {
   const { mediaType, mediaId } = route.params;
@@ -53,12 +53,13 @@ export const MediaScreen = observer(({ route }) => {
 const styles = StyleSheet.create({
   container: {
     borderColor: "red",
-    // borderWidth: 1,
+    // ...myBorder(),
   },
   headerSpace: {
     height: 100,
   },
   dataContainer: {
+    // ...myBorder(),
     paddingLeft: 20,
     paddingRight: 20,
     borderColor: "white",
