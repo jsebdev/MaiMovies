@@ -8,6 +8,7 @@ import {
   API_GET_LIST,
   API_HOST,
   API_LISTS,
+  API_MARK_FAVORITE,
   API_MEDIA,
   API_MEDIA_VIDEOS,
   API_NEW_SESSION,
@@ -211,6 +212,32 @@ export class TheMovieDBController extends ApiController {
   };
 
   //post methods
+
+  markMediaAsFavorite = async (
+    accountId,
+    sessionId,
+    mediaType,
+    mediaId,
+    favorite
+  ) => {
+    try {
+      const url = `${API_HOST}${API_MARK_FAVORITE(accountId, sessionId)}`;
+      const body = {
+        media_type: mediaType,
+        media_id: mediaId,
+        favorite: favorite,
+      };
+      const result = await this.#fetch(url, { method: "POST", body });
+      return result;
+    } catch (err) {
+      console.error(
+        `Error editing favorite for mediaType: ${mediaType} and mediaId: ${mediaId}`
+      );
+      console.error(err);
+      return new ApiResponse({ success: false, message: err.message });
+    }
+  };
+
   createNewSession = async (token) => {
     try {
       const url = `${API_HOST}${API_NEW_SESSION}`;

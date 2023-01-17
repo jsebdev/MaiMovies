@@ -44,6 +44,10 @@ class UserStore {
       fetchLists: flow,
       fetchListItems: flow,
       createNewList: flow,
+      markAsFavorite: flow,
+      fetchAllFavorites: flow,
+      fetchNextPageFavorites: flow,
+      fetchListsNextPage: flow,
     });
     autorun(() => {
       if (this._sessionId) {
@@ -52,11 +56,57 @@ class UserStore {
     });
   }
 
+  *markAsFavorite(mediaType, mediaId, favorite) {
+    const result = yield apiController.markMediaAsFavorite(
+      this.accountId,
+      this.sessionId,
+      mediaType,
+      mediaId,
+      favorite
+    );
+    if (result.success !== true) {
+      console.error(
+        `Could not mark as ${
+          favorite ? "favorite" : "not favorite"
+        } mediaId: ${mediaId}, mediaType: ${mediaType}`
+      );
+      return result;
+    }
+    const favorites = this.chooseFavorites(mediaType);
+    if (favorite) {
+      console.log("84: favorite >>>", favorite);
+      //there must be a better way to add a new favorite than this
+      this.clearFavorites(mediaType);
+      yield this.fetchAllFavorites(mediaType);
+    } else {
+      console.log("89: favorite >>>", favorite);
+      favorites.list.delete(mediaId);
+    }
+    return result;
+  }
+
+  chooseFavorites(mediaType) {
+    return mediaType === MEDIA_TYPES.movie
+      ? this.favoritesMovies
+      : this.favoritesTvShows;
+  }
+
+  clearFavorites(mediaType) {
+    const favorite = this.chooseFavorites(mediaType);
+    favorite.list.clear();
+    favorite.page = 0;
+    favorite.totalPages = Infinity;
+  }
+
+  *fetchAllFavorites(mediaType) {
+    const favorites = this.chooseFavorites(mediaType);
+    while (favorites.page < favorites.totalPages) {
+      yield this.fetchNextPageFavorites(mediaType);
+    }
+  }
+
   *fetchNextPageFavorites(mediaType) {
-    const favorites =
-      mediaType === MEDIA_TYPES.movie
-        ? this.favoritesMovies
-        : this.favoritesTvShows;
+    const favorites = this.chooseFavorites(mediaType);
     if (favorites.page >= favorites.totalPages) return;
     favorites.page++;
     const result = yield apiController.getFavorites(

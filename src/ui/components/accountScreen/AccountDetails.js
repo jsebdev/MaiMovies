@@ -14,8 +14,8 @@ export const AccountDetails = observer(() => {
     (async () => {
       await userStore.fetchAccountDetails();
       userStore.fetchListsNextPage();
-      userStore.fetchNextPageFavorites(MEDIA_TYPES.movie);
-      userStore.fetchNextPageFavorites(MEDIA_TYPES.tv);
+      userStore.fetchAllFavorites(MEDIA_TYPES.movie);
+      userStore.fetchAllFavorites(MEDIA_TYPES.tv);
     })();
   }, []);
   return (

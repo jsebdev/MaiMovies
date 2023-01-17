@@ -15,17 +15,14 @@ export const MediaButtons = observer(({ mediaType, mediaId }) => {
     mediaType === MEDIA_TYPES.movie
       ? userStore.favoritesMovies.list
       : userStore.favoritesTvShows.list;
+  const isFavorite = favorites.has(mediaId);
 
-  const isFavorite = () => {
-    return favorites.has(mediaId);
-  };
-
-  const addToFavorites = () => {
+  const toggleFavorite = () => {
     if (!userStore.sessionId) {
       navigation.navigate(ACCOUNT_NAVIGATION);
       return;
     }
-    // todo: add to favorites
+    userStore.markAsFavorite(mediaType, mediaId, !isFavorite);
     console.log("adding to favorites");
   };
   const addToList = () => {
@@ -41,9 +38,9 @@ export const MediaButtons = observer(({ mediaType, mediaId }) => {
     <View style={styles.container}>
       <IconEntypo name="add-to-list" style={styles.icon} onPress={addToList} />
       <IconAntDesign
-        name={isFavorite() ? "heart" : "hearto"}
+        name={isFavorite ? "heart" : "hearto"}
         style={styles.icon}
-        onPress={addToFavorites}
+        onPress={toggleFavorite}
       />
     </View>
   );
