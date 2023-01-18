@@ -12,11 +12,11 @@ class UserStore {
   requestTokenExpiresAt = null;
   // accessToken = null;
   accessToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1NDY0Nzc4Iiwic2NvcGVzIjpbImFwaV9yZWFkIiwiYXBpX3dyaXRlIl0sInN1YiI6IjYzYjUwMWMxNWFkNzZiMDBhZTkyOTNjMyIsInZlcnNpb24iOjEsIm5iZiI6MTY3NDAwMTQ4OCwiYXVkIjoiZTgwYjc0N2QxNjAyMTM2MWUxMjllZDI4MjYxYTNjNmUifQ.7PEmR9VSSt60bcQhLp6nTbAnLnp4zh_WBK4EkAUB5c0";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE2NzQwNjQzNTksImF1ZCI6ImU4MGI3NDdkMTYwMjEzNjFlMTI5ZWQyODI2MWEzYzZlIiwianRpIjoiNTQ2ODEyNiIsInNjb3BlcyI6WyJhcGlfcmVhZCIsImFwaV93cml0ZSJdLCJ2ZXJzaW9uIjoxLCJzdWIiOiI2M2I1MDFjMTVhZDc2YjAwYWU5MjkzYzMifQ.SV3OmCy55dNIoTwL-cevtV8Ul5iDcXq4crQlSD-ItGI";
   //since session and timeout are never set outside this class,
   //it's not necessary make getters and setters for them. but YOLO
   // _sessionId = null;
-  _sessionId = "a482bcd1e88d8310cef9e5c7e81675fc041778aa";
+  _sessionId = "ec83a386033de200e59ce13b93e5bd1c924d0768";
   // accountId = null;
   accountId = 16827403;
   _timeoutId = null;
@@ -51,6 +51,7 @@ class UserStore {
       fetchNextPageFavorites: flow,
       fetchListsNextPage: flow,
       createNewAccessToken: flow,
+      deleteList: flow,
     });
     autorun(() => {
       if (this._sessionId) {
@@ -58,6 +59,14 @@ class UserStore {
         console.log("56: this.accessToken >>>", this.accessToken);
       }
     });
+  }
+
+  *deleteList(listId) {
+    const result = yield apiController.deleteList(listId);
+    if (result.success === true) {
+      this.lists.delete(listId);
+    }
+    return result;
   }
 
   *addItemToList(listId, mediaType, mediaId) {

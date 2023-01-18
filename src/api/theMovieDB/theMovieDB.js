@@ -18,6 +18,7 @@ import {
   IMAGES_SIZES,
   API_NEW_ACCESS_TOKEN,
   API_ADD_ITEMS_TO_LIST,
+  API_DELETE_LIST,
 } from "@app/utils/constants";
 import { ApiController } from "@app/domain/apiController";
 import {
@@ -322,6 +323,19 @@ export class TheMovieDBController extends ApiController {
   };
 
   //delete methods
+  deleteList = async (listId) => {
+    try {
+      const url = API_DELETE_LIST(listId);
+      const result = await this.#fetch(url, { method: "DELETE" });
+      if (!result.success) return result;
+      return result;
+    } catch (err) {
+      console.error("Error deleting list");
+      console.error(err);
+      return new ApiResponse({ success: false, message: err.message });
+    }
+  };
+
   deleteSession = async (sessionId) => {
     try {
       const url = `${API_URL_V3}${API_DELETE_SESSION}`;

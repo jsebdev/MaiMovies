@@ -1,9 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  ImageBackground,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { View, StyleSheet, ImageBackground, Pressable } from "react-native";
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Paragraph } from "../commonComponents/Paragraph";
@@ -26,21 +21,19 @@ export const ListItem = observer(({ list }) => {
     })();
   }, []);
   return (
-    <TouchableWithoutFeedback
-      onPress={
-        () => navigation.push(LIST_SCREEN, { name: list.name, listId: list.id })
-        // navigation.push(LIST_SCREEN)
+    <Pressable
+      onPress={() =>
+        navigation.push(LIST_SCREEN, { name: list.name, listId: list.id })
       }
+      style={styles.container}
     >
-      <View style={styles.container}>
-        <Background style={styles.background}>
-          <Paragraph style={styles.listName}>{list.name}</Paragraph>
-          <Paragraph style={styles.itemCount}>
-            {list.itemCount} item{list.itemCount !== 1 && "s"}
-          </Paragraph>
-        </Background>
-      </View>
-    </TouchableWithoutFeedback>
+      <Background style={styles.background}>
+        <Paragraph style={styles.listName}>{list.name}</Paragraph>
+        <Paragraph style={styles.itemCount}>
+          {list.itemCount} item{list.itemCount !== 1 && "s"}
+        </Paragraph>
+      </Background>
+    </Pressable>
   );
 });
 

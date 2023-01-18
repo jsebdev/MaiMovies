@@ -34,6 +34,7 @@ export const API_ADD_ITEMS_TO_LIST = (listId) =>
 // Gravatar API
 export const API_GRAVATAR_IMAGE_PATH = (hash) =>
   `https://www.gravatar.com/avatar/${hash}`;
+export const API_DELETE_LIST = (listId) => `${API_URL_V4}/list/${listId}`;
 
 // Navigation and Screen names
 export const SEARCH_NAVIGATION = "SearchNavigation";

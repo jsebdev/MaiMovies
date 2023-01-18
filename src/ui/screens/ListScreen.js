@@ -15,7 +15,7 @@ export const ListScreen = observer(({ route, navigation }) => {
   const list = userStore.lists.get(listId);
   return (
     <BackgroundView>
-      {list.items && list.items.length > 0 ? (
+      {list !== undefined && list.items && list.items.length > 0 ? (
         <MediaList mediaList={list.items} />
       ) : (
         <View style={styles.messageContainer}>
