@@ -18,7 +18,7 @@ import { generalScreenOptions } from "@app/ui/globalStyles";
 
 const Tab = createBottomTabNavigator();
 
-export const Navigation = () => {
+export const HomeNavigation = () => {
   return (
     <Tab.Navigator
       initialRouteName={TRENDING_NAVIGATION}

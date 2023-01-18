@@ -3,7 +3,7 @@ import { BackgroundView } from "../components/commonComponents/BackgroundView";
 import { Paragraph } from "../components/commonComponents/Paragraph";
 import { useStore } from "@app/store/store.hook";
 import PropTypes from "prop-types";
-import { Pressable, StyleSheet } from "react-native";
+import { Alert, Pressable, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 export const AddToListScreen = ({ route, navigation }) => {
@@ -14,12 +14,26 @@ export const AddToListScreen = ({ route, navigation }) => {
     navigation.setOptions({ title: `Add to list: ${media.name}` });
   }, []);
   const lists = Array.from(userStore.lists.values());
-  console.log("18: lists.length >>>", lists.length);
+  const addToList = async (listId) => {
+    const result = await userStore.addItemToList(listId, mediaType, mediaId);
+    if (result.success === false) {
+      Alert.alert(
+        "Could not add item to list. Probably because the item was already in the list."
+      );
+      return;
+    }
+    Alert.alert(`${media.name} added to list successfully`);
+    navigation.goBack();
+  };
   return (
     <BackgroundView style={styles.mainContainer}>
       <ScrollView style={styles.listsContainer}>
         {lists.map((list) => (
-          <Pressable key={list.id} style={styles.list}>
+          <Pressable
+            key={list.id}
+            style={styles.list}
+            onPress={() => addToList(list.id)}
+          >
             <Paragraph style={styles.listName}>{list.name}</Paragraph>
           </Pressable>
         ))}

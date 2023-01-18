@@ -244,7 +244,7 @@ export class TheMovieDBController extends ApiController {
     try {
       const result = await this.addItemsToList(listId, [item]);
       if (!result.success) return result;
-      result.success = result.results[0].success;
+      result.success = result.rawValue.results[0].success;
       return result;
     } catch (err) {
       console.error(`Error adding item to list`);

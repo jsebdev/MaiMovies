@@ -66,9 +66,6 @@ class UserStore {
       media_id: mediaId,
     });
     if (result.success !== true) {
-      console.error(
-        `could not add item itemId ${mediaId}, mediaType ${mediaType} to list ${listId}`
-      );
       return result;
     }
     yield this.fetchListItems(listId);

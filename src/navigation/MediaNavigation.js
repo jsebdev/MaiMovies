@@ -3,14 +3,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { MediaScreen } from "@app/ui/screens/MediaScreen";
 import {
   ACCOUNT_SCREEN,
-  ADD_TO_LIST_SCREEN,
   IMAGE_LIST_SCREEN,
   MEDIA_SCREEN,
 } from "@app/utils/constants";
 import { generalScreenOptions } from "@app/ui/globalStyles";
 import { ImagesListScreen } from "@app/ui/screens/ImagesListScreen";
 import PropTypes from "prop-types";
-import { AddToListScreen } from "@app/ui/screens/AddToListScreen";
 
 const Stack = createStackNavigator();
 
@@ -40,11 +38,6 @@ export const MediaNavigation = ({ navigation }) => {
         options={{
           cardStyleInterpolator: forFade,
         }}
-      />
-      <Stack.Screen
-        name={ADD_TO_LIST_SCREEN}
-        component={AddToListScreen}
-        options={{ headerShown: true }}
       />
     </Stack.Navigator>
   );

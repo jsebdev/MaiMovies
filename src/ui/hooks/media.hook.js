@@ -6,7 +6,6 @@ export const useMedia = (mediaType, mediaId) => {
   const { mediaStore } = useStore();
   const media = mediaStore.getMedia(mediaType, mediaId);
   return { media, mediaStore };
-  // return { mediaStore };
 };
 
 export const useMediaScreen = (mediaType, mediaId) => {
@@ -23,7 +22,3 @@ export const useMediaScreen = (mediaType, mediaId) => {
 
   return { media, mediaStore };
 };
-
-// export const useMediaVideos = (mediaType, mediaId) => {
-//   const { media, mediaStore } = useMedia(mediaType, mediaId);
-// };
