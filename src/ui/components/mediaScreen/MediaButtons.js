@@ -2,7 +2,12 @@ import { View, StyleSheet } from "react-native";
 import React from "react";
 import IconAntDesign from "react-native-vector-icons/AntDesign";
 import IconEntypo from "react-native-vector-icons/Entypo";
-import { ACCOUNT_NAVIGATION, colors, MEDIA_TYPES } from "@app/utils/constants";
+import {
+  ACCOUNT_NAVIGATION,
+  ADD_TO_LIST_SCREEN,
+  colors,
+  MEDIA_TYPES,
+} from "@app/utils/constants";
 import { useNavigation } from "@react-navigation/native";
 import { useStore } from "@app/store/store.hook";
 import { observer } from "mobx-react-lite";
@@ -30,8 +35,10 @@ export const MediaButtons = observer(({ mediaType, mediaId }) => {
       navigation.navigate(ACCOUNT_NAVIGATION);
       return;
     }
-    // todo: add to list
-    console.log("adding to list");
+    navigation.push(ADD_TO_LIST_SCREEN, {
+      mediaId,
+      mediaType,
+    });
   };
 
   return (

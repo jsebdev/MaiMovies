@@ -17,6 +17,7 @@ import {
   API_WEEKLY_TRENDING,
   IMAGES_SIZES,
   API_NEW_ACCESS_TOKEN,
+  API_ADD_ITEMS_TO_LIST,
 } from "@app/utils/constants";
 import { ApiController } from "@app/domain/apiController";
 import {
@@ -29,7 +30,6 @@ import { List } from "@app/domain/ListClass";
 import { addMinutes } from "date-fns/esm";
 
 export class TheMovieDBController extends ApiController {
-  accessToken = null;
   constructor() {
     super();
     this.myHeaders = new Headers();
@@ -153,15 +153,17 @@ export class TheMovieDBController extends ApiController {
         body: { request_token: requestToken },
       });
       if (!result.success) return result;
-      this.accessToken = result.rawValue.access_token;
-      this.myHeaders.set("Authorization", `Bearer ${this.accessToken}`);
-      result.value = this.accessToken;
+      result.value = result.rawValue.access_token;
       return result;
     } catch (err) {
       console.error("Error obtaining new access token");
       console.error(err);
       return new ApiResponse({ success: false, message: err.message });
     }
+  };
+
+  setNewBearer = (accessToken) => {
+    this.myHeaders.set("Authorization", `Bearer ${accessToken}`);
   };
 
   searchMedia = async (page = 1, mediaType, searchText) => {
@@ -238,6 +240,30 @@ export class TheMovieDBController extends ApiController {
   };
 
   //post methods
+  addItemToList = async (listId, item) => {
+    try {
+      const result = await this.addItemsToList(listId, [item]);
+      if (!result.success) return result;
+      result.success = result.results[0].success;
+      return result;
+    } catch (err) {
+      console.error(`Error adding item to list`);
+      console.error(err);
+      return new ApiResponse({ success: false, message: err.message });
+    }
+  };
+  addItemsToList = async (listId, items) => {
+    try {
+      const url = API_ADD_ITEMS_TO_LIST(listId);
+      const body = { items };
+      const result = await this.#fetch(url, { method: "POST", body });
+      return result;
+    } catch (err) {
+      console.error(`Error adding items to list`);
+      console.error(err);
+      return new ApiResponse({ success: false, message: err.message });
+    }
+  };
 
   markMediaAsFavorite = async (
     accountId,

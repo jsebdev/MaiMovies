@@ -25,3 +25,20 @@ export const generalScreenOptions = ({ navigation }) => ({
     />
   ),
 });
+
+export const tabBarScreenOptions = ({ route, navigation }) => {
+  const navigator = navigation
+    .getState()
+    .routes.find(({ name }) => name === route.name);
+  const routes = navigator.state?.routes;
+  if (!routes) return generalScreenOptions;
+  // if the second route contains routes as well, that means that there is that the current
+  // screen is no longer the media screen alone, a new screen was pushed
+  if (routes.length > 1 && routes[1].state?.routes) {
+    return {
+      ...generalScreenOptions,
+      swipeEnabled: false,
+    };
+  }
+  return generalScreenOptions;
+};

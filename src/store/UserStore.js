@@ -10,17 +10,19 @@ import { autorun, flow, makeAutoObservable } from "mobx";
 class UserStore {
   requestToken = null;
   requestTokenExpiresAt = null;
-  accessToken = null;
+  // accessToken = null;
+  accessToken =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1NDY0Nzc4Iiwic2NvcGVzIjpbImFwaV9yZWFkIiwiYXBpX3dyaXRlIl0sInN1YiI6IjYzYjUwMWMxNWFkNzZiMDBhZTkyOTNjMyIsInZlcnNpb24iOjEsIm5iZiI6MTY3NDAwMTQ4OCwiYXVkIjoiZTgwYjc0N2QxNjAyMTM2MWUxMjllZDI4MjYxYTNjNmUifQ.7PEmR9VSSt60bcQhLp6nTbAnLnp4zh_WBK4EkAUB5c0";
   //since session and timeout are never set outside this class,
   //it's not necessary make getters and setters for them. but YOLO
-  _sessionId = null;
-  // _sessionId = "f64250417a99663e66ffff4a194fdffd9e0dbf67";
+  // _sessionId = null;
+  _sessionId = "a482bcd1e88d8310cef9e5c7e81675fc041778aa";
+  // accountId = null;
+  accountId = 16827403;
   _timeoutId = null;
   avatar = null;
   name = null;
   username = null;
-  // accountId = 16827403;
-  accountId = null;
   lists = new Map();
   listTotalPages = Infinity;
   listsPage = 0;
@@ -56,6 +58,21 @@ class UserStore {
         console.log("56: this.accessToken >>>", this.accessToken);
       }
     });
+  }
+
+  *addItemToList(listId, mediaType, mediaId) {
+    const result = yield apiController.addItemToList(listId, {
+      media_type: mediaType,
+      media_id: mediaId,
+    });
+    if (result.success !== true) {
+      console.error(
+        `could not add item itemId ${mediaId}, mediaType ${mediaType} to list ${listId}`
+      );
+      return result;
+    }
+    yield this.fetchListItems(listId);
+    return result;
   }
 
   *markAsFavorite(mediaType, mediaId, favorite) {
@@ -161,6 +178,7 @@ class UserStore {
   }
 
   *fetchAccountDetails() {
+    apiController.setNewBearer(this.accessToken);
     const result = yield apiController.getAccountDetails(this.sessionId);
     if (result.success !== true) {
       if (result.rawValue.status_code === 3) {

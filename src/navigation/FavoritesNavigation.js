@@ -1,5 +1,5 @@
 import React from "react";
-import { generalScreenOptions } from "@app/ui/globalStyles";
+import { tabBarScreenOptions } from "@app/ui/globalStyles";
 import {
   MEDIA_LIST_TYPES,
   MEDIA_TYPES,
@@ -21,18 +21,7 @@ export const FavoritesNavigation = () => {
         width: Dimensions.get("window").width,
       }}
       tabBar={(props) => <MyTabBar {...props} />}
-      screenOptions={({ route, navigation }) => {
-        const navigator = navigation
-          .getState()
-          .routes.find(({ name }) => name === route.name);
-        const routes = navigator.state?.routes;
-        if (!routes) return generalScreenOptions;
-        //todo:Fix now swiping when navigation is deeper than just the media screen
-        if (routes.length >= 3) {
-          return { ...generalScreenOptions, swipeEnabled: false };
-        }
-        return generalScreenOptions;
-      }}
+      screenOptions={tabBarScreenOptions}
     >
       <Tabs.Screen
         name={MOVIES_FAVORITES_NAVIGATION}

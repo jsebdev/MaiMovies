@@ -1,5 +1,5 @@
 import React from "react";
-import { generalScreenOptions } from "@app/ui/globalStyles";
+import { tabBarScreenOptions } from "@app/ui/globalStyles";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Dimensions } from "react-native";
 import { MyTabBar } from "./MyTabBar";
@@ -21,18 +21,7 @@ export const TrendingNavigation = () => {
         width: Dimensions.get("window").width,
       }}
       tabBar={(props) => <MyTabBar {...props} />}
-      screenOptions={({ route, navigation }) => {
-        const navigator = navigation
-          .getState()
-          .routes.find(({ name }) => name === route.name);
-        const routes = navigator.state?.routes;
-        if (!routes) return generalScreenOptions;
-        //todo:Fix now swiping when navigation is deeper than just the media screen
-        if (routes.length >= 3) {
-          return { ...generalScreenOptions, swipeEnabled: false };
-        }
-        return generalScreenOptions;
-      }}
+      screenOptions={tabBarScreenOptions}
     >
       <Tabs.Screen
         name={MOVIES_TRENDING_NAVIGATION}

@@ -28,6 +28,8 @@ export const API_FAVORITES = (accountId, mediaType, sessionId, page) => {
   if (mediaType === MEDIA_TYPES.movie) mediaType = mediaType + "s";
   return `/account/${accountId}/favorite/${mediaType}?session_id=${sessionId}&page=${page}`;
 };
+export const API_ADD_ITEMS_TO_LIST = (listId) =>
+  `${API_URL_V4}/list/${listId}/items`;
 
 // Gravatar API
 export const API_GRAVATAR_IMAGE_PATH = (hash) =>
@@ -56,6 +58,7 @@ export const MEDIA_LIST_SCREEN = "MediaListScreen";
 export const MEDIA_LIST_NAVIGATION = "MediaListNavigation";
 export const MOVIES_FAVORITES_NAVIGATION = "MoviesFavoritesNavigation";
 export const TV_FAVORITES_NAVIGATION = "TvFavoritesNavigation";
+export const ADD_TO_LIST_SCREEN = "AddToListScreen";
 
 export const MEDIA_TYPES = {
   movie: "movie",
