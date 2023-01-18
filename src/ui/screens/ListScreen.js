@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BackgroundView } from "../components/commonComponents/BackgroundView";
 import { Paragraph } from "../components/commonComponents/Paragraph";
 import PropTypes from "prop-types";
@@ -13,10 +13,15 @@ export const ListScreen = observer(({ route, navigation }) => {
   const listId = route?.params?.listId;
   const { userStore } = useStore();
   const list = userStore.lists.get(listId);
+  const [selectedMedia, setSelectedMedia] = useState([]);
   return (
     <BackgroundView>
       {list !== undefined && list.items && list.items.length > 0 ? (
-        <MediaList mediaList={list.items} />
+        <MediaList
+          mediaList={list.items}
+          selectedMedia={selectedMedia}
+          setSelectedMedia={setSelectedMedia}
+        />
       ) : (
         <View style={styles.messageContainer}>
           <Paragraph style={styles.message}>This list is empty</Paragraph>

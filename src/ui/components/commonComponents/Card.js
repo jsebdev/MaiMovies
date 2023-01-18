@@ -1,44 +1,48 @@
 import React from "react";
+import { View, StyleSheet, Image, Dimensions, Pressable } from "react-native";
 import {
-  View,
-  TouchableWithoutFeedback,
-  StyleSheet,
-  Image,
-  Dimensions,
-} from "react-native";
-import { POSTER_RATIO, VERTICAL_POSTERS_IN_SCREEN } from "@app/utils/constants";
+  colors,
+  POSTER_RATIO,
+  VERTICAL_POSTERS_IN_SCREEN,
+} from "@app/utils/constants";
 import PropTypes from "prop-types";
 import { Paragraph } from "./Paragraph";
 
 export const Card = ({
   onPress,
+  onLongPress,
   imageSource,
   title,
   cardRatio = POSTER_RATIO,
   horizontalCardsFit = VERTICAL_POSTERS_IN_SCREEN,
   resizeMode = "cover",
   marginX = 2,
-  marginB = 6,
+  marginB = 0,
+  isSelected = false,
 }) => {
+  console.log("23: title >>>", title);
   const cardWidth = Dimensions.get("window").width / horizontalCardsFit;
   const cardHeight = cardWidth * cardRatio;
   return (
-    <TouchableWithoutFeedback onPress={onPress ? onPress : null}>
+    <Pressable
+      onPress={onPress ? onPress : null}
+      onLongPress={onLongPress ? () => onLongPress() : null}
+    >
       <View
         style={[
           styles.card,
-          { marginHorizontal: marginX, marginBottom: marginB },
+          {
+            paddingHorizontal: marginX,
+            marginBottom: marginB,
+            width: cardWidth,
+            height: cardHeight,
+          },
+          isSelected ? styles.isSelectedCard : null,
         ]}
       >
         <Image
           source={{ uri: imageSource }}
-          style={[
-            styles.image,
-            {
-              width: cardWidth,
-              height: cardHeight,
-            },
-          ]}
+          style={[styles.image]}
           resizeMode={resizeMode}
         />
         {title && (
@@ -63,7 +67,7 @@ export const Card = ({
           </View>
         )}
       </View>
-    </TouchableWithoutFeedback>
+    </Pressable>
   );
 };
 
@@ -73,9 +77,15 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     overflow: "hidden",
     alignItems: "center",
+    paddingTop: 2,
+  },
+  isSelectedCard: {
+    backgroundColor: colors.selected,
   },
   image: {
     borderRadius: 5,
+    flex: 1,
+    width: "100%",
   },
   textContainer: {
     flexDirection: "row",
@@ -98,4 +108,6 @@ Card.propTypes = {
   resizeMode: PropTypes.string,
   marginX: PropTypes.number,
   marginB: PropTypes.number,
+  onLongPress: PropTypes.func,
+  isSelected: PropTypes.bool,
 };

@@ -89,6 +89,8 @@ export const colors = {
   link: "#918aff",
   dimmed: "#aaa",
   error: "#f00",
+  danger: "red",
+  selected: "#ff4d4d",
 };
 export const VOTE_COLORS = [
   {

@@ -4,6 +4,7 @@ import { AccountScreen } from "@app/ui/screens/AccountScreen";
 import { generalScreenOptions } from "@app/ui/globalStyles";
 import {
   ACCOUNT_SCREEN,
+  colors,
   LIST_SCREEN,
   MEDIA_NAVIGATION,
   NEW_LIST_SCREEN,
@@ -35,6 +36,7 @@ export const AccountNavigation = () => {
           headerShown: true,
           headerRight: () => (
             <MyButton
+              textStyle={{ color: colors.danger }}
               onPress={() => {
                 Alert.alert("Are you sure you want to delete this list?", "", [
                   {

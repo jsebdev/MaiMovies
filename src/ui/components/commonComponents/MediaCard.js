@@ -8,7 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import PropTypes from "prop-types";
 import { Card } from "./Card";
 
-export const MediaCard = ({ media }) => {
+export const MediaCard = ({ media, onLongPress, onPress, isSelected }) => {
   const navigation = useNavigation();
   const goToMedia = () => {
     navigation.push(MEDIA_NAVIGATION, {
@@ -22,13 +22,18 @@ export const MediaCard = ({ media }) => {
   };
   return (
     <Card
-      onPress={goToMedia}
+      onPress={onPress ? onPress : goToMedia}
       imageSource={media.getPoster(IMAGES_SIZES.medium)}
       title={media.name}
+      onLongPress={onLongPress}
+      isSelected={isSelected}
     />
   );
 };
 
 MediaCard.propTypes = {
   media: PropTypes.object,
+  onLongPress: PropTypes.func,
+  onPress: PropTypes.func,
+  isSelected: PropTypes.bool,
 };

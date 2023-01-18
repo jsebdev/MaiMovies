@@ -78,5 +78,5 @@ export const getVoteColor = (vote) =>
 
 export const myBorder = (color = "red") => ({
   borderColor: color,
-  borderWidth: 1,
+  borderWidth: 20,
 });
