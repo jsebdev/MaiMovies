@@ -1,7 +1,8 @@
-import { Pressable, StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import React from "react";
 import PropTypes from "prop-types";
 import { Paragraph } from "./Paragraph";
+import { MyPressable } from "./MyPressable";
 
 export const MyButton = ({
   children,
@@ -16,47 +17,21 @@ export const MyButton = ({
     ? pressableStyle
     : [pressableStyle];
   const inheritedTextStyle = Array.isArray(textStyle) ? textStyle : [textStyle];
-  const variantContainerStyle = variant ? pressableStyles[variant] : null;
-  const variantPressableStyle = variant ? pressableStyles[variant] : null;
   const variantTextStyle = variant ? textStyles[variant] : null;
   return (
-    <View
-      style={[
-        containerStyles.default,
-        ...inheritedRootStyle,
-        variantContainerStyle,
-      ]}
+    <MyPressable
+      rootStyle={inheritedRootStyle}
+      pressableStyle={inheritedPressableStyle}
+      onPress={onPress}
     >
-      <Pressable
-        onPress={onPress}
-        style={({ pressed }) => [
-          pressableStyles.default({ pressed }),
-          ...inheritedPressableStyle,
-          variantPressableStyle,
-        ]}
+      <Paragraph
+        style={[textStyles.default, ...inheritedTextStyle, variantTextStyle]}
       >
-        <Paragraph
-          style={[textStyles.default, ...inheritedTextStyle, variantTextStyle]}
-        >
-          {children}
-        </Paragraph>
-      </Pressable>
-    </View>
+        {children}
+      </Paragraph>
+    </MyPressable>
   );
 };
-
-const containerStyles = StyleSheet.create({
-  default: {
-    alignItems: "center",
-  },
-});
-
-const pressableStyles = StyleSheet.create({
-  default: ({ pressed }) => ({
-    backgroundColor: pressed ? "#6c5cfa55" : "transparent",
-    borderRadius: 5,
-  }),
-});
 
 const textStyles = StyleSheet.create({
   default: {
@@ -70,8 +45,8 @@ const textStyles = StyleSheet.create({
 MyButton.propTypes = {
   children: PropTypes.node,
   onPress: PropTypes.func,
-  pressableStyle: PropTypes.object,
-  rootStyle: PropTypes.object,
-  textStyle: PropTypes.object,
+  pressableStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  rootStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  textStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   variant: PropTypes.oneOf(Object.keys(textStyles)),
 };
