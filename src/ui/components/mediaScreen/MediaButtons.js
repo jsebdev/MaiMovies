@@ -12,6 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useStore } from "@app/store/store.hook";
 import { observer } from "mobx-react-lite";
 import PropTypes from "prop-types";
+import { MyPressable } from "../commonComponents/MyPressable";
 
 export const MediaButtons = observer(({ mediaType, mediaId }) => {
   const navigation = useNavigation();
@@ -28,7 +29,6 @@ export const MediaButtons = observer(({ mediaType, mediaId }) => {
       return;
     }
     userStore.markAsFavorite(mediaType, mediaId, !isFavorite);
-    console.log("adding to favorites");
   };
   const addToList = () => {
     if (!userStore.sessionId) {
@@ -43,12 +43,20 @@ export const MediaButtons = observer(({ mediaType, mediaId }) => {
 
   return (
     <View style={styles.container}>
-      <IconEntypo name="add-to-list" style={styles.icon} onPress={addToList} />
-      <IconAntDesign
-        name={isFavorite ? "heart" : "hearto"}
-        style={styles.icon}
-        onPress={toggleFavorite}
-      />
+      <MyPressable>
+        <IconEntypo
+          name="add-to-list"
+          style={styles.icon}
+          onPress={addToList}
+        />
+      </MyPressable>
+      <MyPressable>
+        <IconAntDesign
+          name={isFavorite ? "heart" : "hearto"}
+          style={styles.icon}
+          onPress={toggleFavorite}
+        />
+      </MyPressable>
     </View>
   );
 });

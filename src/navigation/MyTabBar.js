@@ -5,19 +5,19 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { colors, SEARCH_NAVIGATION } from "@app/utils/constants";
 import { Paragraph } from "@app/ui/components/commonComponents/Paragraph";
-import { MyButton } from "@app/ui/components/commonComponents/MyButton";
+import { MyPressable } from "@app/ui/components/commonComponents/MyPressable";
 
 export function MyTabBar({ state, descriptors, navigation, position }) {
   return (
     <View style={{ flexDirection: "row", backgroundColor: colors.background }}>
       <View style={styles.searchContainer}>
-        <MyButton
+        <MyPressable
           onPress={() => {
             navigation.push(SEARCH_NAVIGATION);
           }}
         >
           <Ionicons name="search" color={colors.dimmed} size={30} />
-        </MyButton>
+        </MyPressable>
       </View>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
