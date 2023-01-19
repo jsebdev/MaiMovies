@@ -38,9 +38,6 @@ export const FavoritesList = observer(({ mediaType }) => {
 
 const useFavoriteMedia = (mediaType) => {
   const { userStore } = useStore();
-  if (!userStore.sessionId) {
-    return { userStore };
-  }
   const loadNextPageFavoriteMedia = () => {
     try {
       userStore.fetchNextPageFavorites(mediaType);
@@ -53,7 +50,7 @@ const useFavoriteMedia = (mediaType) => {
       ? userStore.favoritesMovies
       : userStore.favoritesTvShows;
   useEffect(() => {
-    if (media.list.size === 0) {
+    if (userStore.sessionId && media.list.size === 0) {
       (async () => loadNextPageFavoriteMedia())();
     }
   }, []);

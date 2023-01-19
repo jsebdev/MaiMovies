@@ -16,16 +16,23 @@ export const MediaList = ({
   const toggleMediaSelection = (media) => {
     if (isMediaSelected(media)) {
       setSelectedMedia((medias) =>
-        medias.filter((item) => item !== composeUniqueMediaId(media))
+        medias.filter((item) => item.uniqueId !== composeUniqueMediaId(media))
       );
       return;
     }
-    setSelectedMedia((values) => [...values, composeUniqueMediaId(media)]);
+    setSelectedMedia((values) => [
+      ...values,
+      {
+        id: media.id,
+        mediaType: media.mediaType,
+        uniqueId: composeUniqueMediaId(media),
+      },
+    ]);
   };
   const isMediaSelected = (media) => {
     if (!selectedMedia) return false;
     const selected = selectedMedia.find(
-      (item) => item === composeUniqueMediaId(media)
+      (item) => item.uniqueId === composeUniqueMediaId(media)
     );
     if (selected) return true;
     return false;

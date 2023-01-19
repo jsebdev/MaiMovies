@@ -20,13 +20,13 @@ export const Card = ({
   marginB = 0,
   isSelected = false,
 }) => {
-  console.log("23: title >>>", title);
   const cardWidth = Dimensions.get("window").width / horizontalCardsFit;
-  const cardHeight = cardWidth * cardRatio;
+  // const cardHeight = cardWidth * cardRatio;
   return (
     <Pressable
       onPress={onPress ? onPress : null}
       onLongPress={onLongPress ? () => onLongPress() : null}
+      style={isSelected ? styles.isSelectedCard : null}
     >
       <View
         style={[
@@ -35,14 +35,13 @@ export const Card = ({
             paddingHorizontal: marginX,
             marginBottom: marginB,
             width: cardWidth,
-            height: cardHeight,
+            // height: "100%",
           },
-          isSelected ? styles.isSelectedCard : null,
         ]}
       >
         <Image
           source={{ uri: imageSource }}
-          style={[styles.image]}
+          style={[styles.image, { aspectRatio: 1 / cardRatio }]}
           resizeMode={resizeMode}
         />
         {title && (
@@ -73,7 +72,7 @@ export const Card = ({
 
 const styles = StyleSheet.create({
   card: {
-    flex: 1,
+    // flex: 1,
     justifyContent: "flex-start",
     overflow: "hidden",
     alignItems: "center",

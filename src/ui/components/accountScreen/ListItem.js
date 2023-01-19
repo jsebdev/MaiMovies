@@ -15,10 +15,10 @@ export const ListItem = observer(({ list }) => {
     ? BackgroundList(list.background)
     : LinearGradientCard;
   useEffect(() => {
-    (async () => {
-      if (list.itemCount === 0) return;
-      await userStore.fetchListItems(list.id);
-    })();
+    // (async () => {
+    userStore.fetchListItems(list.id);
+    // await userStore.fetchListItems(list.id);
+    // })();
   }, []);
   return (
     <Pressable

@@ -32,9 +32,6 @@ export const AccountDetails = observer(() => {
         renderItem={({ item }) => <ListItem list={item} />}
         numColumns={2}
         onEndReachedThreshold={0.5}
-        //todo: make logic to fetch next page of lists
-        // onEndReached={loadMoreData}
-        // ListFooterComponent={<FlatListLoader showSpinner={showSpinner} />}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       />

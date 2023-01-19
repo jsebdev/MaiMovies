@@ -76,7 +76,7 @@ export const getVoteColor = (vote) =>
 //   return date;
 // };
 
-export const myBorder = (color = "red") => ({
+export const myBorder = (color = "white") => ({
   borderColor: color,
-  borderWidth: 20,
+  borderWidth: 1,
 });

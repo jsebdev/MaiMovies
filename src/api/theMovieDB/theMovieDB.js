@@ -19,6 +19,7 @@ import {
   API_NEW_ACCESS_TOKEN,
   API_ADD_ITEMS_TO_LIST,
   API_DELETE_LIST,
+  API_DELETE_ITEM_FROM_LIST as API_DELETE_ITEMS_FROM_LIST,
 } from "@app/utils/constants";
 import { ApiController } from "@app/domain/apiController";
 import {
@@ -243,7 +244,9 @@ export class TheMovieDBController extends ApiController {
   //post methods
   addItemToList = async (listId, item) => {
     try {
-      const result = await this.addItemsToList(listId, [item]);
+      const result = await this.addItemsToList(listId, [
+        { media_id: item.mediaId, media_type: item.mediaType },
+      ]);
       if (!result.success) return result;
       result.success = result.rawValue.results[0].success;
       return result;
@@ -253,6 +256,7 @@ export class TheMovieDBController extends ApiController {
       return new ApiResponse({ success: false, message: err.message });
     }
   };
+
   addItemsToList = async (listId, items) => {
     try {
       const url = API_ADD_ITEMS_TO_LIST(listId);
@@ -323,6 +327,25 @@ export class TheMovieDBController extends ApiController {
   };
 
   //delete methods
+  deleteMediaFromList = async (listId, items) => {
+    try {
+      const url = API_DELETE_ITEMS_FROM_LIST(listId);
+      const body = {
+        items: items.map((item) => ({
+          media_type: item.mediaType,
+          media_id: item.mediaId,
+        })),
+      };
+      const result = await this.#fetch(url, { method: "DELETE", body });
+      if (!result.success) return result;
+      return result;
+    } catch (err) {
+      console.error("Error deleting list");
+      console.error(err);
+      return new ApiResponse({ success: false, message: err.message });
+    }
+  };
+
   deleteList = async (listId) => {
     try {
       const url = API_DELETE_LIST(listId);

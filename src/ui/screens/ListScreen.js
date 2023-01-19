@@ -6,16 +6,47 @@ import { useStore } from "@app/store/store.hook";
 import { observer } from "mobx-react-lite";
 import { MediaList } from "../components/commonComponents/MediaList";
 import { MyButton } from "../components/commonComponents/MyButton";
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { TRENDING_NAVIGATION } from "@app/utils/constants";
+import { id } from "date-fns/locale";
 
 export const ListScreen = observer(({ route, navigation }) => {
   const listId = route?.params?.listId;
   const { userStore } = useStore();
   const list = userStore.lists.get(listId);
   const [selectedMedia, setSelectedMedia] = useState([]);
+  const deleteMediaPrompt = () => {
+    const selectedNumber = selectedMedia.length;
+    Alert.alert(
+      `Are you sure you want to delete ${selectedNumber} item${
+        selectedNumber > 1 ? "s" : ""
+      } from this list`,
+      "",
+      [
+        {
+          text: "Yes",
+          onPress: async () => {
+            const result = await userStore.deleteMediasFromList(
+              listId,
+              selectedMedia.map(({ id, mediaType }) => ({
+                mediaId: id,
+                mediaType,
+              }))
+            );
+            if (!result.success) Alert.alert("Something went wrong");
+          },
+        },
+        {
+          text: "No",
+        },
+      ]
+    );
+  };
   return (
     <BackgroundView>
+      {selectedMedia.length > 0 && (
+        <MyButton onPress={deleteMediaPrompt}>Delete items</MyButton>
+      )}
       {list !== undefined && list.items && list.items.length > 0 ? (
         <MediaList
           mediaList={list.items}

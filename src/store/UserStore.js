@@ -10,15 +10,15 @@ import { autorun, flow, makeAutoObservable } from "mobx";
 class UserStore {
   requestToken = null;
   requestTokenExpiresAt = null;
-  // accessToken = null;
-  accessToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE2NzQwNjQzNTksImF1ZCI6ImU4MGI3NDdkMTYwMjEzNjFlMTI5ZWQyODI2MWEzYzZlIiwianRpIjoiNTQ2ODEyNiIsInNjb3BlcyI6WyJhcGlfcmVhZCIsImFwaV93cml0ZSJdLCJ2ZXJzaW9uIjoxLCJzdWIiOiI2M2I1MDFjMTVhZDc2YjAwYWU5MjkzYzMifQ.SV3OmCy55dNIoTwL-cevtV8Ul5iDcXq4crQlSD-ItGI";
+  accessToken = null;
+  // accessToken =
+  //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE2NzQwNjQzNTksImF1ZCI6ImU4MGI3NDdkMTYwMjEzNjFlMTI5ZWQyODI2MWEzYzZlIiwianRpIjoiNTQ2ODEyNiIsInNjb3BlcyI6WyJhcGlfcmVhZCIsImFwaV93cml0ZSJdLCJ2ZXJzaW9uIjoxLCJzdWIiOiI2M2I1MDFjMTVhZDc2YjAwYWU5MjkzYzMifQ.SV3OmCy55dNIoTwL-cevtV8Ul5iDcXq4crQlSD-ItGI";
   //since session and timeout are never set outside this class,
   //it's not necessary make getters and setters for them. but YOLO
-  // _sessionId = null;
-  _sessionId = "ec83a386033de200e59ce13b93e5bd1c924d0768";
-  // accountId = null;
-  accountId = 16827403;
+  _sessionId = null;
+  // _sessionId = "ec83a386033de200e59ce13b93e5bd1c924d0768";
+  accountId = null;
+  // accountId = 16827403;
   _timeoutId = null;
   avatar = null;
   name = null;
@@ -43,7 +43,6 @@ class UserStore {
       createNewSession: flow,
       deleteSession: flow,
       fetchAccountDetails: flow,
-      fetchLists: flow,
       fetchListItems: flow,
       createNewList: flow,
       markAsFavorite: flow,
@@ -52,6 +51,7 @@ class UserStore {
       fetchListsNextPage: flow,
       createNewAccessToken: flow,
       deleteList: flow,
+      deleteMediasFromList: flow,
     });
     autorun(() => {
       if (this._sessionId) {
@@ -59,6 +59,16 @@ class UserStore {
         console.log("56: this.accessToken >>>", this.accessToken);
       }
     });
+  }
+
+  *deleteMediasFromList(listId, medias) {
+    console.log("65: medias >>>", medias);
+    const result = yield apiController.deleteMediaFromList(listId, medias);
+    console.log("67: result >>>", result);
+    if (result.success === true) {
+      yield this.fetchListItems(listId);
+    }
+    return result;
   }
 
   *deleteList(listId) {
@@ -71,8 +81,8 @@ class UserStore {
 
   *addItemToList(listId, mediaType, mediaId) {
     const result = yield apiController.addItemToList(listId, {
-      media_type: mediaType,
-      media_id: mediaId,
+      mediaType,
+      mediaId,
     });
     if (result.success !== true) {
       return result;
