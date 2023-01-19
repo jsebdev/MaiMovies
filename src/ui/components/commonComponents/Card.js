@@ -21,12 +21,11 @@ export const Card = ({
   isSelected = false,
 }) => {
   const cardWidth = Dimensions.get("window").width / horizontalCardsFit;
-  // const cardHeight = cardWidth * cardRatio;
   return (
     <Pressable
       onPress={onPress ? onPress : null}
       onLongPress={onLongPress ? () => onLongPress() : null}
-      style={isSelected ? styles.isSelectedCard : null}
+      style={[isSelected ? styles.isSelectedCard : null]}
     >
       <View
         style={[
@@ -35,7 +34,6 @@ export const Card = ({
             paddingHorizontal: marginX,
             marginBottom: marginB,
             width: cardWidth,
-            // height: "100%",
           },
         ]}
       >
@@ -72,7 +70,6 @@ export const Card = ({
 
 const styles = StyleSheet.create({
   card: {
-    // flex: 1,
     justifyContent: "flex-start",
     overflow: "hidden",
     alignItems: "center",
@@ -83,7 +80,6 @@ const styles = StyleSheet.create({
   },
   image: {
     borderRadius: 5,
-    flex: 1,
     width: "100%",
   },
   textContainer: {

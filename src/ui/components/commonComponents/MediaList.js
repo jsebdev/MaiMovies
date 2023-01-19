@@ -37,6 +37,7 @@ export const MediaList = ({
     if (selected) return true;
     return false;
   };
+
   return (
     <FlatList
       data={mediaList}
