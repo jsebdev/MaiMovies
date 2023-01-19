@@ -3,7 +3,6 @@ import React from "react";
 import Logo from "@assets/images/tmdb.svg";
 import { Paragraph } from "@app/ui/components/commonComponents/Paragraph";
 import PropTypes from "prop-types";
-import { myBorder } from "@app/utils/utils";
 
 export const TmdbMessage = ({ variant = "default" }) => {
   const tmdbSize = variant === "small" ? 40 : 60;
@@ -34,7 +33,6 @@ const smallStyles = StyleSheet.create({
     width: "86%",
     fontSize: 10,
     justifyContent: "center",
-    // ...myBorder(),
   },
 });
 

@@ -43,9 +43,7 @@ export const AddToListScreen = ({ route, navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    // ...myBorder(),
-  },
+  mainContainer: {},
   title: {
     textAlign: "center",
     fontSize: 18,
@@ -55,7 +53,6 @@ const styles = StyleSheet.create({
   },
   listsContainer: {
     // marginTop: 20,
-    // ...myBorder(),
   },
   list: {
     padding: 30,

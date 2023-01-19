@@ -4,7 +4,6 @@ import { Paragraph } from "../commonComponents/Paragraph";
 import { observer } from "mobx-react-lite";
 import { useStore } from "@app/store/store.hook";
 import { MyButton } from "../commonComponents/MyButton";
-import { myBorder } from "@app/utils/utils";
 import { TmdbMessage } from "./TmdbMessage";
 
 export const AccountHeader = observer(() => {
@@ -16,8 +15,8 @@ export const AccountHeader = observer(() => {
       <Paragraph style={styles.name}>{userStore.name}</Paragraph>
       <Paragraph style={styles.username}>{userStore.username}</Paragraph>
       <MyButton
+        rootStyle={styles.closeSessionButton}
         onPress={() => {
-          console.log("bam se borro!");
           userStore.deleteSession();
         }}
       >
@@ -42,5 +41,8 @@ const styles = StyleSheet.create({
   name: {
     fontWeight: "bold",
     fontSize: 16,
+  },
+  closeSessionButton: {
+    marginVertical: 20,
   },
 });

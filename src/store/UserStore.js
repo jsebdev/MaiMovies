@@ -221,10 +221,28 @@ class UserStore {
   }
 
   clearAll() {
-    this.requestTokenExpiresAt = null;
-    this.sessionId = null;
     this.requestToken = null;
+    this.requestTokenExpiresAt = null;
+    this.accessToken = null;
+    this.sessionId = null;
+    this.accountId = null;
     this.timeoutId = null;
+    this.avatar = null;
+    this.name = null;
+    this.username = null;
+    this.lists = new Map();
+    this.listTotalPages = Infinity;
+    this.listsPage = 0;
+    this.favoritesTvShows = {
+      list: new Map(),
+      page: 0,
+      totalPages: Infinity,
+    };
+    this.favoritesMovies = {
+      list: new Map(),
+      page: 0,
+      totalPages: Infinity,
+    };
   }
 
   periodicCreateAccessToken() {

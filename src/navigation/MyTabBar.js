@@ -9,11 +9,21 @@ import { MyPressable } from "@app/ui/components/commonComponents/MyPressable";
 
 export function MyTabBar({ state, descriptors, navigation, position }) {
   return (
-    <View style={{ flexDirection: "row", backgroundColor: colors.background }}>
+    <View
+      style={{
+        flexDirection: "row",
+        backgroundColor: colors.background,
+      }}
+    >
       <View style={styles.searchContainer}>
         <MyPressable
           onPress={() => {
             navigation.push(SEARCH_NAVIGATION);
+          }}
+          style={{
+            height: "100%",
+            aspectRatio: 1,
+            justifyContent: "center",
           }}
         >
           <Ionicons name="search" color={colors.dimmed} size={30} />

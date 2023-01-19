@@ -12,7 +12,6 @@ export const AccountScreen = observer(() => {
   return (
     <BackgroundView style={styles.container}>
       {userStore.sessionId ? <AccountDetails /> : <LoginMessage />}
-      {/* <MyButton onPress={() => navigation.push("test")}>go to test</MyButton> */}
     </BackgroundView>
   );
 });

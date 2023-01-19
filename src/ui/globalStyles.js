@@ -44,4 +44,5 @@ export const tabBarScreenOptions = ({ route, navigation }) => {
 
 export const pressableStyle = (pressed) => ({
   backgroundColor: pressed ? "#6c5cfa55" : "transparent",
+  // backgroundColor: pressed ? "#f00" : "transparent",
 });

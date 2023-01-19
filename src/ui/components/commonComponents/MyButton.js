@@ -8,22 +8,14 @@ export const MyButton = ({
   children,
   onPress,
   rootStyle,
-  pressableStyle,
   textStyle,
   variant,
 }) => {
   const inheritedRootStyle = Array.isArray(rootStyle) ? rootStyle : [rootStyle];
-  const inheritedPressableStyle = Array.isArray(pressableStyle)
-    ? pressableStyle
-    : [pressableStyle];
   const inheritedTextStyle = Array.isArray(textStyle) ? textStyle : [textStyle];
   const variantTextStyle = variant ? textStyles[variant] : null;
   return (
-    <MyPressable
-      rootStyle={inheritedRootStyle}
-      pressableStyle={inheritedPressableStyle}
-      onPress={onPress}
-    >
+    <MyPressable style={inheritedRootStyle} onPress={onPress}>
       <Paragraph
         style={[textStyles.default, ...inheritedTextStyle, variantTextStyle]}
       >

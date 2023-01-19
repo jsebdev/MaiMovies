@@ -43,11 +43,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
-    // ...myBorder(),
   },
   title: {
     flex: 1,
-    // ...myBorder(),
   },
   message: {
     textAlign: "center",

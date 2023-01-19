@@ -1,49 +1,34 @@
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import React from "react";
 import PropTypes from "prop-types";
 import { pressableStyle } from "@app/ui/globalStyles";
 
-export const MyPressable = ({
-  children,
-  onPress,
-  rootStyle,
-  pressableStyle,
-}) => {
-  const inheritedRootStyle = Array.isArray(rootStyle) ? rootStyle : [rootStyle];
-  const inheritedPressableStyle = Array.isArray(pressableStyle)
-    ? pressableStyle
-    : [pressableStyle];
+export const MyPressable = ({ children, onPress, style }) => {
+  const inheritedStyle = Array.isArray(style) ? style : [style];
   return (
-    <View style={[containerStyles.default, ...inheritedRootStyle]}>
-      <Pressable
-        onPress={onPress}
-        style={({ pressed }) => [
-          pressableStyles.default({ pressed }),
-          ...inheritedPressableStyle,
-        ]}
-      >
-        {children}
-      </Pressable>
-    </View>
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [
+        pressableStyles.default({ pressed }),
+        ...inheritedStyle,
+      ]}
+    >
+      {children}
+    </Pressable>
   );
 };
-
-const containerStyles = StyleSheet.create({
-  default: {
-    alignItems: "center",
-  },
-});
 
 const pressableStyles = StyleSheet.create({
   default: ({ pressed }) => ({
     ...pressableStyle(pressed),
     borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
   }),
 });
 
 MyPressable.propTypes = {
   children: PropTypes.node,
   onPress: PropTypes.func,
-  pressableStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  rootStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
