@@ -382,11 +382,11 @@ export class TheMovieDBController extends ApiController {
     });
     const result = await response.json();
     if (![200, 201].includes(response.status)) {
-      console.log(
-        `Error fetching url: ${url}, method: ${method}, status code is ${response.status}`
-      );
-      if (body) console.log("sent body: ", body);
-      console.log("Response: ", result);
+      // console.log(
+      //   `Error fetching url: ${url}, method: ${method}, status code is ${response.status}`
+      // );
+      // if (body) console.log("sent body: ", body);
+      // console.log("Response: ", result);
       return new ApiResponse({
         success: false,
         rawValue: result,

@@ -53,18 +53,12 @@ class UserStore {
       deleteList: flow,
       deleteMediasFromList: flow,
     });
-    autorun(() => {
-      if (this._sessionId) {
-        console.log("20: this.session >>>", this.sessionId);
-        console.log("56: this.accessToken >>>", this.accessToken);
-      }
-    });
+    // autorun(() => {
+    // });
   }
 
   *deleteMediasFromList(listId, medias) {
-    console.log("65: medias >>>", medias);
     const result = yield apiController.deleteMediaFromList(listId, medias);
-    console.log("67: result >>>", result);
     if (result.success === true) {
       yield this.fetchListItems(listId);
     }
@@ -299,10 +293,7 @@ class UserStore {
   *deleteSession() {
     const result = yield apiController.deleteSession(this.sessionId);
     if (result.success === true) {
-      this.sessionId = null;
-      this.requestToken = null;
-      this.requestTokenExpiresAt = null;
-      this.timeoutId = null;
+      this.clearAll();
     }
     return result;
   }

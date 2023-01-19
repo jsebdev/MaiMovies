@@ -11,7 +11,6 @@ class MediaStore {
       fetchMediaVideos: action,
     });
     // autorun(() => {
-    // console.log("29: this.medias >>>", this.medias);
     // });
   }
 

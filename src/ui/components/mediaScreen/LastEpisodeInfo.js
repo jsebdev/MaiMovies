@@ -9,7 +9,6 @@ import { MyButton } from "../commonComponents/MyButton";
 
 export const LastEpisodeInfo = ({ lastEpisode, imageBaseUrl }) => {
   const [showInfo, setShowInfo] = useState(false);
-  // console.log("12: lastEpisode, imageBaseUrl >>>", lastEpisode, imageBaseUrl);
   if (!lastEpisode) return null;
   return (
     <View style={styles.container}>

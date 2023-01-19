@@ -1,6 +1,6 @@
 import { apiController } from "@app/api/apiController";
 import { MEDIA_TYPES } from "@app/utils/constants";
-import { autorun, flow, makeAutoObservable } from "mobx";
+import { flow, makeAutoObservable } from "mobx";
 
 class SearchStore {
   _searchText = "";
@@ -21,8 +21,6 @@ class SearchStore {
       fetchNextPageMediaSearch: flow,
     });
     // autorun(() => {
-    //   console.log("23: this.movies.page >>>", this.movies.page);
-    //   console.log("24: this.tv.page >>>", this.tv.page);
     // });
   }
 
