@@ -18,7 +18,6 @@ export const MediaScreen = observer(({ route }) => {
   const { mediaType, mediaId } = route.params;
 
   const { media } = useMediaScreen(mediaType, mediaId);
-  // console.log("20: media >>>", media);
 
   return (
     <BackgroundView>

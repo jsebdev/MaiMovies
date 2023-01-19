@@ -47,9 +47,6 @@ export const HomeNavigation = () => {
         options={{
           tabBarLabel: "Trending",
           tabBarLabelStyle: styles.tabBarLabel,
-          //todo: change this image to a better one
-          // tabBarIcon: () =>
-          //   renderImageIcon(require("@assets/images/moviesIcon.png")),
           tabBarIcon: ({ color, size }) => (
             <IconMaterialComunity
               name="movie-filter"

@@ -1,6 +1,5 @@
 import { View } from "react-native";
 import React, { useState } from "react";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import Entypo from "react-native-vector-icons/Entypo";
 import { StyleSheet, TextInput } from "react-native";
 import { colors } from "@app/utils/constants";
@@ -15,7 +14,6 @@ export const Searcher = ({ search }) => {
   };
   return (
     <View style={styles.searchBar}>
-      {/* todo: make keyboard hide when clicking on search */}
       <TextInput
         style={styles.input}
         value={searchText}
@@ -32,13 +30,6 @@ export const Searcher = ({ search }) => {
         size={30}
         style={styles.searchButton}
         onPress={() => setSearchText("")}
-      />
-      <Ionicons
-        name="search"
-        color={colors.dimmed}
-        size={30}
-        style={styles.searchButton}
-        onPress={handleSearch}
       />
     </View>
   );

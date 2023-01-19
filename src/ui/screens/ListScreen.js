@@ -7,8 +7,7 @@ import { observer } from "mobx-react-lite";
 import { MediaList } from "../components/commonComponents/MediaList";
 import { MyButton } from "../components/commonComponents/MyButton";
 import { Alert, StyleSheet, View } from "react-native";
-import { TRENDING_NAVIGATION } from "@app/utils/constants";
-import { id } from "date-fns/locale";
+import { colors, TRENDING_NAVIGATION } from "@app/utils/constants";
 
 export const ListScreen = observer(({ route, navigation }) => {
   const listId = route?.params?.listId;
@@ -45,7 +44,13 @@ export const ListScreen = observer(({ route, navigation }) => {
   return (
     <BackgroundView>
       {selectedMedia.length > 0 && (
-        <MyButton onPress={deleteMediaPrompt}>Delete items</MyButton>
+        <MyButton
+          onPress={deleteMediaPrompt}
+          textStyle={styles.deleteButtonText}
+          rootStyle={styles.deleteButton}
+        >
+          Delete items
+        </MyButton>
       )}
       {list !== undefined && list.items && list.items.length > 0 ? (
         <MediaList
@@ -73,6 +78,12 @@ const styles = StyleSheet.create({
   message: {
     fontSize: 18,
     marginBottom: 30,
+  },
+  deleteButtonText: {
+    color: colors.danger,
+  },
+  deleteButton: {
+    marginVertical: 20,
   },
 });
 
