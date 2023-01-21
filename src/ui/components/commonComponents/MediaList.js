@@ -11,6 +11,7 @@ export const MediaList = ({
   horizontal = false,
   selectedMedia,
   setSelectedMedia,
+  headerComponent,
 }) => {
   const composeUniqueMediaId = ({ id, mediaType }) => `${mediaType}${id}`;
   const toggleMediaSelection = (media) => {
@@ -61,6 +62,7 @@ export const MediaList = ({
       ListFooterComponent={<FlatListLoader showSpinner={showSpinner} />}
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
+      ListHeaderComponent={headerComponent}
     />
   );
 };
@@ -72,4 +74,5 @@ MediaList.propTypes = {
   horizontal: PropTypes.bool,
   selectedMedia: PropTypes.array,
   setSelectedMedia: PropTypes.func,
+  headerComponent: PropTypes.node,
 };

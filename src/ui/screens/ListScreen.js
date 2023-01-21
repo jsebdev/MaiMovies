@@ -33,6 +33,7 @@ export const ListScreen = observer(({ route, navigation }) => {
               }))
             );
             if (!result.success) Alert.alert("Something went wrong");
+            else setSelectedMedia([]);
           },
         },
         {
@@ -41,6 +42,7 @@ export const ListScreen = observer(({ route, navigation }) => {
       ]
     );
   };
+
   return (
     <BackgroundView>
       {selectedMedia.length > 0 && (
@@ -52,11 +54,25 @@ export const ListScreen = observer(({ route, navigation }) => {
           Delete items
         </MyButton>
       )}
+      {list &&
+        list.items.length === 0 &&
+        list.description &&
+        list.description.length > 0 && (
+          <Paragraph style={styles.description}>{list.description}</Paragraph>
+        )}
       {list !== undefined && list.items && list.items.length > 0 ? (
         <MediaList
           mediaList={list.items}
           selectedMedia={selectedMedia}
           setSelectedMedia={setSelectedMedia}
+          headerComponent={
+            list.description &&
+            list.description.length > 0 && (
+              <Paragraph style={styles.description}>
+                {list.description}
+              </Paragraph>
+            )
+          }
         />
       ) : (
         <View style={styles.messageContainer}>
@@ -71,9 +87,13 @@ export const ListScreen = observer(({ route, navigation }) => {
 });
 
 const styles = StyleSheet.create({
+  description: {
+    textAlign: "center",
+    marginTop: 20,
+  },
   messageContainer: {
     alignItems: "center",
-    paddingTop: 50,
+    paddingTop: 30,
   },
   message: {
     fontSize: 18,
