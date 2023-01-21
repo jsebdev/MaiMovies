@@ -3,8 +3,9 @@ import { BackgroundView } from "../components/commonComponents/BackgroundView";
 import { Paragraph } from "../components/commonComponents/Paragraph";
 import { useStore } from "@app/store/store.hook";
 import PropTypes from "prop-types";
-import { Alert, Pressable, StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { MyPressable } from "../components/commonComponents/MyPressable";
 
 export const AddToListScreen = ({ route, navigation }) => {
   const { mediaStore, userStore } = useStore();
@@ -18,7 +19,7 @@ export const AddToListScreen = ({ route, navigation }) => {
     const result = await userStore.addItemToList(listId, mediaType, mediaId);
     if (result.success === false) {
       Alert.alert(
-        "Could not add item to list. Probably because the item was already in the list."
+        "Could not add item to list. Probably because the item is already in the list."
       );
       return;
     }
@@ -29,13 +30,13 @@ export const AddToListScreen = ({ route, navigation }) => {
     <BackgroundView style={styles.mainContainer}>
       <ScrollView style={styles.listsContainer}>
         {lists.map((list) => (
-          <Pressable
+          <MyPressable
             key={list.id}
             style={styles.list}
             onPress={() => addToList(list.id)}
           >
             <Paragraph style={styles.listName}>{list.name}</Paragraph>
-          </Pressable>
+          </MyPressable>
         ))}
       </ScrollView>
     </BackgroundView>
@@ -56,6 +57,7 @@ const styles = StyleSheet.create({
   },
   list: {
     padding: 30,
+    alignItems: "flex-start",
   },
   listName: {
     fontSize: 18,
