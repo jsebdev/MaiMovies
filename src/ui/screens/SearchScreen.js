@@ -24,12 +24,14 @@ export const SearchScreen = observer(() => {
             pendingResults={searchStore.pendingResults}
             loadMoreResults={fetchNewMovies}
             resultTitle="Movies:"
+            noResultMessage="No Movies found"
           />
           <SearchResult
             list={Array.from(searchStore.tv.list.values())}
             pendingResults={searchStore.pendingResults}
             loadMoreResults={fetchNewTvShows}
             resultTitle="Tv shows:"
+            noResultMessage="No TV shows found"
           />
         </View>
       )}

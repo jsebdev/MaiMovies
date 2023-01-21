@@ -9,6 +9,7 @@ export const SearchResult = ({
   pendingResults,
   loadMoreResults,
   resultTitle,
+  noResultMessage,
 }) => {
   return (
     <View style={styles.listContainer}>
@@ -29,7 +30,7 @@ export const SearchResult = ({
           {pendingResults > 0 ? (
             <ActivityIndicator />
           ) : (
-            <Paragraph style={styles.message}>No movies found.</Paragraph>
+            <Paragraph style={styles.message}>{noResultMessage}</Paragraph>
           )}
         </>
       )}
@@ -60,4 +61,5 @@ SearchResult.propTypes = {
   loadMoreResults: PropTypes.func,
   resultTitle: PropTypes.string,
   mediaType: PropTypes.string,
+  noResultMessage: PropTypes.string.isRequired,
 };

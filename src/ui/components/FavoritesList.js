@@ -21,8 +21,8 @@ export const FavoritesList = observer(({ mediaType }) => {
             />
           ) : (
             <Paragraph style={styles.message}>
-              You don&apos;t have any favorite $
-              {mediaType === MEDIA_TYPES.movie ? "movie" : "tv show"} yet`
+              You don&apos;t have any favorite
+              {mediaType === MEDIA_TYPES.movie ? " movie" : " tv show"} yet
             </Paragraph>
           )}
         </>
