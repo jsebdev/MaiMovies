@@ -5,7 +5,7 @@ import { StyleSheet, TextInput } from "react-native";
 import { colors } from "@app/utils/constants";
 import PropTypes from "prop-types";
 
-export const Searcher = ({ search }) => {
+export const Searcher = ({ search, resetSearch }) => {
   const [searchText, setSearchText] = useState("");
   const handleSearch = () => {
     if (searchText.length > 0) {
@@ -29,7 +29,10 @@ export const Searcher = ({ search }) => {
         color={colors.dimmed}
         size={30}
         style={styles.searchButton}
-        onPress={() => setSearchText("")}
+        onPress={() => {
+          resetSearch();
+          setSearchText("");
+        }}
       />
     </View>
   );
@@ -71,4 +74,5 @@ const styles = StyleSheet.create({
 
 Searcher.propTypes = {
   search: PropTypes.func,
+  resetSearch: PropTypes.func,
 };

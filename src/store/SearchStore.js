@@ -24,6 +24,20 @@ class SearchStore {
     // });
   }
 
+  resetSearch() {
+    this._searchText = "";
+    this.movies = {
+      list: new Map(),
+      page: 0,
+      totalPages: Infinity,
+    };
+    this.tv = {
+      list: [],
+      page: 0,
+      totalPages: Infinity,
+    };
+  }
+
   get searchText() {
     return this._searchText;
   }

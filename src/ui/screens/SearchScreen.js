@@ -10,10 +10,11 @@ import { Searcher } from "../components/searchScreen/Searcher";
 import { SearchResult } from "../components/searchScreen/SearchResult";
 
 export const SearchScreen = observer(() => {
-  const { searchStore, search, fetchNewMovies, fetchNewTvShows } = useSearch();
+  const { searchStore, search, fetchNewMovies, fetchNewTvShows, resetSearch } =
+    useSearch();
   return (
     <BackgroundView>
-      <Searcher search={search} />
+      <Searcher search={search} resetSearch={resetSearch} />
       {searchStore.searchText && (
         <View style={styles.resultsContainer}>
           <Paragraph style={styles.message}>
@@ -62,5 +63,8 @@ const useSearch = () => {
   const fetchNewTvShows = () => {
     searchStore.fetchNextPageMediaSearch(MEDIA_TYPES.tv);
   };
-  return { searchStore, search, fetchNewMovies, fetchNewTvShows };
+  const resetSearch = () => {
+    searchStore.resetSearch();
+  };
+  return { searchStore, search, fetchNewMovies, fetchNewTvShows, resetSearch };
 };

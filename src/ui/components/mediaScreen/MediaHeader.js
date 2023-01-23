@@ -24,7 +24,7 @@ export const MediaHeader = ({ media }) => {
             />
           </View>
           <Paragraph>{media.status}</Paragraph>
-          {media.runtime && (
+          {media.runtime !== undefined && (
             <Paragraph>
               {formatDuration({
                 hours: Math.floor(media.runtime / 60),
@@ -54,6 +54,7 @@ export const MediaHeader = ({ media }) => {
             </Paragraph>
           )}
         </View>
+
         <View style={styles.rightContainer}>
           <View style={styles.topRightContainer}>
             <Score score={media.averageVote} />
