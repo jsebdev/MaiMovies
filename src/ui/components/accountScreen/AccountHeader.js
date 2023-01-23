@@ -30,6 +30,7 @@ const avatarSize = 100;
 
 const styles = StyleSheet.create({
   mainContainer: {
+    marginTop: 50,
     alignItems: "center",
   },
   avatar: {

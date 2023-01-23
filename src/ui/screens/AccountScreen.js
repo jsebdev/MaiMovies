@@ -17,7 +17,5 @@ export const AccountScreen = observer(() => {
 });
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: 50,
-  },
+  container: {},
 });

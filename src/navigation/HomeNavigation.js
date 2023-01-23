@@ -45,7 +45,7 @@ export const HomeNavigation = () => {
         name={TRENDING_NAVIGATION}
         component={TrendingNavigation}
         options={{
-          tabBarLabel: "Trending",
+          tabBarLabel: "Home",
           tabBarLabelStyle: styles.tabBarLabel,
           tabBarIcon: ({ color, size }) => (
             <IconMaterialComunity
