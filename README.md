@@ -2,6 +2,12 @@ d# MaiMovies
 
 Mobile App to create, edit and manage your own lists of movies and tv shows.
 
+<p align="center">
+<a href="https://www.youtube.com/watch?v=-qyklmNkhMY">
+<img src="https://img.youtube.com/vi/-qyklmNkhMY/0.jpg">
+</a>
+</p>
+
 <div style="display: flex; justify-content: center;">
 <a href="https://www.youtube.com/watch?v=-qyklmNkhMY">
 <img src="https://img.youtube.com/vi/-qyklmNkhMY/0.jpg">
