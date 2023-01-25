@@ -1,8 +1,16 @@
-# MaiMovies
+d# MaiMovies
 
 Mobile App to create, edit and manage your own lists of movies and tv shows.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/-qyklmNkhMY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<div style="display: flex; justify-content: center;">
+<a href="https://www.youtube.com/watch?v=-qyklmNkhMY">
+<img src="https://img.youtube.com/vi/-qyklmNkhMY/0.jpg">
+</a>
+</div>
+
+<div>
+[![Alt text](https://img.youtube.com/vi/-qyklmNkhMY/0.jpg)](https://www.youtube.com/watch?v=-qyklmNkhMY)
+</div>
 
 ## About this project
 
@@ -16,7 +24,7 @@ So! I decided to fix both issues at the same time building this app for me (And 
 <div style="border: 1px solid green; width: 50%; padding: 10px; display: flex; align-items: center; font-size: 16px; text-align: center;">Create infinite number of lists if your account</div>
 <div style="border: 1px solid green; width: 50%; padding: 10px; display: flex; align-items: center; font-size: 16px; text-align: center; justify-content: center;">
 
-<img style="border: 1px solid red;" src="./images/screenshot0.png">
+<img style="border: 1px solid red;" src="./images/screenshot0.jpg">
 
 </div>
 </div>
