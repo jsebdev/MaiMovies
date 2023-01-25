@@ -20,11 +20,12 @@ So! I decided to fix both issues at the same time building this app for me (And 
 
 <p align="center">Create infinite number of lists if your account</p>
 <p align="center">
-<img style="width: 30%" src="./images/screenshot0.jpg">
-</img>
+<img style="width: 30%" src="./images/screenshot0.jpg" />
+</p>
+
 <p align="center">See latest tendencies of movies and tv shows</p>
 <p align="center">
-<img style="width: 30%" src="./images/screenshot1.jpg">
+<img style="width: 30%" src="./images/screenshot1.jpg" />
 </p>
 
 <p align="center">Search for any movie or tv show.</p>
