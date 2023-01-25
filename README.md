@@ -24,3 +24,20 @@ So! I decided to fix both issues at the same time building this app for me (And 
 <p align="center">
 <img style="width: 30%" src="./images/screenshot1.jpg">
 </p>
+
+<p align="center">Search for any movie or tv show.</p>
+<p align="center">
+<img style="width: 30%" src="./images/screenshot2.jpg">
+</p>
+
+<p align="center">See detailed and actual information about your movies, like Revenue, release date, genre, production companies, public rate, among others.</p>
+<p align="center">
+<img style="width: 30%" src="./images/screenshot4.jpg">
+</p>
+
+<p align="center">In the case of tv shows, the same info is available as well as some extra information like season or even info about the latest released episode.
+
+</p>
+<p align="center">
+<img style="width: 30%" src="./images/screenshot3.jpg">
+</p>
